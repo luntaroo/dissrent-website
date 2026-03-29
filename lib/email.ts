@@ -40,10 +40,11 @@ export async function sendConfirmEmail(booking: Booking): Promise<void> {
     ? `<p><strong>Ukupna cijena:</strong> ${Number(booking.total_price)} KM</p>`
     : "";
 
-  console.log(`[EMAIL] Sending confirm email FROM=${from()} TO=${esc(booking.customer_email)}`);
+  const toEmail = process.env.TEST_EMAIL_OVERRIDE ?? booking.customer_email;
+  console.log(`[EMAIL] Sending confirm email FROM=${from()} TO=${toEmail}${process.env.TEST_EMAIL_OVERRIDE ? ` (TEST override from ${esc(booking.customer_email)})` : ""}`);
   const result = await resend.emails.send({
     from: from(),
-    to: booking.customer_email,
+    to: toEmail,
     subject: "Potvrdi rezervaciju — DISS RENT",
     html: `
       <div style="font-family:Arial,sans-serif;background:#1a1a1e;color:#fff;padding:32px;border-radius:10px;max-width:560px">
@@ -75,7 +76,7 @@ export async function sendConfirmEmail(booking: Booking): Promise<void> {
 }
 
 export async function sendAdminEmail(booking: Booking): Promise<void> {
-  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminEmail = process.env.TEST_EMAIL_OVERRIDE ?? process.env.ADMIN_EMAIL;
   if (!adminEmail) return;
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";

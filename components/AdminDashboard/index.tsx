@@ -25,6 +25,7 @@ import {
   Th,
   Td,
   StatusBadge,
+  ActionBtn,
   EmptyMsg,
 } from "./styles";
 import { CAR_DATA } from "@/lib/carData";
@@ -98,6 +99,19 @@ export default function AdminDashboard({ initialBookings }: Props) {
       body: JSON.stringify({ carImg, date }),
     });
     await fetchBlocked();
+  }
+
+  async function handleBookingAction(id: string, action: "confirm" | "cancel") {
+    await fetch("/api/admin/bookings", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, action }),
+    });
+    const res = await fetch("/api/admin/bookings");
+    if (res.ok) {
+      const data = await res.json();
+      setBookings(data.bookings);
+    }
   }
 
   async function handleLogout() {
@@ -193,6 +207,7 @@ export default function AdminDashboard({ initialBookings }: Props) {
               <Th>CIJENA</Th>
               <Th>STATUS</Th>
               <Th>DATUM</Th>
+              <Th>AKCIJE</Th>
             </tr>
           </thead>
           <tbody>
@@ -216,6 +231,28 @@ export default function AdminDashboard({ initialBookings }: Props) {
                 </Td>
                 <Td style={{ color: "#555", fontSize: 12 }}>
                   {b.created_at.slice(0, 10)}
+                </Td>
+                <Td>
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                    {b.status === "pending" && (
+                      <>
+                        <ActionBtn $variant="confirm" onClick={() => handleBookingAction(b.id, "confirm")}>
+                          Potvrdi
+                        </ActionBtn>
+                        <ActionBtn $variant="cancel" onClick={() => handleBookingAction(b.id, "cancel")}>
+                          Otkaži
+                        </ActionBtn>
+                      </>
+                    )}
+                    {b.status === "confirmed" && (
+                      <ActionBtn $variant="cancel" onClick={() => handleBookingAction(b.id, "cancel")}>
+                        Otkaži
+                      </ActionBtn>
+                    )}
+                    {b.status === "cancelled" && (
+                      <span style={{ color: "#444", fontSize: 12 }}>—</span>
+                    )}
+                  </div>
                 </Td>
               </tr>
             ))}

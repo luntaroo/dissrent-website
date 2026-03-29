@@ -7,10 +7,10 @@ const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const VALID_PREFS = ["viber", "sms"] as const;
 
-// Valid car images — must match filenames in /public
+// Valid car images — must match car.img paths in carData (public paths with leading slash)
 const VALID_IMGS = [
-  "5.jpeg", "6.jpeg", "002.jpeg", "009.jpeg",
-  "2.jpeg", "00.jpeg", "1.jpg", "3.jpg",
+  "/5.jpeg", "/6.jpeg", "/002.jpeg", "/009.jpeg",
+  "/2.jpeg", "/00.jpeg", "/1.jpg", "/3.jpg",
 ];
 
 export async function POST(req: NextRequest) {

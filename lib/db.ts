@@ -37,7 +37,8 @@ db.exec(`
 
 // Migrate existing DB: add cancel_token column if it doesn't exist yet
 try {
-  db.exec("ALTER TABLE bookings ADD COLUMN cancel_token TEXT UNIQUE");
+  db.exec("ALTER TABLE bookings ADD COLUMN cancel_token TEXT");
+  db.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_cancel_token ON bookings(cancel_token)");
 } catch {
   // Column already exists — safe to ignore
 }

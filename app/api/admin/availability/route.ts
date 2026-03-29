@@ -4,10 +4,10 @@ import { isAdminAuthenticated } from "@/lib/adminAuth";
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
-// Must match VALID_IMGS in booking route
+// Must match car.img values in carData (public paths with leading slash)
 const VALID_IMGS = [
-  "5.jpeg", "6.jpeg", "002.jpeg", "009.jpeg",
-  "2.jpeg", "00.jpeg", "1.jpg", "3.jpg",
+  "/5.jpeg", "/6.jpeg", "/002.jpeg", "/009.jpeg",
+  "/2.jpeg", "/00.jpeg", "/1.jpg", "/3.jpg",
 ];
 
 function isValidDate(s: string): boolean {

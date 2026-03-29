@@ -242,3 +242,28 @@ export const EmptyMsg = styled.p`
   font-size: 14px;
   padding: 20px 0;
 `;
+
+export const ActionBtn = styled.button<{ $variant: "confirm" | "cancel" }>`
+  padding: 4px 12px;
+  border-radius: 5px;
+  border: none;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  background: ${({ $variant }) =>
+    $variant === "confirm" ? "rgba(50, 200, 100, 0.2)" : "rgba(200, 50, 50, 0.2)"};
+  color: ${({ $variant }) =>
+    $variant === "confirm" ? "#50c878" : "#e05050"};
+  border: 1px solid currentColor;
+
+  &:hover {
+    opacity: 0.75;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+`;

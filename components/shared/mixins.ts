@@ -1,7 +1,7 @@
 import { css } from "styled-components";
 
 export const heavyFont = css`
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: "Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   text-transform: uppercase;
   letter-spacing: -0.5px;
   font-weight: normal;
