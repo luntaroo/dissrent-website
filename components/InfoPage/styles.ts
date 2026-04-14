@@ -17,44 +17,43 @@ export const Container = styled.div`
 
 export const PageTitle = styled.h1`
   ${heavyFont}
-  font-size: clamp(2.8rem, 6vw, 5rem);
-  line-height: 0.94;
-  color: var(--text);
-  margin-bottom: 10px;
+  font-size: clamp(2.5rem, 5.5vw, 4rem);
+  line-height: 1.05;
+  color: var(--text-heading);
+  margin-bottom: 12px;
   max-width: 11ch;
 `;
 
 export const TitleAccent = styled.div`
-  width: 110px;
-  height: 6px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  border-radius: 999px;
-  margin-bottom: 30px;
+  width: 100px;
+  height: 5px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: var(--radius-full);
+  margin-bottom: 28px;
 `;
 
 export const Section = styled.section`
   margin-bottom: 18px;
   padding: 28px;
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(14px);
 `;
 
 export const SectionTitle = styled.h2`
   ${heavyFont}
-  font-size: clamp(1.55rem, 3vw, 2.2rem);
-  line-height: 1;
-  color: var(--text);
+  font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+  line-height: 1.05;
+  color: var(--text-heading);
   margin-bottom: 14px;
 `;
 
 export const Text = styled.p`
   ${bodyFont}
-  font-size: 1rem;
+  font-size: 0.96rem;
   color: var(--text-muted);
-  line-height: 1.9;
+  line-height: 1.85;
   margin-bottom: 14px;
 `;
 
@@ -68,38 +67,37 @@ export const List = styled.ul`
 
 export const ListItem = styled.li`
   ${bodyFont}
-  font-size: 0.98rem;
+  font-size: 0.94rem;
   color: var(--text-muted);
-  line-height: 1.8;
+  line-height: 1.75;
   padding: 14px 16px;
-  border-radius: 22px;
-  background: rgba(16, 24, 40, 0.03);
-  border: 1px solid rgba(16, 24, 40, 0.08);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-light);
 `;
 
 export const FaqItem = styled.div`
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.68);
-  border-radius: 30px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
   padding: 24px 26px;
   margin-bottom: 16px;
   box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(14px);
 `;
 
 export const FaqQuestion = styled.h3`
   ${heavyFont}
-  font-size: 1.55rem;
-  line-height: 1;
-  color: var(--text);
+  font-size: 1.35rem;
+  line-height: 1.1;
+  color: var(--text-heading);
   margin-bottom: 10px;
 `;
 
 export const FaqAnswer = styled.p`
   ${bodyFont}
-  font-size: 0.98rem;
+  font-size: 0.94rem;
   color: var(--text-muted);
-  line-height: 1.82;
+  line-height: 1.8;
 `;
 
 export const BackLink = styled.a`
@@ -107,9 +105,19 @@ export const BackLink = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.92rem;
-  font-weight: 800;
-  color: var(--gold-strong);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary);
   text-decoration: none;
   margin-bottom: 24px;
+  padding: 8px 12px;
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  transition: background 0.2s, transform 0.15s;
+
+  &:hover {
+    background: rgba(37, 99, 235, 0.15);
+    transform: translateY(-1px);
+  }
 `;

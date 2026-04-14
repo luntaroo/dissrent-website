@@ -17,16 +17,20 @@ import { bodyFont, heavyFont } from "../shared/mixins";
 
 const PageShell = styled.div`
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SearchSection = styled.section`
   position: relative;
-  margin-top: -56px;
-  padding: 0 20px 18px;
+  margin-top: -48px;
+  padding: 0 20px 24px;
+  z-index: 100;
 
   @media (max-width: 900px) {
-    margin-top: -44px;
-    padding: 0 12px 16px;
+    margin-top: -40px;
+    padding: 0 12px 20px;
   }
 `;
 
@@ -38,10 +42,10 @@ const SearchContainer = styled.div`
 const HighlightsGrid = styled.div`
   position: relative;
   z-index: 1;
-  margin-top: 12px;
+  margin-top: 16px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -49,44 +53,49 @@ const HighlightsGrid = styled.div`
 `;
 
 const HighlightCard = styled.div`
-  padding: 12px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(14px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
 `;
 
 const HighlightLabel = styled.div`
   ${bodyFont}
-  font-size: 0.56rem;
+  font-size: 0.58rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--gold-strong);
+  color: var(--primary);
   margin-bottom: 10px;
 `;
 
 const HighlightTitle = styled.div`
   ${heavyFont}
-  font-size: 0.9rem;
-  line-height: 1.02;
-  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.05;
+  color: var(--text-heading);
   margin-bottom: 8px;
 `;
 
 const HighlightText = styled.p`
   ${bodyFont}
   color: var(--text-muted);
-  font-size: 0.72rem;
-  line-height: 1.45;
+  font-size: 0.76rem;
+  line-height: 1.5;
 `;
 
 const FleetSection = styled.section`
-  padding: 10px 20px 56px;
+  padding: 16px 20px 64px;
 
   @media (max-width: 900px) {
-    padding: 6px 12px 44px;
+    padding: 12px 12px 52px;
   }
 `;
 
@@ -98,9 +107,9 @@ const FleetContainer = styled.div`
 const FleetIntro = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 0.4fr);
-  gap: 14px;
+  gap: 16px;
   align-items: end;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -110,57 +119,57 @@ const FleetIntro = styled.div`
 const FleetCopy = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 `;
 
 const FleetEyebrow = styled.span`
   ${bodyFont}
-  font-size: 0.56rem;
+  font-size: 0.6rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--gold-strong);
+  color: var(--primary);
 `;
 
 const FleetTitle = styled.h2`
   ${heavyFont}
-  font-size: clamp(1.45rem, 2.8vw, 2rem);
-  line-height: 0.95;
-  color: var(--text);
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.05;
+  color: var(--text-heading);
   max-width: 10ch;
 `;
 
 const FleetText = styled.p`
   ${bodyFont}
-  font-size: 0.76rem;
-  line-height: 1.5;
+  font-size: 0.82rem;
+  line-height: 1.6;
   color: var(--text-muted);
   max-width: 620px;
 `;
 
 const FleetAside = styled.div`
-  padding: 14px;
-  border-radius: 18px;
-  background: rgba(16, 24, 40, 0.92);
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: var(--text-inverse);
-  box-shadow: 0 28px 72px rgba(9, 12, 17, 0.2);
+  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
 `;
 
 const FleetAsideLabel = styled.div`
   ${bodyFont}
-  font-size: 0.56rem;
+  font-size: 0.58rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gold-light);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 10px;
 `;
 
 const FleetAsideText = styled.p`
   ${bodyFont}
-  color: rgba(247, 248, 251, 0.7);
-  font-size: 0.72rem;
-  line-height: 1.48;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.78rem;
+  line-height: 1.55;
 `;
 
 interface Props {

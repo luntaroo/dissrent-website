@@ -2,13 +2,11 @@ import styled from "styled-components";
 import { bodyFont, heavyFont } from "../shared/mixins";
 
 export const Section = styled.section`
-  background:
-    radial-gradient(circle at top left, rgba(var(--gold-rgb), 0.16), transparent 24%),
-    linear-gradient(180deg, var(--bg-dark-strong) 0%, #11161f 100%);
-  padding: 104px 32px;
+  background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+  padding: 80px 32px;
 
   @media (max-width: 900px) {
-    padding: 72px 20px;
+    padding: 60px 20px;
   }
 `;
 
@@ -19,40 +17,40 @@ export const Inner = styled.div`
 
 export const Header = styled.div`
   max-width: 720px;
-  margin-bottom: 46px;
+  margin-bottom: 48px;
 `;
 
 export const Eyebrow = styled.div`
   ${bodyFont}
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--gold-light);
-  margin-bottom: 12px;
+  color: var(--primary);
+  margin-bottom: 14px;
 `;
 
 export const Title = styled.h2`
   ${heavyFont}
-  font-size: clamp(2.3rem, 4vw, 4rem);
-  line-height: 0.96;
-  color: var(--text-inverse);
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  line-height: 1.05;
+  color: var(--text-heading);
   margin-bottom: 16px;
   max-width: 11ch;
 `;
 
 export const Text = styled.p`
   ${bodyFont}
-  font-size: 0.98rem;
-  color: rgba(255, 255, 255, 0.62);
-  line-height: 1.8;
+  font-size: 0.96rem;
+  color: var(--text-muted);
+  line-height: 1.75;
 `;
 
 export const Cards = styled.div`
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
-  margin-bottom: 28px;
+  gap: 20px;
+  margin-bottom: 32px;
 
   @media (max-width: 1100px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -64,57 +62,67 @@ export const Cards = styled.div`
 `;
 
 export const Card = styled.div`
-  padding: 24px;
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
+  padding: 26px;
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(37, 99, 235, 0.2);
+  }
 `;
 
 export const CardKicker = styled.div`
   ${heavyFont}
-  font-size: 1rem;
-  color: var(--gold-light);
-  margin-bottom: 18px;
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin-bottom: 16px;
 `;
 
 export const CardTitle = styled.h3`
   ${heavyFont}
-  font-size: 1.4rem;
-  line-height: 1.02;
-  color: var(--text-inverse);
-  margin-bottom: 12px;
+  font-size: 1.15rem;
+  line-height: 1.1;
+  color: var(--text-heading);
+  margin-bottom: 10px;
 `;
 
 export const CardText = styled.p`
   ${bodyFont}
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.58);
-  line-height: 1.75;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.7;
 `;
 
 export const Strip = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
+  justify-content: center;
 `;
 
 export const StripItem = styled.div`
   ${bodyFont}
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: rgba(var(--gold-rgb), 0.1);
-  border: 1px solid rgba(var(--gold-rgb), 0.18);
-  color: var(--gold-light);
-  font-size: 0.8rem;
-  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 600;
 `;
 
 export const FinalNote = styled.p`
   ${bodyFont}
-  color: rgba(255, 255, 255, 0.48);
-  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-size: 0.84rem;
   line-height: 1.7;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
 `;

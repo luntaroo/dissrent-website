@@ -4,8 +4,8 @@ import { bodyFont, heavyFont } from "../shared/mixins";
 export const Overlay = styled.div<{ $open: boolean }>`
   position: fixed;
   inset: 0;
-  background: rgba(9, 12, 17, 0.76);
-  backdrop-filter: blur(14px);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
   z-index: 9000;
   display: flex;
   justify-content: center;
@@ -22,16 +22,16 @@ export const Overlay = styled.div<{ $open: boolean }>`
 `;
 
 export const Modal = styled.div<{ $open: boolean }>`
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.64);
-  border-radius: 38px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 28px;
   width: 100%;
   max-width: 1120px;
   max-height: calc(100vh - 48px);
   position: relative;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 50px 140px rgba(9, 12, 17, 0.32);
+  box-shadow: var(--shadow-2xl);
   transform: ${({ $open }) => ($open ? "translateY(0) scale(1)" : "translateY(20px) scale(0.98)")};
   transition: transform 0.3s ease;
   overflow: hidden;
@@ -68,14 +68,14 @@ export const ScrollArea = styled.div`
 
 export const CloseX = styled.button`
   position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 44px;
-  height: 44px;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(10, 15, 22, 0.7);
-  color: var(--text-inverse);
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--text-subtle);
   font-size: 1rem;
   cursor: pointer;
   display: flex;
@@ -83,6 +83,13 @@ export const CloseX = styled.button`
   justify-content: center;
   z-index: 10;
   flex-shrink: 0;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+
+  &:hover {
+    background: var(--danger-soft);
+    color: var(--danger);
+    border-color: rgba(220, 38, 38, 0.2);
+  }
 
   @media (max-width: 760px) {
     display: none;
@@ -101,7 +108,7 @@ export const Shell = styled.div`
 `;
 
 export const SummaryPane = styled.div`
-  background: linear-gradient(180deg, var(--bg-dark-strong) 0%, #121821 100%);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: var(--text-inverse);
 
   @media (max-width: 760px) {
@@ -112,7 +119,7 @@ export const SummaryPane = styled.div`
 export const SummaryVisual = styled.div<{ $img: string }>`
   min-height: 240px;
   background:
-    linear-gradient(180deg, rgba(9, 12, 17, 0.08) 0%, rgba(9, 12, 17, 0.56) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%),
     url(${({ $img }) => $img}) center/cover no-repeat;
 
   @media (max-width: 760px) {
@@ -123,9 +130,7 @@ export const SummaryVisual = styled.div<{ $img: string }>`
 export const SummaryOverlay = styled.div`
   width: 100%;
   height: 100%;
-  background:
-    radial-gradient(circle at top left, rgba(var(--gold-rgb), 0.28), transparent 28%),
-    linear-gradient(180deg, transparent 20%, rgba(9, 12, 17, 0.58) 100%);
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.15), transparent 30%);
 `;
 
 export const SummaryContent = styled.div`
@@ -137,25 +142,25 @@ export const SummaryContent = styled.div`
 
 export const SummaryEyebrow = styled.div`
   ${bodyFont}
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gold-light);
+  color: rgba(255, 255, 255, 0.85);
 `;
 
 export const Title = styled.h2`
   ${heavyFont}
-  font-size: clamp(1.9rem, 4vw, 3.2rem);
-  line-height: 0.96;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1;
   color: var(--text-inverse);
 `;
 
 export const Subtitle = styled.p`
   ${bodyFont}
-  color: rgba(247, 248, 251, 0.68);
-  font-size: 0.92rem;
-  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  line-height: 1.7;
 `;
 
 export const Steps = styled.div`
@@ -166,19 +171,19 @@ export const Steps = styled.div`
 
 export const Step = styled.div<{ $active?: boolean }>`
   ${bodyFont}
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  color: ${({ $active }) => ($active ? "#101828" : "rgba(247, 248, 251, 0.72)")};
-  background: ${({ $active }) => ($active ? "var(--gold-light)" : "rgba(255, 255, 255, 0.08)")};
-  border: 1px solid ${({ $active }) => ($active ? "rgba(var(--gold-rgb), 0.28)" : "rgba(255, 255, 255, 0.08)")};
-  border-radius: 999px;
+  color: ${({ $active }) => ($active ? "var(--text-inverse)" : "rgba(255, 255, 255, 0.7)")};
+  background: ${({ $active }) => ($active ? "rgba(255, 255, 255, 0.2)" : "rgba(255, 255, 255, 0.08)")};
+  border: 1px solid ${({ $active }) => ($active ? "rgba(255, 255, 255, 0.3)" : "rgba(255, 255, 255, 0.1)")};
+  border-radius: var(--radius-full);
   padding: 8px 14px;
 `;
 
 export const SummaryBox = styled.div`
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
   padding: 18px;
 `;
 
@@ -187,8 +192,8 @@ export const SummaryLine = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  color: rgba(247, 248, 251, 0.56);
-  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.88rem;
   line-height: 1.8;
 
   strong {
@@ -200,24 +205,24 @@ export const SummaryLine = styled.div`
 
 export const Notice = styled.div`
   ${bodyFont}
-  background: rgba(var(--gold-rgb), 0.12);
-  border: 1px solid rgba(var(--gold-rgb), 0.18);
-  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-lg);
   padding: 14px 16px;
   color: inherit;
-  font-size: 0.88rem;
-  line-height: 1.72;
+  font-size: 0.86rem;
+  line-height: 1.7;
 `;
 
 export const FormPane = styled.div`
   padding: 34px 32px 32px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
 
   @media (max-width: 760px) {
     padding: 20px 18px 32px;
-    gap: 16px;
+    gap: 18px;
   }
 `;
 
@@ -227,20 +232,20 @@ export const MobileCarTitle = styled.div`
   @media (max-width: 760px) {
     display: block;
     ${heavyFont}
-    font-size: 1.5rem;
+    font-size: 1.45rem;
     line-height: 1.05;
-    color: var(--text);
+    color: var(--text-heading);
     margin-bottom: 4px;
   }
 `;
 
 export const SectionTitle = styled.div`
   ${bodyFont}
-  font-size: 0.78rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text-subtle);
 `;
 
 export const DateRow = styled.div`
@@ -262,39 +267,40 @@ export const Field = styled.div`
 export const Label = styled.label`
   ${bodyFont}
   display: block;
-  color: var(--text-muted);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 `;
 
 export const Input = styled.input`
   ${bodyFont}
   width: 100%;
-  height: 58px;
-  background: rgba(16, 24, 40, 0.03);
-  border: 1px solid rgba(16, 24, 40, 0.1);
-  border-radius: 20px;
-  color: var(--text);
+  height: 54px;
+  background: var(--bg-subtle);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-heading);
   padding: 0 18px;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 500;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 
   &:focus {
-    border-color: rgba(var(--gold-rgb), 0.35);
-    box-shadow: 0 0 0 4px rgba(var(--gold-rgb), 0.12);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-soft);
   }
 `;
 
 export const ContactLabel = styled.span`
   ${bodyFont}
   display: block;
-  color: var(--text-muted);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 `;
 
@@ -310,14 +316,14 @@ export const RadioOption = styled.label`
   gap: 10px;
   cursor: pointer;
   padding: 14px 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(16, 24, 40, 0.1);
-  background: rgba(16, 24, 40, 0.03);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--bg-subtle);
   transition: border-color 0.2s, background 0.2s;
 
   &:has(input:checked) {
-    border-color: rgba(var(--gold-rgb), 0.35);
-    background: rgba(var(--gold-rgb), 0.08);
+    border-color: var(--primary);
+    background: var(--primary-soft);
   }
 `;
 
@@ -326,54 +332,65 @@ export const RadioInput = styled.input`
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid rgba(16, 24, 40, 0.14);
-  background: var(--surface-strong);
+  border: 2px solid var(--border-medium);
+  background: var(--surface);
   cursor: pointer;
   flex-shrink: 0;
   transition: border-color 0.2s, background 0.2s;
 
   &:checked {
-    background: var(--gold);
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(var(--gold-rgb), 0.12);
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
   }
 `;
 
 export const RadioIcon = styled.i`
   font-size: 1rem;
-  color: var(--gold-strong);
+  color: var(--primary);
 `;
 
 export const RadioText = styled.span`
   ${bodyFont}
-  color: var(--text);
-  font-size: 0.92rem;
-  font-weight: 700;
+  color: var(--text-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
 `;
 
 export const ErrorText = styled.p`
   ${bodyFont}
   color: var(--danger);
-  font-size: 0.9rem;
-  line-height: 1.7;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  padding: 10px 14px;
+  background: var(--danger-soft);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(220, 38, 38, 0.15);
 `;
 
 export const ConfirmButton = styled.button`
   ${bodyFont}
   width: 100%;
-  min-height: 58px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #101828;
+  min-height: 54px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--text-inverse);
   border: none;
-  border-radius: 999px;
-  font-size: 0.94rem;
-  font-weight: 800;
+  border-radius: var(--radius-full);
+  font-size: 0.92rem;
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 20px 36px rgba(var(--gold-rgb), 0.22);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+  transition: transform 0.15s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.32);
+  }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
     box-shadow: none;
   }
 `;
@@ -385,22 +402,22 @@ export const SuccessBox = styled.div`
 
 export const SuccessTitle = styled.h2`
   ${heavyFont}
-  font-size: clamp(2rem, 4vw, 3rem);
-  color: var(--text);
-  line-height: 0.98;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--text-heading);
+  line-height: 1;
   margin-bottom: 16px;
 `;
 
 export const SuccessText = styled.p`
   ${bodyFont}
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   color: var(--text-muted);
-  line-height: 1.8;
+  line-height: 1.75;
   max-width: 540px;
   margin: 0 auto;
 
   strong {
-    color: var(--text);
-    font-weight: 700;
+    color: var(--text-heading);
+    font-weight: 600;
   }
 `;

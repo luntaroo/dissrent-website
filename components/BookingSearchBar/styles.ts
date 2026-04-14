@@ -4,27 +4,16 @@ import { bodyFont, heavyFont } from "../shared/mixins";
 export const Wrapper = styled.section`
   position: relative;
   z-index: 1100;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.82) 100%),
-    linear-gradient(135deg, rgba(var(--gold-rgb), 0.08), transparent 55%);
-  border-radius: 22px;
-  padding: 16px;
-  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.66);
-  backdrop-filter: blur(18px);
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border);
   overflow: visible;
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top right, rgba(var(--gold-rgb), 0.12), transparent 30%);
-    pointer-events: none;
-  }
-
   @media (max-width: 900px) {
-    padding: 14px 12px;
-    border-radius: 18px;
+    padding: 16px 14px;
+    border-radius: var(--radius-lg);
   }
 `;
 
@@ -33,9 +22,9 @@ export const Header = styled.div`
   z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
+  gap: 16px;
   align-items: end;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 
   @media (max-width: 760px) {
     grid-template-columns: 1fr;
@@ -45,30 +34,30 @@ export const Header = styled.div`
 export const HeaderCopy = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 `;
 
 export const Eyebrow = styled.div`
   ${bodyFont}
-  font-size: 0.58rem;
+  font-size: 0.6rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--gold-strong);
+  color: var(--primary);
 `;
 
 export const Title = styled.h2`
   ${heavyFont}
-  font-size: clamp(1.05rem, 2vw, 1.4rem);
-  line-height: 1.02;
-  color: var(--text);
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  line-height: 1.05;
+  color: var(--text-heading);
 `;
 
 export const Description = styled.p`
   ${bodyFont}
-  font-size: 0.76rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
-  line-height: 1.5;
+  line-height: 1.6;
   max-width: 620px;
 `;
 
@@ -76,31 +65,31 @@ export const Logo = styled.div`
   ${bodyFont}
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   min-width: 180px;
-  padding: 10px 12px;
-  border-radius: 18px;
-  background: rgba(16, 24, 40, 0.05);
-  border: 1px solid rgba(16, 24, 40, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  padding: 12px 14px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-gradient);
+  border: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 
   span {
     font-size: 0.56rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--text-faint);
+    color: var(--text-subtle);
   }
 
   strong {
     ${heavyFont}
-    font-size: 0.96rem;
-    color: var(--text);
+    font-size: 1rem;
+    color: var(--text-heading);
     line-height: 1;
   }
 
   small {
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
   }
 `;
@@ -110,7 +99,7 @@ export const FieldsGrid = styled.div`
   z-index: 1;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
   align-items: end;
 
   @media (max-width: 1100px) {
@@ -131,84 +120,92 @@ export const FormGroup = styled.div`
 
 export const Label = styled.label`
   ${bodyFont}
-  font-size: 0.58rem;
-  font-weight: 800;
+  font-size: 0.6rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  color: var(--text-subtle);
 `;
 
 export const InputContainer = styled.div`
   position: relative;
-  height: 44px;
+  height: 48px;
 `;
 
 export const TextInput = styled.input`
   ${bodyFont}
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid rgba(16, 24, 40, 0.1);
-  border-radius: 14px;
-  color: var(--text);
-  padding: 0 36px 0 12px;
-  font-size: 0.76rem;
-  font-weight: 700;
+  background: var(--bg-subtle);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-heading);
+  padding: 0 40px 0 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 
   &:focus {
-    border-color: rgba(var(--gold-rgb), 0.4);
-    box-shadow: 0 0 0 4px rgba(var(--gold-rgb), 0.12);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-soft);
+  }
+
+  &::placeholder {
+    color: var(--text-light);
   }
 `;
 
 export const InputIcon = styled.i`
   position: absolute;
-  right: 12px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--gold-strong);
-  font-size: 0.76rem;
+  color: var(--primary);
+  font-size: 0.8rem;
   pointer-events: none;
 `;
 
 export const SearchButton = styled.button`
   ${bodyFont}
   width: 100%;
-  height: 44px;
+  height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   border: none;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #101828;
-  font-size: 0.76rem;
-  font-weight: 800;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--text-inverse);
+  font-size: 0.8rem;
+  font-weight: 700;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.2s ease;
   white-space: nowrap;
-  box-shadow: 0 18px 34px rgba(var(--gold-rgb), 0.22);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 22px 38px rgba(var(--gold-rgb), 0.28);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.32);
   }
 
   &:active {
     transform: translateY(0);
+  }
+
+  i {
+    font-size: 0.75rem;
   }
 `;
 
 export const MetaRow = styled.div`
   position: relative;
   z-index: 1;
-  margin-top: 10px;
+  margin-top: 14px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
 `;
 
@@ -225,26 +222,30 @@ export const MetaPill = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
-  background: rgba(var(--gold-rgb), 0.1);
-  color: var(--gold-strong);
-  border: 1px solid rgba(var(--gold-rgb), 0.18);
-  border-radius: 999px;
-  font-size: 0.68rem;
-  font-weight: 700;
+  padding: 7px 12px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 600;
 `;
 
 export const HelperText = styled.p`
   ${bodyFont}
-  color: var(--text-soft);
-  font-size: 0.7rem;
-  line-height: 1.45;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
 `;
 
 export const ErrorText = styled.p`
   ${bodyFont}
   color: var(--danger);
-  font-size: 0.74rem;
-  font-weight: 700;
-  margin-top: 8px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: var(--danger-soft);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(220, 38, 38, 0.15);
 `;

@@ -37,6 +37,8 @@ export default function Navbar() {
             <Image
               src={LOGO_URL}
               alt="DISS RENT"
+              width={320}
+              height={100}
               priority
               sizes="(max-width: 640px) 116px, 152px"
             />

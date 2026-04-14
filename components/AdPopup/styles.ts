@@ -20,22 +20,21 @@ export const Overlay = styled.div`
 
 export const Content = styled.div`
   position: relative;
-  max-width: 360px;
+  max-width: 380px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  background: rgba(10, 15, 22, 0.9);
-  border-radius: 30px;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(9, 12, 17, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(22px) saturate(160%);
+  box-shadow: var(--shadow-2xl);
+  border: 1px solid var(--border);
   pointer-events: auto;
 `;
 
 export const Visual = styled.div`
   position: relative;
-  min-height: 160px;
+  min-height: 170px;
 `;
 
 export const VisualOverlay = styled.div`
@@ -43,8 +42,8 @@ export const VisualOverlay = styled.div`
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.08) 0%,
-    rgba(0, 0, 0, 0.55) 100%
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.5) 100%
   );
 `;
 
@@ -53,16 +52,16 @@ export const VisualBadge = styled.div`
   position: absolute;
   top: 12px;
   left: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(8, 8, 8, 0.78);
+  padding: 6px 11px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
-  color: var(--gold);
-  font-size: 0.62rem;
+  color: var(--primary);
+  font-size: 0.6rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  border: 1px solid rgba(200, 145, 42, 0.3);
+  border: 1px solid rgba(37, 99, 235, 0.15);
 `;
 
 export const VisualTitle = styled.h2`
@@ -72,16 +71,17 @@ export const VisualTitle = styled.h2`
   right: 12px;
   bottom: 14px;
   color: var(--text-inverse);
-  font-size: 1.45rem;
-  line-height: 0.95;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 `;
 
 export const Body = styled.div`
-  padding: 18px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 12px;
+  gap: 14px;
+  background: var(--surface);
 `;
 
 export const BodyTop = styled.div`
@@ -93,24 +93,24 @@ export const BodyTop = styled.div`
 
 export const Kicker = styled.div`
   ${bodyFont}
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--gold);
+  letter-spacing: 0.12em;
+  color: var(--primary);
 `;
 
 export const Title = styled.h2`
   ${heavyFont}
-  font-size: clamp(1.18rem, 3vw, 1.4rem);
-  line-height: 1;
-  color: var(--text-inverse);
+  font-size: clamp(1.15rem, 3vw, 1.45rem);
+  line-height: 1.1;
+  color: var(--text-heading);
 `;
 
 export const Subtitle = styled.p`
   ${bodyFont}
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.84rem;
+  color: var(--text-muted);
   line-height: 1.65;
 `;
 
@@ -125,17 +125,17 @@ export const Feature = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(200, 145, 42, 0.1);
-  border: 1px solid rgba(200, 145, 42, 0.18);
-  color: rgba(255, 255, 255, 0.7);
+  padding: 6px 11px;
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  color: var(--text-muted);
   font-size: 0.72rem;
   font-weight: 600;
 
   i {
-    color: var(--gold);
-    font-size: 0.66rem;
+    color: var(--success);
+    font-size: 0.64rem;
   }
 `;
 
@@ -143,17 +143,19 @@ export const CloseBtn = styled.button`
   ${bodyFont}
   align-self: flex-start;
   border: none;
-  border-radius: 999px;
-  padding: 11px 16px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #101828;
+  border-radius: var(--radius-full);
+  padding: 12px 18px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--text-inverse);
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
 
   &:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.32);
   }
 `;
 
@@ -162,10 +164,10 @@ export const CloseX = styled.button`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 1px solid var(--border-dark);
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1.15rem;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--text-subtle);
+  font-size: 1.1rem;
   line-height: 1;
   cursor: pointer;
   display: flex;
@@ -176,8 +178,8 @@ export const CloseX = styled.button`
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 
   &:hover {
-    background: var(--gold-dim);
-    color: var(--gold);
-    border-color: rgba(200, 145, 42, 0.4);
+    background: var(--danger-soft);
+    color: var(--danger);
+    border-color: rgba(220, 38, 38, 0.2);
   }
 `;

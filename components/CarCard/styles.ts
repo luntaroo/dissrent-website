@@ -2,19 +2,19 @@ import styled from "styled-components";
 import { bodyFont, heavyFont } from "../shared/mixins";
 
 export const Card = styled.article`
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.64);
-  border-radius: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-md);
-  backdrop-filter: blur(16px);
-  transition: transform 0.24s ease, box-shadow 0.24s ease;
+  transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
+    border-color: rgba(37, 99, 235, 0.25);
   }
 `;
 
@@ -28,19 +28,19 @@ export const Bg = styled.div<{ $img: string }>`
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(16, 24, 40, 0) 0%, rgba(16, 24, 40, 0.36) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%),
     url(${({ $img }) => $img}) center/cover no-repeat;
-  transition: transform 0.45s ease;
+  transition: transform 0.5s ease;
 
   ${Card}:hover & {
-    transform: scale(1.03);
+    transform: scale(1.06);
   }
 `;
 
 export const MediaOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(var(--gold-rgb), 0.14), transparent 56%);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), transparent 60%);
 `;
 
 export const TopRow = styled.div`
@@ -50,7 +50,7 @@ export const TopRow = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
-  padding: 12px;
+  padding: 14px;
   flex-wrap: wrap;
 `;
 
@@ -59,31 +59,32 @@ export const StatusBadge = styled.div<{ $available: boolean }>`
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 10px;
-  border-radius: 999px;
+  padding: 7px 11px;
+  border-radius: var(--radius-full);
   background: ${({ $available }) =>
-    $available ? "rgba(10, 15, 22, 0.66)" : "rgba(180, 83, 9, 0.88)"};
+    $available ? "rgba(22, 163, 74, 0.9)" : "rgba(217, 119, 6, 0.9)"};
   color: var(--text-inverse);
-  font-size: 0.62rem;
+  font-size: 0.64rem;
   font-weight: 700;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
 `;
 
 export const PriceBadge = styled.div`
   ${bodyFont}
-  padding: 7px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--text);
-  font-size: 0.62rem;
-  font-weight: 800;
+  padding: 7px 11px;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  color: var(--text-heading);
+  font-size: 0.64rem;
+  font-weight: 700;
+  border: 1px solid var(--border);
 `;
 
 export const Bottom = styled.div`
-  padding: 14px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   flex: 1;
 `;
 
@@ -95,23 +96,23 @@ export const TitleRow = styled.div`
 
 export const Title = styled.h3`
   ${heavyFont}
-  color: var(--text);
-  font-size: 1rem;
-  line-height: 1;
+  color: var(--text-heading);
+  font-size: 1.05rem;
+  line-height: 1.1;
 `;
 
 export const AvailabilityText = styled.p<{ $available: boolean }>`
   ${bodyFont}
   color: ${({ $available }) => ($available ? "var(--success)" : "var(--warning)")};
-  font-size: 0.72rem;
-  font-weight: 700;
-  line-height: 1.45;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.4;
 `;
 
 export const PricingGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
+  gap: 8px;
 
   @media (max-width: 520px) {
     grid-template-columns: 1fr;
@@ -119,28 +120,28 @@ export const PricingGrid = styled.div`
 `;
 
 export const PricingCard = styled.div`
-  padding: 10px;
-  border-radius: 16px;
-  background: rgba(16, 24, 40, 0.04);
-  border: 1px solid rgba(16, 24, 40, 0.08);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-light);
 `;
 
 export const PricingLabel = styled.div`
   ${bodyFont}
   font-size: 0.54rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 5px;
+  color: var(--text-subtle);
+  margin-bottom: 6px;
 `;
 
 export const PricingValue = styled.div`
   ${bodyFont}
-  color: var(--text);
-  font-size: 0.7rem;
-  font-weight: 800;
-  line-height: 1.4;
+  color: var(--text-heading);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.3;
 `;
 
 export const BenefitRow = styled.div`
@@ -154,19 +155,23 @@ export const Benefit = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 6px 9px;
-  border-radius: 999px;
-  background: rgba(var(--gold-rgb), 0.08);
-  border: 1px solid rgba(var(--gold-rgb), 0.15);
-  color: var(--gold-strong);
-  font-size: 0.62rem;
-  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  color: var(--primary);
+  font-size: 0.64rem;
+  font-weight: 600;
+
+  i {
+    font-size: 0.6rem;
+  }
 `;
 
 export const ActionRow = styled.div`
   margin-top: auto;
   display: flex;
-  gap: 8px;
+  gap: 10px;
 
   @media (max-width: 520px) {
     flex-direction: column;
@@ -176,26 +181,43 @@ export const ActionRow = styled.div`
 export const GhostButton = styled.button`
   ${bodyFont}
   flex: 1;
-  min-height: 42px;
-  border-radius: 999px;
-  border: 1px solid rgba(16, 24, 40, 0.12);
-  background: rgba(16, 24, 40, 0.03);
-  color: var(--text);
-  font-size: 0.72rem;
-  font-weight: 800;
+  min-height: 44px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border-medium);
+  background: var(--surface);
+  color: var(--text-heading);
+  font-size: 0.76rem;
+  font-weight: 700;
   cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+
+  &:hover {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-1px);
+  }
 `;
 
 export const BookBtn = styled.button`
   ${bodyFont}
   flex: 1.2;
-  min-height: 42px;
+  min-height: 44px;
   border: none;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #101828;
-  font-size: 0.72rem;
-  font-weight: 800;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--text-inverse);
+  font-size: 0.76rem;
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 18px 30px rgba(var(--gold-rgb), 0.22);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  transition: transform 0.15s, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(37, 99, 235, 0.32);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 `;

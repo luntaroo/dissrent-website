@@ -2,27 +2,28 @@ import styled from "styled-components";
 import { bodyFont } from "../shared/mixins";
 
 export const FooterEl = styled.footer`
-  background:
-    radial-gradient(circle at top left, rgba(var(--gold-rgb), 0.14), transparent 24%),
-    linear-gradient(180deg, var(--bg-dark-strong) 0%, #0f141d 100%);
-  color: var(--text-inverse);
+  background: linear-gradient(180deg, var(--bg-subtle) 0%, var(--bg) 100%);
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
 `;
 
 export const Container = styled.div`
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 72px 32px 30px;
+  padding: 64px 32px 32px;
 
   @media (max-width: 900px) {
-    padding: 54px 20px 24px;
+    padding: 48px 20px 24px;
   }
 `;
 
 export const TopRow = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
-  gap: 24px;
-  margin-bottom: 28px;
+  gap: 32px;
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
 
   @media (max-width: 960px) {
     grid-template-columns: 1fr;
@@ -32,77 +33,82 @@ export const TopRow = styled.div`
 export const BrandBlock = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 `;
 
 export const BrandEyebrow = styled.span`
   ${bodyFont}
   width: fit-content;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(var(--gold-rgb), 0.12);
-  border: 1px solid rgba(var(--gold-rgb), 0.18);
-  font-size: 0.62rem;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  font-size: 0.6rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--gold-light);
+  color: var(--primary);
 `;
 
 export const BrandLogoLink = styled.a`
   display: block;
-  width: min(100%, 320px);
+  width: min(100%, 280px);
   text-decoration: none;
 
   img {
     width: 100%;
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 24px 44px rgba(0, 0, 0, 0.22));
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.06));
   }
 `;
 
 export const BrandText = styled.p`
   ${bodyFont}
-  max-width: 560px;
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 0.96rem;
-  line-height: 1.8;
+  max-width: 520px;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.75;
 `;
 
 export const ContactCard = styled.div`
   display: grid;
-  gap: 10px;
+  gap: 12px;
   padding: 24px;
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
 `;
 
 export const ContactLabel = styled.div`
   ${bodyFont}
-  font-size: 0.7rem;
-  font-weight: 800;
+  font-size: 0.68rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.42);
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
 `;
 
 export const ContactValue = styled.a`
   ${bodyFont}
-  color: var(--text-inverse);
-  font-size: 0.96rem;
-  font-weight: 700;
+  color: var(--text-heading);
+  font-size: 0.94rem;
+  font-weight: 600;
   line-height: 1.5;
   text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--primary);
+  }
 `;
 
 export const LinksGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-  padding: 26px 0 30px;
+  gap: 24px;
+  padding: 32px 0;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -112,28 +118,28 @@ export const LinksGrid = styled.div`
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 `;
 
 export const ColTitle = styled.h4`
   ${bodyFont}
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.38);
-  margin-bottom: 6px;
+  letter-spacing: 0.12em;
+  color: var(--text-subtle);
+  margin-bottom: 4px;
 `;
 
 export const FooterLink = styled.a`
   ${bodyFont}
-  color: rgba(255, 255, 255, 0.66);
+  color: var(--text-muted);
   text-decoration: none;
-  font-size: 0.94rem;
+  font-size: 0.92rem;
   transition: color 0.2s;
 
   &:hover {
-    color: var(--gold-light);
+    color: var(--primary);
   }
 `;
 
@@ -150,24 +156,24 @@ export const SocialLink = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.72);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
   font-size: 1rem;
   text-decoration: none;
   transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 
   &:hover {
-    color: var(--gold-light);
-    border-color: rgba(var(--gold-rgb), 0.28);
-    background: rgba(var(--gold-rgb), 0.12);
-    transform: translateY(-1px);
+    color: var(--primary);
+    border-color: rgba(37, 99, 235, 0.3);
+    background: var(--primary-soft);
+    transform: translateY(-2px);
   }
 `;
 
 export const BottomBar = styled.div`
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -177,7 +183,7 @@ export const BottomBar = styled.div`
 
 export const BottomText = styled.p`
   ${bodyFont}
-  color: rgba(255, 255, 255, 0.36);
+  color: var(--text-subtle);
   font-size: 0.82rem;
   line-height: 1.6;
 `;

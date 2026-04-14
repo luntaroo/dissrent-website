@@ -4,7 +4,7 @@ import { bodyFont, heavyFont } from "../shared/mixins";
 export const Wrap = styled.div`
   position: relative;
   width: 100%;
-  height: 58px;
+  height: 48px;
   z-index: 3;
 `;
 
@@ -12,25 +12,26 @@ export const Trigger = styled.button<{ $hasValue: boolean }>`
   ${bodyFont}
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid rgba(16, 24, 40, 0.1);
-  border-radius: 20px;
-  color: ${({ $hasValue }) => ($hasValue ? "var(--text)" : "var(--text-faint)")};
-  padding: 0 44px 0 16px;
-  font-size: 0.95rem;
-  font-weight: 700;
+  background: var(--bg-subtle);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  color: ${({ $hasValue }) => ($hasValue ? "var(--text-heading)" : "var(--text-light)")};
+  padding: 0 44px 0 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
   text-align: left;
   cursor: pointer;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 
   &:hover {
-    border-color: rgba(var(--gold-rgb), 0.32);
+    border-color: rgba(37, 99, 235, 0.3);
+    background: var(--primary-soft);
   }
 
   &:focus {
-    border-color: rgba(var(--gold-rgb), 0.35);
-    box-shadow: 0 0 0 4px rgba(var(--gold-rgb), 0.12);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-soft);
   }
 `;
 
@@ -39,19 +40,19 @@ export const Icon = styled.i`
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--gold-strong);
-  font-size: 0.9rem;
+  color: var(--primary);
+  font-size: 0.8rem;
   pointer-events: none;
 `;
 
 export const Popup = styled.div`
   z-index: 99999;
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 28px;
-  padding: 18px;
-  box-shadow: var(--shadow-lg);
-  backdrop-filter: blur(18px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-xl);
+  backdrop-filter: blur(16px);
 `;
 
 export const MonthNav = styled.div`
@@ -63,29 +64,29 @@ export const MonthNav = styled.div`
 
 export const MonthLabel = styled.span`
   ${heavyFont}
-  font-size: 1.1rem;
-  color: var(--text);
+  font-size: 1.05rem;
+  color: var(--text-heading);
   letter-spacing: -0.03em;
 `;
 
 export const NavBtn = styled.button`
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(16, 24, 40, 0.08);
-  border-radius: 14px;
-  background: rgba(16, 24, 40, 0.04);
-  color: var(--gold-strong);
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--primary);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.15s, background 0.15s;
+  transition: transform 0.15s, background 0.15s, border-color 0.15s;
 
   &:hover {
     transform: translateY(-1px);
-    background: rgba(var(--gold-rgb), 0.08);
-    border-color: rgba(var(--gold-rgb), 0.18);
+    background: var(--primary-soft);
+    border-color: rgba(37, 99, 235, 0.3);
   }
 `;
 
@@ -98,11 +99,12 @@ export const WeekRow = styled.div`
 
 export const WeekDay = styled.div`
   ${bodyFont}
-  font-size: 0.7rem;
-  color: var(--text-faint);
+  font-size: 0.66rem;
+  color: var(--text-subtle);
   text-align: center;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 `;
 
 export const DaysGrid = styled.div`
@@ -120,10 +122,10 @@ export const DayCell = styled.button<{
   $inRange: boolean;
 }>`
   ${bodyFont}
-  height: 38px;
-  border-radius: 14px;
+  height: 36px;
+  border-radius: var(--radius-sm);
   border: 1px solid transparent;
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   cursor: ${({ $empty, $disabled, $blocked }) =>
     $empty || $disabled || $blocked ? "default" : "pointer"};
   pointer-events: ${({ $empty, $disabled, $blocked }) =>
@@ -133,40 +135,45 @@ export const DayCell = styled.button<{
     $empty
       ? "transparent"
       : $selected
-        ? "linear-gradient(135deg, var(--gold), var(--gold-light))"
+        ? "linear-gradient(135deg, var(--primary), var(--primary-light))"
         : $inRange
-          ? "rgba(var(--gold-rgb), 0.1)"
+          ? "var(--primary-soft)"
           : $blocked
-            ? "var(--danger-dim)"
+            ? "var(--danger-soft)"
             : $disabled
               ? "transparent"
-              : "rgba(16, 24, 40, 0.04)"};
+              : "var(--bg-subtle)"};
 
   color: ${({ $selected, $disabled, $blocked, $empty, $today, $inRange }) =>
     $empty
       ? "transparent"
       : $selected
-        ? "#101828"
+        ? "var(--text-inverse)"
         : $blocked
           ? "var(--danger)"
           : $disabled
-            ? "var(--text-faint)"
+            ? "var(--text-light)"
             : $today
-              ? "var(--gold-strong)"
+              ? "var(--primary)"
               : $inRange
-                ? "var(--text)"
+                ? "var(--text-heading)"
                 : "var(--text-muted)"};
 
-  font-weight: ${({ $selected, $today }) => ($selected || $today ? "800" : "600")};
+  font-weight: ${({ $selected, $today }) => ($selected || $today ? "700" : "600")};
 
-  box-shadow: ${({ $selected }) => ($selected ? "0 8px 18px rgba(var(--gold-rgb), 0.24)" : "none")};
+  box-shadow: ${({ $selected }) =>
+    $selected ? "0 4px 12px rgba(37, 99, 235, 0.25)" : "none"};
 
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
 
   &:hover {
     background: ${({ $selected, $empty, $disabled, $blocked }) =>
-      $selected || $empty || $disabled || $blocked ? undefined : "rgba(var(--gold-rgb), 0.1)"};
+      $selected || $empty || $disabled || $blocked
+        ? undefined
+        : "var(--primary-soft)"};
     color: ${({ $selected, $empty, $disabled, $blocked }) =>
-      $selected || $empty || $disabled || $blocked ? undefined : "var(--gold-strong)"};
+      $selected || $empty || $disabled || $blocked ? undefined : "var(--primary)"};
+    transform: ${({ $selected, $empty, $disabled, $blocked }) =>
+      $selected || $empty || $disabled || $blocked ? undefined : "translateY(-1px)"};
   }
 `;

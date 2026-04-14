@@ -35,6 +35,8 @@ export default function Footer() {
               <Image
                 src={LOGO_URL}
                 alt="DISS RENT"
+                width={320}
+                height={100}
                 sizes="(max-width: 900px) 220px, 320px"
               />
             </BrandLogoLink>

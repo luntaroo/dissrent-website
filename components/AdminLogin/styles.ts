@@ -7,50 +7,55 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px;
+  background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
 `;
 
 export const Card = styled.div`
   width: min(100%, 460px);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97) 0%, rgba(246, 250, 255, 0.99) 100%);
-  border: 1px solid rgba(12, 76, 177, 0.12);
-  border-radius: 30px;
-  padding: 34px 30px 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 36px 32px 30px;
   box-shadow: var(--shadow-lg);
 `;
 
 export const Eyebrow = styled.span`
   ${bodyFont}
   display: inline-block;
-  font-size: 0.8rem;
+  font-size: 0.66rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--primary-strong);
+  color: var(--primary);
   margin-bottom: 10px;
+  padding: 6px 12px;
+  background: var(--primary-soft);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(37, 99, 235, 0.15);
 `;
 
 export const Title = styled.h1`
   ${heavyFont}
-  font-size: clamp(2.1rem, 5vw, 3rem);
-  line-height: 0.94;
-  color: var(--navy);
+  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  line-height: 1.05;
+  color: var(--text-heading);
   margin-bottom: 10px;
 `;
 
 export const Subtitle = styled.p`
   ${bodyFont}
-  color: var(--text-soft);
-  font-size: 0.98rem;
-  line-height: 1.8;
-  margin-bottom: 22px;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
 `;
 
 export const Label = styled.label`
   ${bodyFont}
   display: block;
-  color: var(--navy);
-  font-size: 0.84rem;
-  font-weight: 800;
+  color: var(--text-subtle);
+  font-size: 0.68rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-bottom: 8px;
@@ -59,45 +64,59 @@ export const Label = styled.label`
 export const Input = styled.input`
   ${bodyFont}
   width: 100%;
-  height: 56px;
-  background: var(--surface-solid);
-  border: 1px solid rgba(12, 76, 177, 0.12);
-  border-radius: 18px;
-  color: var(--navy);
+  height: 52px;
+  background: var(--bg-subtle);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-heading);
   padding: 0 18px;
-  font-size: 1rem;
+  font-size: 0.94rem;
+  font-weight: 500;
   outline: none;
   margin-bottom: 20px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 
   &:focus {
-    border-color: rgba(12, 76, 177, 0.28);
-    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.08);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-soft);
   }
 `;
 
 export const LoginBtn = styled.button`
   ${bodyFont}
   width: 100%;
-  background: linear-gradient(135deg, var(--primary) 0%, #3ba5ff 100%);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: var(--text-inverse);
   border: none;
-  border-radius: 18px;
-  padding: 16px 18px;
-  font-size: 1rem;
-  font-weight: 800;
+  border-radius: var(--radius-full);
+  padding: 14px 18px;
+  font-size: 0.92rem;
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 18px 32px rgba(var(--primary-rgb), 0.22);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+  transition: transform 0.15s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.32);
+  }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 `;
 
 export const ErrorMsg = styled.p`
   ${bodyFont}
   color: var(--danger);
-  font-size: 0.92rem;
-  line-height: 1.7;
+  font-size: 0.88rem;
+  line-height: 1.6;
   margin-bottom: 14px;
+  padding: 10px 14px;
+  background: var(--danger-soft);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(220, 38, 38, 0.15);
 `;

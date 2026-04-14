@@ -5,42 +5,41 @@ export const Nav = styled.header`
   position: fixed;
   inset: 0 0 auto;
   z-index: 1000;
-  padding: 10px 16px 0;
-  pointer-events: none;
+  padding: 12px 16px 0;
 
   @media (max-width: 640px) {
-    padding: 8px 10px 0;
+    padding: 10px 12px 0;
   }
 `;
 
 export const NavInner = styled.div`
   max-width: var(--max-w);
   margin: 0 auto;
-  min-height: 58px;
-  padding: 8px 10px 8px 14px;
+  min-height: 56px;
+  padding: 10px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  background: rgba(10, 15, 22, 0.76);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  box-shadow: 0 24px 60px rgba(9, 12, 17, 0.35);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   pointer-events: auto;
 
   @media (max-width: 768px) {
     min-height: 52px;
-    padding: 6px 8px 6px 12px;
-    gap: 8px;
+    padding: 8px 14px;
+    gap: 12px;
   }
 `;
 
 export const Brand = styled.a`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-shrink: 0;
   text-decoration: none;
 `;
@@ -48,7 +47,7 @@ export const Brand = styled.a`
 export const BrandMark = styled.span`
   display: flex;
   align-items: center;
-  width: clamp(116px, 11.5vw, 152px);
+  width: clamp(120px, 11.5vw, 156px);
   flex-shrink: 0;
   transform: translateY(1px);
 
@@ -56,11 +55,11 @@ export const BrandMark = styled.span`
     width: 100%;
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.26));
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.08));
   }
 
   @media (max-width: 560px) {
-    width: 118px;
+    width: 120px;
   }
 `;
 
@@ -77,24 +76,23 @@ export const BrandTagline = styled.span`
   ${bodyFont}
   display: inline-flex;
   align-items: center;
-  min-height: 34px;
+  min-height: 32px;
   padding: 0 12px;
-  border-radius: 999px;
-  background: rgba(var(--gold-rgb), 0.12);
-  border: 1px solid rgba(var(--gold-rgb), 0.18);
-  font-size: 0.56rem;
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  font-size: 0.54rem;
   font-weight: 800;
-  color: rgba(247, 248, 251, 0.88);
+  color: var(--primary);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   line-height: 1;
-  white-space: nowrap;
 `;
 
 export const NavLinks = styled.nav`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 
   @media (max-width: 900px) {
     display: none;
@@ -103,27 +101,27 @@ export const NavLinks = styled.nav`
 
 export const NavLink = styled.a<{ $active?: boolean }>`
   ${bodyFont}
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: ${({ $active }) => ($active ? "var(--text-inverse)" : "rgba(247, 248, 251, 0.64)")};
-  padding: 8px 11px;
-  border-radius: 999px;
-  background: ${({ $active }) => ($active ? "rgba(255, 255, 255, 0.08)" : "transparent")};
-  border: 1px solid ${({ $active }) => ($active ? "rgba(255, 255, 255, 0.08)" : "transparent")};
+  color: ${({ $active }) => ($active ? "var(--primary)" : "var(--text-muted)")};
+  padding: 8px 12px;
+  border-radius: var(--radius-full);
+  background: ${({ $active }) => ($active ? "var(--primary-soft)" : "transparent")};
+  border: 1px solid ${({ $active }) => ($active ? "rgba(37, 99, 235, 0.15)" : "transparent")};
   transition: color 0.2s, background 0.2s, border-color 0.2s;
   text-decoration: none;
 
   &:hover {
-    color: var(--text-inverse);
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.08);
+    color: var(--primary);
+    background: var(--primary-soft);
+    border-color: rgba(37, 99, 235, 0.15);
   }
 `;
 
 export const RightSide = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   flex-shrink: 0;
 `;
 
@@ -132,25 +130,25 @@ export const CtaLink = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 86px;
-  padding: 0 14px;
-  height: 40px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #0b1820;
+  min-width: 92px;
+  padding: 0 16px;
+  height: 42px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--text-inverse);
   font-size: 0.78rem;
-  font-weight: 800;
-  box-shadow: 0 14px 28px rgba(var(--gold-rgb), 0.24);
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   white-space: nowrap;
 
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 0 18px 34px rgba(var(--gold-rgb), 0.3);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.32);
   }
 
   @media (max-width: 560px) {
-    min-width: 92px;
+    min-width: 88px;
     padding: 0 14px;
   }
 `;
@@ -158,26 +156,26 @@ export const CtaLink = styled.a`
 export const PhoneLink = styled.a`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-decoration: none;
-  padding: 6px 10px 6px 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 12px 8px 10px;
+  border-radius: var(--radius-full);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
   transition: border-color 0.2s, background 0.2s, transform 0.2s;
 
   &:hover {
     transform: translateY(-1px);
-    border-color: rgba(var(--gold-rgb), 0.45);
-    background: rgba(var(--gold-rgb), 0.12);
+    border-color: rgba(37, 99, 235, 0.3);
+    background: var(--primary-soft);
   }
 `;
 
 export const PhoneIconWrap = styled.div`
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: rgba(var(--gold-rgb), 0.14);
+  background: var(--primary-soft);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -185,8 +183,8 @@ export const PhoneIconWrap = styled.div`
 `;
 
 export const PhoneIcon = styled.i`
-  font-size: 0.66rem;
-  color: var(--gold-light);
+  font-size: 0.7rem;
+  color: var(--primary);
 `;
 
 export const PhoneText = styled.div`
@@ -201,8 +199,8 @@ export const PhoneText = styled.div`
 
 export const PhoneLabel = styled.span`
   ${bodyFont}
-  font-size: 0.56rem;
-  color: rgba(247, 248, 251, 0.42);
+  font-size: 0.54rem;
+  color: var(--text-subtle);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   line-height: 1;
@@ -210,8 +208,8 @@ export const PhoneLabel = styled.span`
 
 export const PhoneNum = styled.span`
   ${bodyFont}
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: var(--text-inverse);
+  color: var(--text-heading);
   line-height: 1;
 `;

@@ -24,35 +24,41 @@ export const TitleBlock = styled.div`
 
 export const Title = styled.h1`
   ${heavyFont}
-  font-size: clamp(2.3rem, 5vw, 4rem);
-  line-height: 0.92;
-  color: var(--navy);
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  line-height: 1.05;
+  color: var(--text-heading);
 `;
 
 export const HeaderText = styled.p`
   ${bodyFont}
-  color: var(--text-soft);
-  font-size: 1rem;
-  line-height: 1.8;
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  line-height: 1.7;
   max-width: 680px;
 `;
 
 export const LogoutBtn = styled.button`
   ${bodyFont}
-  border: 1px solid rgba(216, 75, 84, 0.16);
-  background: rgba(216, 75, 84, 0.08);
+  border: 1.5px solid rgba(220, 38, 38, 0.2);
+  background: var(--danger-soft);
   color: var(--danger);
-  padding: 12px 18px;
-  border-radius: 18px;
-  font-size: 0.95rem;
-  font-weight: 800;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+
+  &:hover {
+    background: rgba(220, 38, 38, 0.15);
+    border-color: rgba(220, 38, 38, 0.3);
+  }
 `;
 
 export const SectionCard = styled.section`
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 250, 255, 0.99) 100%);
-  border: 1px solid rgba(12, 76, 177, 0.12);
-  border-radius: 30px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
   padding: 26px;
   box-shadow: var(--shadow-sm);
   margin-bottom: 24px;
@@ -60,17 +66,17 @@ export const SectionCard = styled.section`
 
 export const SectionTitle = styled.h2`
   ${heavyFont}
-  font-size: clamp(1.65rem, 3vw, 2.5rem);
-  line-height: 0.95;
-  color: var(--navy);
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.05;
+  color: var(--text-heading);
   margin-bottom: 10px;
 `;
 
 export const SectionHint = styled.p`
   ${bodyFont}
-  font-size: 0.96rem;
-  color: var(--text-soft);
-  line-height: 1.8;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.7;
   margin-bottom: 20px;
 `;
 
@@ -89,11 +95,11 @@ export const CarsGrid = styled.div`
 `;
 
 export const CarCalendarCard = styled.div`
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(12, 76, 177, 0.12);
-  border-radius: 26px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 18px 36px rgba(24, 58, 109, 0.08);
+  box-shadow: var(--shadow-sm);
 `;
 
 export const CarHeader = styled.div`
@@ -101,19 +107,19 @@ export const CarHeader = styled.div`
   align-items: center;
   gap: 14px;
   padding: 18px;
-  background: linear-gradient(180deg, rgba(243, 248, 255, 0.96) 0%, rgba(232, 241, 255, 0.98) 100%);
-  border-bottom: 1px solid rgba(12, 76, 177, 0.1);
+  background: var(--bg-gradient);
+  border-bottom: 1px solid var(--border);
 `;
 
 export const CarThumb = styled.div<{ $img: string }>`
   width: 72px;
   height: 50px;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   background-image: url(${({ $img }) => $img});
   background-size: cover;
   background-position: center;
   flex-shrink: 0;
-  box-shadow: 0 12px 24px rgba(15, 58, 129, 0.1);
+  box-shadow: var(--shadow-sm);
 `;
 
 export const CarTitle = styled.div`
@@ -125,17 +131,17 @@ export const CarTitle = styled.div`
 
 export const CarName = styled.span`
   ${heavyFont}
-  font-size: 1.15rem;
-  line-height: 0.96;
-  color: var(--navy);
+  font-size: 1.1rem;
+  line-height: 1.05;
+  color: var(--text-heading);
 `;
 
 export const CarMeta = styled.span<{ $available: boolean }>`
   ${bodyFont}
-  font-size: 0.84rem;
-  font-weight: 800;
-  color: ${({ $available }) => ($available ? "var(--success)" : "#9b5f14")};
-  line-height: 1.6;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: ${({ $available }) => ($available ? "var(--success)" : "var(--warning)")};
+  line-height: 1.5;
 `;
 
 export const CalendarWrap = styled.div`
@@ -151,18 +157,25 @@ export const MonthNav = styled.div`
 
 export const MonthLabel = styled.span`
   ${heavyFont}
-  font-size: 1.15rem;
-  color: var(--navy);
+  font-size: 1.1rem;
+  color: var(--text-heading);
 `;
 
 export const NavBtn = styled.button`
   width: 32px;
   height: 32px;
-  border-radius: 12px;
-  border: 1px solid rgba(12, 76, 177, 0.12);
-  background: var(--surface-muted);
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: var(--bg-subtle);
   color: var(--primary);
   cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+
+  &:hover {
+    background: var(--primary-soft);
+    border-color: rgba(37, 99, 235, 0.3);
+    transform: translateY(-1px);
+  }
 `;
 
 export const WeekRow = styled.div`
@@ -175,10 +188,11 @@ export const WeekRow = styled.div`
 export const WeekDay = styled.div`
   ${bodyFont}
   text-align: center;
-  font-size: 0.72rem;
-  font-weight: 800;
-  color: var(--text-soft);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-subtle);
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 `;
 
 export const DaysGrid = styled.div`
@@ -194,32 +208,39 @@ export const DayCell = styled.button<{
   $past: boolean;
 }>`
   ${bodyFont}
-  height: 34px;
-  border-radius: 12px;
+  height: 32px;
+  border-radius: var(--radius-sm);
   border: 1px solid transparent;
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   font-weight: 700;
   cursor: ${({ $empty, $past }) => ($empty || $past ? "default" : "pointer")};
   background: ${({ $blocked, $empty, $past }) =>
     $empty
       ? "transparent"
       : $past
-        ? "#eef3fb"
+        ? "var(--bg-subtle)"
         : $blocked
-          ? "rgba(216, 75, 84, 0.14)"
-          : "var(--surface-muted)"};
+          ? "var(--danger-soft)"
+          : "var(--bg-subtle)"};
   color: ${({ $blocked, $empty, $past, $today }) =>
     $empty
       ? "transparent"
       : $past
-        ? "#b0bfd2"
+        ? "var(--text-light)"
         : $blocked
           ? "var(--danger)"
           : $today
-            ? "var(--primary-strong)"
-            : "var(--navy)"};
-  box-shadow: ${({ $today }) => ($today ? "inset 0 0 0 2px rgba(15, 106, 230, 0.22)" : "none")};
+            ? "var(--primary)"
+            : "var(--text-heading)"};
+  box-shadow: ${({ $today }) =>
+    $today ? "inset 0 0 0 2px rgba(37, 99, 235, 0.2)" : "none"};
   pointer-events: ${({ $empty, $past }) => ($empty || $past ? "none" : "auto")};
+  transition: background 0.15s, transform 0.15s;
+
+  &:hover {
+    ${({ $empty, $past, $blocked }) =>
+      !$empty && !$past && !$blocked ? "transform: translateY(-1px);" : ""}
+  }
 `;
 
 export const TableScroll = styled.div`
@@ -237,29 +258,29 @@ export const Th = styled.th`
   ${bodyFont}
   text-align: left;
   padding: 12px 14px;
-  color: var(--text-soft);
-  font-size: 0.78rem;
-  font-weight: 800;
+  color: var(--text-subtle);
+  font-size: 0.72rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border-bottom: 1px solid rgba(12, 76, 177, 0.1);
+  border-bottom: 1px solid var(--border);
 `;
 
 export const Td = styled.td`
   ${bodyFont}
   padding: 14px;
-  color: var(--navy);
-  font-size: 0.94rem;
-  border-bottom: 1px solid rgba(12, 76, 177, 0.08);
+  color: var(--text-heading);
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-light);
   vertical-align: middle;
 `;
 
 export const CellStrong = styled.strong`
-  color: var(--navy);
+  color: var(--text-heading);
 `;
 
 export const CellMuted = styled.span`
-  color: var(--text-soft);
+  color: var(--text-muted);
   font-size: 0.84rem;
 `;
 
@@ -269,27 +290,27 @@ export const StatusBadge = styled.span<{ $status: string }>`
   align-items: center;
   justify-content: center;
   padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 800;
+  border-radius: var(--radius-full);
+  font-size: 0.74rem;
+  font-weight: 700;
   background: ${({ $status }) =>
     $status === "confirmed"
-      ? "rgba(31, 157, 104, 0.12)"
+      ? "var(--success-soft)"
       : $status === "pending"
-        ? "rgba(240, 156, 40, 0.12)"
-        : "rgba(92, 112, 143, 0.12)"};
+        ? "var(--warning-soft)"
+        : "var(--bg-subtle)"};
   color: ${({ $status }) =>
     $status === "confirmed"
       ? "var(--success)"
       : $status === "pending"
-        ? "#9b5f14"
-        : "var(--text-soft)"};
+        ? "var(--warning)"
+        : "var(--text-muted)"};
 `;
 
 export const EmptyMsg = styled.p`
   ${bodyFont}
-  color: var(--text-soft);
-  font-size: 0.96rem;
+  color: var(--text-muted);
+  font-size: 0.92rem;
   padding: 10px 0 4px;
 `;
 
@@ -301,20 +322,26 @@ export const ActionsRow = styled.div`
 
 export const ActionBtn = styled.button<{ $variant: "confirm" | "cancel" }>`
   ${bodyFont}
-  padding: 9px 12px;
-  border-radius: 14px;
-  border: 1px solid
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid
     ${({ $variant }) =>
-      $variant === "confirm" ? "rgba(31, 157, 104, 0.18)" : "rgba(216, 75, 84, 0.18)"};
+      $variant === "confirm" ? "rgba(22, 163, 74, 0.2)" : "rgba(220, 38, 38, 0.2)"};
   background: ${({ $variant }) =>
-    $variant === "confirm" ? "rgba(31, 157, 104, 0.08)" : "rgba(216, 75, 84, 0.08)"};
+    $variant === "confirm" ? "var(--success-soft)" : "var(--danger-soft)"};
   color: ${({ $variant }) => ($variant === "confirm" ? "var(--success)" : "var(--danger)")};
-  font-size: 0.84rem;
-  font-weight: 800;
+  font-size: 0.8rem;
+  font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
 
   &:disabled {
     opacity: 0.45;
     cursor: not-allowed;
+    transform: none;
   }
 `;

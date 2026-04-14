@@ -12,37 +12,36 @@ export const PageWrap = styled.div`
 `;
 
 export const Card = styled.div`
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.68);
-  border-radius: 34px;
-  padding: 38px 32px;
-  box-shadow: var(--shadow-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 40px 32px;
+  box-shadow: var(--shadow-lg);
   text-align: center;
-  backdrop-filter: blur(16px);
 
   @media (max-width: 640px) {
-    padding: 30px 20px;
-    border-radius: 28px;
+    padding: 32px 20px;
+    border-radius: var(--radius-lg);
   }
 `;
 
 export const StatusIcon = styled.div<{ $tone: "success" | "warning" | "danger" | "info" }>`
-  width: 76px;
-  height: 76px;
-  margin: 0 auto 20px;
-  border-radius: 24px;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 32px;
   background: ${({ $tone }) =>
     $tone === "success"
-      ? "rgba(21, 128, 61, 0.12)"
+      ? "var(--success-soft)"
       : $tone === "warning"
-        ? "rgba(180, 83, 9, 0.12)"
+        ? "var(--warning-soft)"
         : $tone === "info"
-          ? "var(--info-dim)"
-          : "rgba(194, 65, 12, 0.12)"};
+          ? "var(--info-soft)"
+          : "var(--danger-soft)"};
   color: ${({ $tone }) =>
     $tone === "success"
       ? "var(--success)"
@@ -55,25 +54,25 @@ export const StatusIcon = styled.div<{ $tone: "success" | "warning" | "danger" |
 
 export const Title = styled.h1`
   ${heavyFont}
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
-  line-height: 0.96;
-  color: var(--text);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.05;
+  color: var(--text-heading);
   margin-bottom: 14px;
 `;
 
 export const Text = styled.p`
   ${bodyFont}
   color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.8;
+  font-size: 0.96rem;
+  line-height: 1.75;
   margin-bottom: 24px;
 `;
 
 export const SummaryBox = styled.div`
   text-align: left;
-  border: 1px solid rgba(16, 24, 40, 0.08);
-  background: rgba(16, 24, 40, 0.04);
-  border-radius: 26px;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  border-radius: var(--radius-lg);
   padding: 20px;
   margin-bottom: 24px;
 `;
@@ -81,12 +80,12 @@ export const SummaryBox = styled.div`
 export const SummaryLine = styled.p`
   ${bodyFont}
   color: var(--text-muted);
-  line-height: 1.9;
-  font-size: 0.96rem;
+  line-height: 1.85;
+  font-size: 0.92rem;
 
   strong {
-    color: var(--text);
-    font-weight: 800;
+    color: var(--text-heading);
+    font-weight: 700;
   }
 `;
 
@@ -99,22 +98,31 @@ export const ActionStack = styled.div`
 export const PrimaryButton = styled.button`
   ${bodyFont}
   width: 100%;
-  min-height: 56px;
+  min-height: 52px;
   border: none;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #101828;
-  font-size: 0.96rem;
-  font-weight: 800;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--text-inverse);
+  font-size: 0.92rem;
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 20px 36px rgba(var(--gold-rgb), 0.22);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+  transition: transform 0.15s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.32);
+  }
 `;
 
 export const SecondaryButton = styled.button`
   ${PrimaryButton}
-  background: linear-gradient(135deg, var(--danger), #db5e2c);
-  color: var(--text-inverse);
-  box-shadow: 0 20px 36px rgba(194, 65, 12, 0.22);
+  background: linear-gradient(135deg, var(--danger), #dc4f38);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.25);
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.32);
+  }
 `;
 
 export const BackLink = styled.a`
@@ -124,10 +132,18 @@ export const BackLink = styled.a`
   justify-content: center;
   min-height: 50px;
   padding: 0 20px;
-  border-radius: 999px;
-  background: rgba(16, 24, 40, 0.06);
-  color: var(--text);
-  font-size: 0.92rem;
-  font-weight: 800;
+  border-radius: var(--radius-full);
+  background: var(--bg-subtle);
+  color: var(--text-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
   text-decoration: none;
+  border: 1.5px solid var(--border);
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+
+  &:hover {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-1px);
+  }
 `;

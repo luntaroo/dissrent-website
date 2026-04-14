@@ -9,8 +9,8 @@ export const Overlay = styled.div<{ $open: boolean }>`
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(9, 12, 17, 0.72);
-  backdrop-filter: blur(16px);
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(10px);
   opacity: ${({ $open }) => ($open ? 1 : 0)};
   pointer-events: ${({ $open }) => ($open ? "auto" : "none")};
   transition: opacity 0.28s ease;
@@ -24,11 +24,11 @@ export const Panel = styled.div<{ $open: boolean }>`
   width: min(100%, 1080px);
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(255, 255, 255, 0.52);
-  border-radius: 36px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 50px 140px rgba(9, 12, 17, 0.3);
+  box-shadow: var(--shadow-2xl);
   transform: ${({ $open }) => ($open ? "translateY(0) scale(1)" : "translateY(16px) scale(0.98)")};
   transition: transform 0.28s ease;
   position: relative;
@@ -44,7 +44,7 @@ export const Visual = styled.div<{ $img: string }>`
   position: relative;
   min-height: 100%;
   background:
-    linear-gradient(180deg, rgba(14, 18, 24, 0.08) 0%, rgba(14, 18, 24, 0.58) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.4) 100%),
     url(${({ $img }) => $img}) center/cover no-repeat;
 
   @media (max-width: 880px) {
@@ -55,14 +55,12 @@ export const Visual = styled.div<{ $img: string }>`
 export const VisualOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at top left, rgba(var(--gold-rgb), 0.22), transparent 28%),
-    linear-gradient(180deg, transparent 20%, rgba(14, 18, 24, 0.56) 100%);
+  background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.15), transparent 35%);
 `;
 
 export const VisualBadgeRow = styled.div`
   position: absolute;
-  inset: auto 24px 24px 24px;
+  inset: auto 20px 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -74,36 +72,39 @@ export const VisualBadge = styled.div`
   width: fit-content;
   max-width: 420px;
   padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(10, 15, 22, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(247, 248, 251, 0.9);
-  font-size: 0.88rem;
-  font-weight: 700;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: var(--text-heading);
+  font-size: 0.86rem;
+  font-weight: 600;
   line-height: 1.55;
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-md);
 `;
 
 export const CloseButton = styled.button`
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 16px;
+  right: 16px;
   z-index: 3;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(10, 15, 22, 0.64);
-  color: var(--text-inverse);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-subtle);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.18s ease, background 0.18s ease;
+  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
 
   &:hover {
     transform: translateY(-1px);
-    background: rgba(var(--gold-rgb), 0.18);
+    background: var(--danger-soft);
+    color: var(--danger);
+    border-color: rgba(220, 38, 38, 0.2);
   }
 `;
 
@@ -111,7 +112,7 @@ export const Copy = styled.div`
   padding: 36px 34px 32px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
 
   @media (max-width: 640px) {
     padding: 28px 20px 24px;
@@ -120,40 +121,40 @@ export const Copy = styled.div`
 
 export const Eyebrow = styled.div`
   ${bodyFont}
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gold-strong);
+  color: var(--primary);
 `;
 
 export const Title = styled.h2`
   ${heavyFont}
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 0.98;
-  color: var(--text);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.05;
+  color: var(--text-heading);
 `;
 
 export const Subtitle = styled.p`
   ${bodyFont}
   color: var(--text-muted);
-  font-size: 0.96rem;
-  line-height: 1.78;
+  font-size: 0.94rem;
+  line-height: 1.75;
 `;
 
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 `;
 
 export const SectionTitle = styled.h3`
   ${bodyFont}
-  font-size: 0.82rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text-subtle);
 `;
 
 export const PricingTable = styled.div`
@@ -167,22 +168,22 @@ export const PricingRow = styled.div`
   justify-content: space-between;
   gap: 16px;
   padding: 16px 18px;
-  border-radius: 20px;
-  background: rgba(16, 24, 40, 0.04);
-  border: 1px solid rgba(16, 24, 40, 0.08);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-light);
 `;
 
 export const PricingLabel = styled.span`
   ${bodyFont}
   color: var(--text-muted);
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: 0.9rem;
+  font-weight: 600;
 `;
 
 export const PricingValue = styled.span`
   ${heavyFont}
-  color: var(--text);
-  font-size: 1.05rem;
+  color: var(--text-heading);
+  font-size: 1.02rem;
   line-height: 1;
 `;
 
@@ -198,34 +199,34 @@ export const InsightGrid = styled.div`
 
 export const InsightCard = styled.div`
   padding: 18px;
-  border-radius: 22px;
-  background: rgba(var(--gold-rgb), 0.08);
-  border: 1px solid rgba(var(--gold-rgb), 0.16);
+  border-radius: var(--radius-lg);
+  background: var(--primary-soft);
+  border: 1px solid rgba(37, 99, 235, 0.15);
 `;
 
 export const InsightLabel = styled.div`
   ${bodyFont}
-  font-size: 0.7rem;
+  font-size: 0.64rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gold-strong);
+  color: var(--primary);
   margin-bottom: 8px;
 `;
 
 export const InsightValue = styled.div`
   ${bodyFont}
-  color: var(--text);
-  font-size: 0.92rem;
-  font-weight: 700;
+  color: var(--text-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
   line-height: 1.6;
 `;
 
 export const TripBox = styled.div`
   padding: 18px;
-  border-radius: 24px;
-  background: var(--info-dim);
-  border: 1px solid rgba(var(--primary-rgb), 0.14);
+  border-radius: var(--radius-lg);
+  background: var(--info-soft);
+  border: 1px solid rgba(37, 99, 235, 0.15);
 `;
 
 export const TripRow = styled.div`
@@ -235,12 +236,12 @@ export const TripRow = styled.div`
   justify-content: space-between;
   gap: 12px;
   color: var(--text-muted);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.7;
 
   strong {
-    color: var(--text);
-    font-weight: 800;
+    color: var(--text-heading);
+    font-weight: 700;
   }
 `;
 
@@ -255,11 +256,12 @@ export const FeatureItem = styled.div`
   align-items: center;
   gap: 10px;
   color: var(--text-muted);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.65;
 
   i {
-    color: var(--gold-strong);
+    color: var(--primary);
+    font-size: 0.85rem;
   }
 `;
 
@@ -276,26 +278,39 @@ export const ActionRow = styled.div`
 export const SecondaryButton = styled.button`
   ${bodyFont}
   flex: 1;
-  min-height: 54px;
-  border-radius: 999px;
-  border: 1px solid rgba(16, 24, 40, 0.12);
-  background: rgba(16, 24, 40, 0.04);
-  color: var(--text);
-  font-size: 0.92rem;
-  font-weight: 800;
+  min-height: 52px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border-medium);
+  background: var(--surface);
+  color: var(--text-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+
+  &:hover {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-1px);
+  }
 `;
 
 export const PrimaryButton = styled.button`
   ${bodyFont}
   flex: 1.2;
-  min-height: 54px;
+  min-height: 52px;
   border: none;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #101828;
-  font-size: 0.92rem;
-  font-weight: 800;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--text-inverse);
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 20px 34px rgba(var(--gold-rgb), 0.22);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+  transition: transform 0.15s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.32);
+  }
 `;

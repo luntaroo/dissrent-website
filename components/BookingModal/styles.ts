@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { heavyFont } from "../shared/mixins";
+import { heavyFont, bodyFont } from "../shared/mixins";
 
 export const Overlay = styled.div<{ $open: boolean }>`
   position: fixed;
@@ -7,12 +7,13 @@ export const Overlay = styled.div<{ $open: boolean }>`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.82);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
   z-index: 9000;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 30px 0 40px;
+  padding: 40px 20px;
   overflow-y: auto;
   opacity: ${({ $open }) => ($open ? 1 : 0)};
   pointer-events: ${({ $open }) => ($open ? "all" : "none")};
@@ -20,28 +21,25 @@ export const Overlay = styled.div<{ $open: boolean }>`
 `;
 
 export const Modal = styled.div<{ $open: boolean }>`
-  background: #111114;
-  border: 3px solid var(--yellow-bar);
-  border-radius: 10px;
-  padding: 35px 35px 30px;
-  width: 90%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  width: 100%;
   max-width: 520px;
   position: relative;
+  box-shadow: var(--shadow-2xl);
   transform: ${({ $open }) =>
-    $open ? "translateY(0) scale(1)" : "translateY(30px) scale(0.97)"};
+    $open ? "translateY(0) scale(1)" : "translateY(20px) scale(0.98)"};
   transition: transform 0.3s ease;
 `;
 
 export const ModalTitle = styled.h2`
   ${heavyFont}
-  font-size: 42px;
-  color: var(--yellow-bar);
-  margin-bottom: 22px;
-  line-height: 1;
-  letter-spacing: 1px;
-  transform: scaleX(0.88);
-  transform-origin: left;
-  text-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin-bottom: 20px;
+  line-height: 1.1;
 `;
 
 export const Field = styled.div`
@@ -56,130 +54,141 @@ export const DateRow = styled.div`
 `;
 
 export const FieldLabel = styled.label`
-  ${heavyFont}
+  ${bodyFont}
   display: block;
-  color: var(--yellow-bar);
-  font-size: 20px;
-  margin-bottom: 6px;
-  letter-spacing: 1px;
-  transform: scaleX(0.88);
-  transform-origin: left;
+  color: var(--text-subtle);
+  font-size: 0.68rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 `;
 
 export const FieldInput = styled.input`
   width: 100%;
-  height: 48px;
-  background: #2a2a2e;
-  border: none;
-  border-radius: 6px;
-  color: #fff;
+  height: 50px;
+  background: var(--bg-subtle);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-heading);
   padding: 0 16px;
-  font-size: 15px;
-  font-family: Arial, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
   outline: none;
-  transition: background 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 
   &:focus {
-    background: #333338;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-soft);
   }
 `;
 
 export const ContactLabel = styled.span`
-  ${heavyFont}
-  color: var(--yellow-bar);
-  font-size: 20px;
+  ${bodyFont}
+  color: var(--text-subtle);
+  font-size: 0.68rem;
   margin-bottom: 10px;
   display: block;
-  letter-spacing: 1px;
-  transform: scaleX(0.88);
-  transform-origin: left;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 `;
 
 export const RadioGroup = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 12px;
   margin-bottom: 20px;
 `;
 
 export const RadioOption = styled.label`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   cursor: pointer;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--bg-subtle);
+  transition: border-color 0.2s, background 0.2s;
+
+  &:has(input:checked) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+  }
 `;
 
 export const RadioInput = styled.input`
   appearance: none;
   -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  border: 3px solid #555;
-  background: #222;
+  border: 2px solid var(--border-medium);
+  background: var(--surface);
   cursor: pointer;
   flex-shrink: 0;
   transition: all 0.15s;
 
   &:checked {
-    background: var(--yellow-bar);
-    border-color: var(--yellow-bar);
-    box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
   }
 `;
 
 export const RadioIcon = styled.i`
-  font-size: 22px;
-  color: var(--yellow-bar);
+  font-size: 1rem;
+  color: var(--primary);
 `;
 
 export const RadioText = styled.span`
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  font-family: Arial, sans-serif;
+  ${bodyFont}
+  color: var(--text-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
 `;
 
 export const ConfirmBtn = styled.button`
   ${heavyFont}
   width: 100%;
-  background: linear-gradient(180deg, #ffcc00 0%, #ff5500 100%);
-  color: #000;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--text-inverse);
   border: none;
-  border-radius: 8px;
-  padding: 16px 0;
-  font-size: 38px;
+  border-radius: var(--radius-full);
+  padding: 14px 0;
+  font-size: 0.92rem;
   cursor: pointer;
-  box-shadow: 0 6px 0 #8a3000, 0 10px 25px rgba(0, 0, 0, 0.7);
-  transition: all 0.1s;
-  transform: scaleX(0.9);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+  transition: transform 0.15s, box-shadow 0.2s;
 
   &:hover {
-    filter: brightness(1.08);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.32);
   }
 
   &:active {
-    transform: scaleX(0.9) translateY(5px);
-    box-shadow: 0 1px 0 #8a3000, 0 4px 10px rgba(0, 0, 0, 0.7);
+    transform: translateY(0);
   }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
-    transform: scaleX(0.9);
+    transform: none;
+    box-shadow: none;
   }
 `;
 
 export const CloseX = styled.button`
   position: absolute;
-  top: 12px;
+  top: 14px;
   right: 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #aaa;
-  width: 30px;
-  height: 30px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-subtle);
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  font-size: 18px;
+  font-size: 1.1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -187,23 +196,24 @@ export const CloseX = styled.button`
   transition: all 0.2s;
 
   &:hover {
-    background: rgba(255, 0, 0, 0.6);
-    color: #fff;
+    background: var(--danger-soft);
+    color: var(--danger);
+    border-color: rgba(220, 38, 38, 0.2);
   }
 `;
 
 export const ContextBar = styled.div`
-  background: rgba(255, 204, 0, 0.08);
-  border: 1px solid rgba(255, 204, 0, 0.25);
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-size: 14px;
-  font-family: Arial, sans-serif;
-  color: #ccc;
+  background: var(--info-soft);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 0.86rem;
+  color: var(--text-muted);
   margin-bottom: 18px;
 
   strong {
-    color: #fff;
+    color: var(--text-heading);
+    font-weight: 600;
   }
 `;
 
@@ -214,21 +224,20 @@ export const SuccessBox = styled.div`
 
 export const SuccessTitle = styled.h2`
   ${heavyFont}
-  font-size: 36px;
-  color: var(--yellow-bar);
-  margin-bottom: 16px;
-  letter-spacing: 1px;
-  transform: scaleX(0.88);
-  transform-origin: center;
+  font-size: 1.6rem;
+  color: var(--success);
+  margin-bottom: 14px;
+  line-height: 1.1;
 `;
 
 export const SuccessText = styled.p`
-  font-family: Arial, sans-serif;
-  font-size: 15px;
-  color: #ccc;
+  ${bodyFont}
+  font-size: 0.92rem;
+  color: var(--text-muted);
   line-height: 1.7;
 
   strong {
-    color: #fff;
+    color: var(--text-heading);
+    font-weight: 600;
   }
 `;

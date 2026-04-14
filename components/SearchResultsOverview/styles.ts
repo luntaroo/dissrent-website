@@ -8,7 +8,7 @@ export const Section = styled.section`
 export const OverviewGrid = styled.div`
   display: grid;
   grid-template-columns: minmax(220px, 0.34fr) minmax(0, 0.66fr);
-  gap: 14px;
+  gap: 16px;
 
   @media (max-width: 1020px) {
     grid-template-columns: 1fr;
@@ -19,11 +19,11 @@ export const SummaryCard = styled.aside`
   position: sticky;
   top: calc(var(--nav-h) + 16px);
   align-self: start;
-  padding: 18px;
-  border-radius: 20px;
-  background: rgba(16, 24, 40, 0.88);
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: var(--text-inverse);
-  box-shadow: 0 34px 80px rgba(9, 12, 17, 0.24);
+  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
 
   @media (max-width: 1020px) {
     position: static;
@@ -32,58 +32,58 @@ export const SummaryCard = styled.aside`
 
 export const SummaryEyebrow = styled.div`
   ${bodyFont}
-  font-size: 0.56rem;
+  font-size: 0.58rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--gold-light);
-  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 10px;
 `;
 
 export const SummaryTitle = styled.h2`
   ${heavyFont}
-  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-  line-height: 1;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  line-height: 1.05;
   margin-bottom: 10px;
 `;
 
 export const SummaryText = styled.p`
   ${bodyFont}
-  color: rgba(247, 248, 251, 0.64);
-  font-size: 0.74rem;
-  line-height: 1.48;
-  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  margin-bottom: 14px;
 `;
 
 export const SummaryList = styled.div`
   display: grid;
   gap: 8px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 `;
 
 export const SummaryItem = styled.div`
   padding: 10px 12px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 `;
 
 export const SummaryLabel = styled.div`
   ${bodyFont}
-  font-size: 0.54rem;
-  font-weight: 800;
+  font-size: 0.56rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: rgba(247, 248, 251, 0.44);
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 6px;
 `;
 
 export const SummaryValue = styled.div`
   ${bodyFont}
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--text-inverse);
-  line-height: 1.55;
+  line-height: 1.5;
 `;
 
 export const StepList = styled.div`
@@ -103,32 +103,32 @@ export const StepNumber = styled.div`
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: rgba(var(--gold-rgb), 0.18);
-  color: var(--gold-light);
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--text-inverse);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
 `;
 
 export const StepText = styled.p`
   ${bodyFont}
-  color: rgba(247, 248, 251, 0.66);
-  font-size: 0.68rem;
-  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.72rem;
+  line-height: 1.5;
 `;
 
 export const ResultsColumn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 `;
 
 export const Toolbar = styled.div`
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
 `;
 
@@ -140,17 +140,17 @@ export const ToolbarCopy = styled.div`
 
 export const Heading = styled.h2`
   ${heavyFont}
-  color: var(--text);
-  font-size: clamp(1.25rem, 2.5vw, 1.8rem);
-  line-height: 0.96;
+  color: var(--text-heading);
+  font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+  line-height: 1.05;
 `;
 
 export const Subtext = styled.p`
   ${bodyFont}
   max-width: 760px;
   color: var(--text-muted);
-  font-size: 0.74rem;
-  line-height: 1.45;
+  font-size: 0.78rem;
+  line-height: 1.5;
 `;
 
 export const FilterRow = styled.div`
@@ -161,31 +161,44 @@ export const FilterRow = styled.div`
 
 export const FilterButton = styled.button<{ $active: boolean }>`
   ${bodyFont}
-  padding: 7px 10px;
-  border-radius: 999px;
-  border: 1px solid ${({ $active }) => ($active ? "rgba(var(--gold-rgb), 0.28)" : "rgba(16, 24, 40, 0.1)")};
-  background: ${({ $active }) => ($active ? "rgba(var(--gold-rgb), 0.1)" : "rgba(255, 255, 255, 0.72)")};
-  color: ${({ $active }) => ($active ? "var(--gold-strong)" : "var(--text)")};
-  font-size: 0.68rem;
+  padding: 7px 11px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid ${({ $active }) => ($active ? "rgba(37, 99, 235, 0.3)" : "var(--border)")};
+  background: ${({ $active }) => ($active ? "var(--primary-soft)" : "var(--surface)")};
+  color: ${({ $active }) => ($active ? "var(--primary)" : "var(--text-heading)")};
+  font-size: 0.7rem;
   font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+
+  &:hover {
+    transform: translateY(-1px);
+    ${({ $active }) =>
+      !$active
+        ? `
+    background: var(--primary-soft);
+    border-color: rgba(37, 99, 235, 0.3);
+    color: var(--primary);
+  `
+        : ""}
+  }
 `;
 
 export const EmptyState = styled.div`
   ${bodyFont}
-  border: 1px solid rgba(var(--gold-rgb), 0.18);
-  background: rgba(var(--gold-rgb), 0.08);
-  border-radius: 18px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  background: var(--info-soft);
+  border-radius: var(--radius-md);
   padding: 12px 14px;
-  color: var(--gold-strong);
-  font-size: 0.74rem;
-  line-height: 1.45;
+  color: var(--primary);
+  font-size: 0.76rem;
+  line-height: 1.5;
 `;
 
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
 
   @media (max-width: 760px) {
     grid-template-columns: 1fr;
