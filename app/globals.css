@@ -1,25 +1,147 @@
 :root {
-  --bg-color: #1a1a1e;
-  --grid-line: #222225;
-  --yellow-bar: #ffcc00;
-  --input-bg: #111111;
-  --red-icon: #ff0000;
-  --price-yellow: #ffcc00;
+  --bg: #edf5f8;
+  --bg-soft: #f7fbfd;
+  --bg-dark: #0e1218;
+  --bg-dark-strong: #090c11;
+  --surface: rgba(255, 255, 255, 0.84);
+  --surface-strong: #ffffff;
+  --surface-off: #f2f8fb;
+  --surface-dim: #e3edf2;
+  --surface-dark: rgba(255, 255, 255, 0.05);
+  --surface-dark-strong: rgba(255, 255, 255, 0.08);
+
+  --text: #101828;
+  --text-muted: #5f6c7b;
+  --text-soft: #6f7c8a;
+  --text-faint: #98a2b3;
+  --text-inverse: #f7f8fb;
+
+  --gold: #1d84b0;
+  --gold-light: #62b8d7;
+  --gold-strong: #155f80;
+  --gold-dim: rgba(29, 132, 176, 0.14);
+  --gold-rgb: 29, 132, 176;
+
+  --success: #15803d;
+  --success-dim: rgba(21, 128, 61, 0.11);
+  --danger: #c2410c;
+  --danger-dim: rgba(194, 65, 12, 0.1);
+  --warning: #b45309;
+  --info: #1d84b0;
+  --info-dim: rgba(29, 132, 176, 0.12);
+
+  --border: rgba(15, 23, 42, 0.08);
+  --border-mid: rgba(15, 23, 42, 0.14);
+  --border-strong: rgba(15, 23, 42, 0.22);
+  --border-dark: rgba(255, 255, 255, 0.1);
+
+  --shadow-xs: 0 2px 10px rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 24px 60px rgba(15, 23, 42, 0.12);
+  --shadow-lg: 0 40px 100px rgba(15, 23, 42, 0.16);
+  --shadow-xl: 0 60px 140px rgba(15, 23, 42, 0.2);
+
+  --max-w: 1080px;
+  --nav-h: 64px;
+  --radius-sm: 14px;
+  --radius-md: 20px;
+  --radius-lg: 26px;
+  --radius-xl: 32px;
+
+  /* Legacy aliases kept for existing components */
+  --primary: #1d84b0;
+  --primary-strong: #155f80;
+  --primary-soft: #e8f5fb;
+  --primary-rgb: 29, 132, 176;
+  --navy: #101828;
+  --page-bg: #eef5f8;
+  --page-bg-strong: #e2edf3;
+  --text-color: #101828;
+  --shadow-lg-old: 0 40px 100px rgba(15, 23, 42, 0.16);
 }
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
 body {
-  background-color: var(--bg-color);
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 80px 80px;
-  color: #ffffff;
-  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(var(--gold-rgb), 0.08), transparent 24%),
+    linear-gradient(180deg, #f8fbfd 0%, #eef5f8 42%, #f7fbfd 100%);
+  color: var(--text);
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
+}
+
+/* Desktop-only global scale — render at 50% to match the "browser zoom 50%" look.
+   Mobile stays at native scale so touch targets and layouts remain correct. */
+@media (min-width: 901px) {
+  body {
+    zoom: 0.8;
+  }
+
+  /* Firefox fallback — `zoom` on body is supported in Firefox 126+. */
+  @supports not (zoom: 0.8) {
+    body {
+      zoom: unset;
+      transform: scale(0.8);
+      transform-origin: 0 0;
+      width: 200%;
+      height: 200%;
+    }
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: var(--gold-dim);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(var(--gold-rgb), 0.55);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 24, 40, 0.18);
+  border-radius: 99px;
 }

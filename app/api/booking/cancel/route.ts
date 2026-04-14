@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import db from "@/lib/db";
 
 function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+  return process.env.APP_BASE_URL ?? process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 }
 
 function redirectToStatus(status: string): NextResponse {
@@ -38,11 +38,11 @@ export async function POST(req: NextRequest) {
     return redirectToStatus("invalid");
   }
 
-  const booking = db.getBookingByCancelToken(token);
+  const booking = await db.getBookingByCancelToken(token);
   if (!booking || booking.status !== "confirmed") {
     return redirectToStatus("invalid");
   }
 
-  db.cancelBooking(booking.id);
+  await db.cancelBooking(booking.id);
   return redirectToStatus("cancelled");
 }

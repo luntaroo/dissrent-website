@@ -1,95 +1,101 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import {
   Hero,
-  HeroBgImage,
-  DarkOverlay,
-  Accent,
-  AccentRight,
-  AccentBottom,
-  Spotlight,
+  HeroInner,
   Content,
-  TopRow,
-  LocationTag,
-  LocationIcon,
-  PriceBadge,
-  PriceNumber,
-  PriceUnit,
+  Eyebrow,
   Headline,
-  Separator,
+  Lead,
+  Actions,
+  PrimaryAction,
+  SecondaryAction,
   TrustRow,
   TrustItem,
-  TrustCheck,
-  TrustText,
-  CtaButton,
+  Showcase,
+  ImageCard,
+  ImageOverlay,
+  FloatingBadge,
+  FloatingBadgeLabel,
+  FloatingBadgeValue,
+  InfoPanel,
+  InfoLabel,
+  InfoValue,
 } from "./styles";
 
 export default function HeroSection() {
-  function scrollToSearch() {
-    const el =
-      document.getElementById("search-bar") ??
-      document.querySelector("[class*='SearchWrapper']");
-    el?.scrollIntoView({ behavior: "smooth" });
-  }
-
   return (
     <Hero>
-      <HeroBgImage>
-        <Image
-          src="/1.jpg"
-          alt=""
-          fill
-          style={{ objectFit: "cover", objectPosition: "center 40%" }}
-          priority
-        />
-      </HeroBgImage>
-      <DarkOverlay />
-      <Accent />
-      <AccentRight />
-      <AccentBottom />
-      <Spotlight />
-      <Content>
-        <TopRow>
-          <LocationTag>
-            <LocationIcon className="fa-solid fa-location-dot" />
-            BANJALUKA
-          </LocationTag>
-          <PriceBadge>
-            <span>OD</span>
-            <PriceNumber>60</PriceNumber>
-            <PriceUnit>KM/DAN</PriceUnit>
-          </PriceBadge>
-        </TopRow>
+      <HeroInner>
+        <Content>
+          <Eyebrow>Rent a car Banjaluka</Eyebrow>
 
-        <Headline>
-          IZNAJMI<br />
-          <span>AUTOMOBIL</span><br />
-          DANAS.
-        </Headline>
+          <Headline>
+            Premium vozila.
+            <span>Jasna cijena. Brza rezervacija.</span>
+          </Headline>
 
-        <Separator />
+          <Lead>
+            DISS RENT nudi provjerena vozila u Banjaluci bez depozita, uz jasne cijene, brzu potvrdu
+            rezervacije i podrsku kada vam je potrebna.
+          </Lead>
 
-        <TrustRow>
-          <TrustItem>
-            <TrustCheck className="fa-solid fa-check" />
-            <TrustText>Bez depozita</TrustText>
-          </TrustItem>
-          <TrustItem>
-            <TrustCheck className="fa-solid fa-check" />
-            <TrustText>Bez skrivenih troškova</TrustText>
-          </TrustItem>
-          <TrustItem>
-            <TrustCheck className="fa-solid fa-check" />
-            <TrustText>6 vozila na raspolaganju</TrustText>
-          </TrustItem>
-        </TrustRow>
+          <Actions>
+            <PrimaryAction href="#search-bar">Provjeri dostupnost</PrimaryAction>
+            <SecondaryAction href="tel:+38765626444">
+              <i className="fa-solid fa-phone" />
+              Pozovi odmah
+            </SecondaryAction>
+          </Actions>
 
-        <CtaButton onClick={scrollToSearch}>
-          REZERVIŠI ODMAH
-        </CtaButton>
-      </Content>
+          <TrustRow>
+            <TrustItem>
+              <i className="fa-solid fa-circle-check" />
+              Bez depozita
+            </TrustItem>
+            <TrustItem>
+              <i className="fa-solid fa-envelope-circle-check" />
+              Potvrda emailom
+            </TrustItem>
+            <TrustItem>
+              <i className="fa-solid fa-location-dot" />
+              Preuzimanje u Banjaluci
+            </TrustItem>
+          </TrustRow>
+        </Content>
+
+        <Showcase>
+          <ImageCard>
+            <Image
+              src="/1.jpg"
+              alt="Premium rent a car vozilo u Banjaluci"
+              fill
+              priority
+              style={{ objectFit: "cover", objectPosition: "center 56%" }}
+            />
+            <ImageOverlay />
+            <FloatingBadge>
+              <FloatingBadgeLabel>Lokacija</FloatingBadgeLabel>
+              <FloatingBadgeValue>Banjaluka</FloatingBadgeValue>
+            </FloatingBadge>
+          </ImageCard>
+
+          <InfoPanel>
+            <div>
+              <InfoLabel>Pocetna cijena</InfoLabel>
+              <InfoValue>od 60 KM / dan</InfoValue>
+            </div>
+            <div>
+              <InfoLabel>Popust</InfoLabel>
+              <InfoValue>4-7 dana automatski</InfoValue>
+            </div>
+            <div>
+              <InfoLabel>Kontakt</InfoLabel>
+              <InfoValue>Telefon, Viber, SMS</InfoValue>
+            </div>
+          </InfoPanel>
+        </Showcase>
+      </HeroInner>
     </Hero>
   );
 }

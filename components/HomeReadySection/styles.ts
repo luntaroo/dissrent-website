@@ -1,106 +1,120 @@
 import styled from "styled-components";
-import { heavyFont } from "../shared/mixins";
+import { bodyFont, heavyFont } from "../shared/mixins";
 
 export const Section = styled.section`
-  margin-top: 34px;
-  margin-bottom: 14px;
+  background:
+    radial-gradient(circle at top left, rgba(var(--gold-rgb), 0.16), transparent 24%),
+    linear-gradient(180deg, var(--bg-dark-strong) 0%, #11161f 100%);
+  padding: 104px 32px;
+
+  @media (max-width: 900px) {
+    padding: 72px 20px;
+  }
+`;
+
+export const Inner = styled.div`
+  max-width: var(--max-w);
+  margin: 0 auto;
 `;
 
 export const Header = styled.div`
-  text-align: center;
-  margin-bottom: 22px;
+  max-width: 720px;
+  margin-bottom: 46px;
 `;
 
 export const Eyebrow = styled.div`
-  ${heavyFont}
-  color: #ff6600;
-  font-size: 18px;
-  margin-bottom: 8px;
-  letter-spacing: 1px;
+  ${bodyFont}
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold-light);
+  margin-bottom: 12px;
 `;
 
 export const Title = styled.h2`
   ${heavyFont}
-  color: var(--yellow-bar);
-  font-size: 46px;
-  margin-bottom: 10px;
-  transform: scaleX(0.88);
-  transform-origin: center;
+  font-size: clamp(2.3rem, 4vw, 4rem);
+  line-height: 0.96;
+  color: var(--text-inverse);
+  margin-bottom: 16px;
+  max-width: 11ch;
 `;
 
 export const Text = styled.p`
-  max-width: 900px;
-  margin: 0 auto;
-  color: #c7c7c7;
-  font-family: Arial, sans-serif;
-  font-size: 15px;
+  ${bodyFont}
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.62);
   line-height: 1.8;
 `;
 
 export const Cards = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 700px) {
     grid-template-columns: 1fr;
   }
 `;
 
 export const Card = styled.div`
-  background: linear-gradient(180deg, rgba(255, 204, 0, 0.08) 0%, rgba(255, 85, 0, 0.06) 100%);
-  border: 1px solid rgba(255, 204, 0, 0.18);
-  border-radius: 10px;
-  padding: 18px;
+  padding: 24px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
 `;
 
-export const CardNumber = styled.div`
+export const CardKicker = styled.div`
   ${heavyFont}
-  color: var(--yellow-bar);
-  font-size: 34px;
-  line-height: 1;
-  margin-bottom: 8px;
+  font-size: 1rem;
+  color: var(--gold-light);
+  margin-bottom: 18px;
 `;
 
 export const CardTitle = styled.h3`
   ${heavyFont}
-  color: #fff;
-  font-size: 24px;
-  margin-bottom: 8px;
-  transform: scaleX(0.9);
-  transform-origin: left;
+  font-size: 1.4rem;
+  line-height: 1.02;
+  color: var(--text-inverse);
+  margin-bottom: 12px;
 `;
 
 export const CardText = styled.p`
-  color: #d8d8d8;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.7;
+  ${bodyFont}
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.58);
+  line-height: 1.75;
 `;
 
 export const Strip = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-
-  @media (max-width: 900px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 560px) {
-    grid-template-columns: 1fr;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
 `;
 
 export const StripItem = styled.div`
-  background: #141418;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 14px;
-  color: #f2f2f2;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
+  ${bodyFont}
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(var(--gold-rgb), 0.1);
+  border: 1px solid rgba(var(--gold-rgb), 0.18);
+  color: var(--gold-light);
+  font-size: 0.8rem;
+  font-weight: 700;
+`;
+
+export const FinalNote = styled.p`
+  ${bodyFont}
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.82rem;
+  line-height: 1.7;
 `;

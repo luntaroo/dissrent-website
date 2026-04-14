@@ -1,7 +1,6 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
@@ -17,98 +16,85 @@ import {
   BackLink,
 } from "@/components/InfoPage/styles";
 
+export const metadata: Metadata = {
+  title: "Politika privatnosti",
+  description:
+    "Politika privatnosti za DISS RENT rent a car u Banjaluci: podaci o rezervaciji, kontakt informacije i korisnicka prava.",
+};
+
 export default function PrivacyPage() {
   return (
     <PageWrap>
       <Navbar />
+
       <Container>
         <BackLink as={Link} href="/">
-          <i className="fa-solid fa-arrow-left" /> NAZAD NA POČETNU
+          <i className="fa-solid fa-arrow-left" /> Nazad na pocetnu
         </BackLink>
 
-        <PageTitle>POLITIKA PRIVATNOSTI</PageTitle>
+        <PageTitle>Politika privatnosti</PageTitle>
         <TitleAccent />
 
         <Section>
           <Text>
-            <strong style={{ color: "var(--yellow-bar)" }}>DISS RENT</strong> poštuje
-            Vašu privatnost. Ova politika objašnjava koje podatke prikupljamo, zašto
-            ih prikupljamo i kako ih koristimo.
+            <strong style={{ color: "var(--primary)" }}>DISS RENT</strong> postuje privatnost korisnika.
+            Ova stranica objasnjava koje podatke prikupljamo i kako ih koristimo tokom procesa rezervacije.
           </Text>
         </Section>
 
         <Section>
-          <SectionTitle>1. KOJE PODATKE PRIKUPLJAMO</SectionTitle>
-          <Text>Prilikom rezervacije vozila prikupljamo sljedeće podatke:</Text>
+          <SectionTitle>1. Koje podatke prikupljamo</SectionTitle>
           <List>
             <ListItem>Ime i prezime</ListItem>
             <ListItem>Broj telefona</ListItem>
             <ListItem>Email adresu</ListItem>
-            <ListItem>Željeni datume najma</ListItem>
-            <ListItem>Preferirani način kontakta (Viber ili SMS)</ListItem>
+            <ListItem>Odabrane datume najma</ListItem>
+            <ListItem>Preferirani nacin kontakta</ListItem>
           </List>
         </Section>
 
         <Section>
-          <SectionTitle>2. ZAŠTO PRIKUPLJAMO PODATKE</SectionTitle>
-          <Text>Vaše podatke koristimo isključivo u sljedeće svrhe:</Text>
+          <SectionTitle>2. Zasto koristimo podatke</SectionTitle>
           <List>
-            <ListItem>Obrada i potvrda Vaše rezervacije</ListItem>
-            <ListItem>Komunikacija vezana za Vaš najam</ListItem>
-            <ListItem>Slanje potvrde putem email-a</ListItem>
-            <ListItem>Kontaktiranje putem odabranog kanala (Viber/SMS)</ListItem>
+            <ListItem>Za obradu i potvrdu rezervacije</ListItem>
+            <ListItem>Za komunikaciju o najmu i dostupnosti</ListItem>
+            <ListItem>Za slanje email potvrde i eventualnog otkazivanja</ListItem>
           </List>
         </Section>
 
         <Section>
-          <SectionTitle>3. DIJELJENJE PODATAKA</SectionTitle>
+          <SectionTitle>3. Dijeljenje podataka</SectionTitle>
           <Text>
-            Vaše lične podatke <strong style={{ color: "#fff" }}>ne dijelimo</strong> sa
-            trećim stranama, ne prodajemo ih niti koristimo u marketinške svrhe
-            bez Vaše izričite saglasnosti.
+            Licne podatke ne prodajemo niti koristimo za marketinske kampanje bez posebne saglasnosti
+            korisnika.
           </Text>
         </Section>
 
         <Section>
-          <SectionTitle>4. ČUVANJE PODATAKA</SectionTitle>
+          <SectionTitle>4. Cuvanje podataka</SectionTitle>
           <Text>
-            Vaši podaci se čuvaju u našoj lokalnoj bazi podataka na zaštićenom
-            serveru. Podaci o rezervacijama se čuvaju tokom trajanja poslovnog
-            odnosa i u skladu sa zakonskim obavezama.
+            Podaci o rezervacijama cuvaju se u internoj bazi i koriste se iskljucivo za operativne potrebe
+            najma i evidenciju rezervacija.
           </Text>
         </Section>
 
         <Section>
-          <SectionTitle>5. VAŠA PRAVA</SectionTitle>
-          <Text>Imate pravo na:</Text>
+          <SectionTitle>5. Vasa prava</SectionTitle>
           <List>
-            <ListItem>Uvid u Vaše lične podatke koje čuvamo</ListItem>
-            <ListItem>Ispravku netačnih podataka</ListItem>
-            <ListItem>Brisanje Vaših podataka (uz zakonska ograničenja)</ListItem>
-            <ListItem>Prigovor na obradu podataka</ListItem>
+            <ListItem>Uvid u podatke koje cuvamo</ListItem>
+            <ListItem>Ispravka netacnih podataka</ListItem>
+            <ListItem>Zahtjev za brisanje podataka uz zakonska ogranicenja</ListItem>
           </List>
-          <Text>
-            Za ostvarivanje ovih prava, kontaktirajte nas putem email-a:
-            rent@diss.com
-          </Text>
+          <Text>Za sva pitanja mozete se javiti na rent@diss.com.</Text>
         </Section>
 
         <Section>
-          <SectionTitle>6. KOLAČIĆI (COOKIES)</SectionTitle>
-          <Text>
-            Naša web stranica koristi samo tehničke kolačiće neophodne za
-            funkcionisanje sajta. Ne koristimo kolačiće za praćenje ili
-            oglašavanje.
-          </Text>
-        </Section>
-
-        <Section>
-          <Text style={{ color: "#777", fontSize: 13 }}>
-            Posljednje ažuriranje: Mart 2026. DISS RENT zadržava pravo izmjene
-            politike privatnosti.
+          <Text style={{ color: "var(--text-soft)", fontSize: "0.92rem", marginBottom: 0 }}>
+            Posljednje azuriranje: april 2026.
           </Text>
         </Section>
       </Container>
+
       <Footer />
     </PageWrap>
   );

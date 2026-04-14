@@ -1,269 +1,320 @@
 import styled from "styled-components";
-import { heavyFont } from "../shared/mixins";
+import { bodyFont, heavyFont } from "../shared/mixins";
 
 export const Page = styled.div`
-  width: 96%;
-  max-width: 1500px;
+  width: min(100% - 40px, 1320px);
   margin: 0 auto;
-  padding: 30px 0 60px;
+  padding: 36px 0 56px;
 `;
 
 export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 36px;
-  flex-wrap: wrap;
   gap: 16px;
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+`;
+
+export const TitleBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 export const Title = styled.h1`
   ${heavyFont}
-  font-size: 48px;
-  color: var(--yellow-bar);
-  letter-spacing: 1px;
-  transform: scaleX(0.88);
-  transform-origin: left;
-  text-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
-  line-height: 1;
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  line-height: 0.92;
+  color: var(--navy);
+`;
+
+export const HeaderText = styled.p`
+  ${bodyFont}
+  color: var(--text-soft);
+  font-size: 1rem;
+  line-height: 1.8;
+  max-width: 680px;
 `;
 
 export const LogoutBtn = styled.button`
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #aaa;
-  padding: 8px 20px;
-  border-radius: 6px;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
+  ${bodyFont}
+  border: 1px solid rgba(216, 75, 84, 0.16);
+  background: rgba(216, 75, 84, 0.08);
+  color: var(--danger);
+  padding: 12px 18px;
+  border-radius: 18px;
+  font-size: 0.95rem;
+  font-weight: 800;
   cursor: pointer;
-  transition: all 0.2s;
+`;
 
-  &:hover {
-    background: rgba(255, 0, 0, 0.5);
-    color: #fff;
-    border-color: transparent;
-  }
+export const SectionCard = styled.section`
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 250, 255, 0.99) 100%);
+  border: 1px solid rgba(12, 76, 177, 0.12);
+  border-radius: 30px;
+  padding: 26px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
 `;
 
 export const SectionTitle = styled.h2`
   ${heavyFont}
-  font-size: 32px;
-  color: var(--yellow-bar);
-  letter-spacing: 1px;
-  transform: scaleX(0.88);
-  transform-origin: left;
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
+  line-height: 0.95;
+  color: var(--navy);
+  margin-bottom: 10px;
+`;
+
+export const SectionHint = styled.p`
+  ${bodyFont}
+  font-size: 0.96rem;
+  color: var(--text-soft);
+  line-height: 1.8;
   margin-bottom: 20px;
-  margin-top: 40px;
-  line-height: 1;
 `;
 
 export const CarsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
 
-  @media (max-width: 1100px) {
-    grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 1120px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     grid-template-columns: 1fr;
   }
 `;
 
 export const CarCalendarCard = styled.div`
-  background: #111114;
-  border: 2px solid #2a2a2e;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(12, 76, 177, 0.12);
+  border-radius: 26px;
   overflow: hidden;
+  box-shadow: 0 18px 36px rgba(24, 58, 109, 0.08);
 `;
 
 export const CarHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  background: #1a1a1e;
-  border-bottom: 1px solid #2a2a2e;
+  gap: 14px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(243, 248, 255, 0.96) 0%, rgba(232, 241, 255, 0.98) 100%);
+  border-bottom: 1px solid rgba(12, 76, 177, 0.1);
 `;
 
 export const CarThumb = styled.div<{ $img: string }>`
-  width: 60px;
-  height: 40px;
-  border-radius: 4px;
+  width: 72px;
+  height: 50px;
+  border-radius: 14px;
   background-image: url(${({ $img }) => $img});
   background-size: cover;
   background-position: center;
   flex-shrink: 0;
+  box-shadow: 0 12px 24px rgba(15, 58, 129, 0.1);
+`;
+
+export const CarTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
 `;
 
 export const CarName = styled.span`
   ${heavyFont}
-  font-size: 16px;
-  color: var(--yellow-bar);
-  letter-spacing: 0.5px;
-  transform: scaleX(0.88);
-  display: inline-block;
-  transform-origin: left;
+  font-size: 1.15rem;
+  line-height: 0.96;
+  color: var(--navy);
+`;
+
+export const CarMeta = styled.span<{ $available: boolean }>`
+  ${bodyFont}
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: ${({ $available }) => ($available ? "var(--success)" : "#9b5f14")};
+  line-height: 1.6;
 `;
 
 export const CalendarWrap = styled.div`
-  padding: 14px 12px;
+  padding: 18px 16px 16px;
 `;
 
 export const MonthNav = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 `;
 
 export const MonthLabel = styled.span`
   ${heavyFont}
-  font-size: 18px;
-  color: #fff;
-  letter-spacing: 1px;
-  transform: scaleX(0.88);
-  display: inline-block;
-  transform-origin: center;
+  font-size: 1.15rem;
+  color: var(--navy);
 `;
 
 export const NavBtn = styled.button`
-  background: none;
-  border: 1px solid #333;
-  color: #aaa;
-  width: 28px;
-  height: 28px;
-  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  border: 1px solid rgba(12, 76, 177, 0.12);
+  background: var(--surface-muted);
+  color: var(--primary);
   cursor: pointer;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s;
-
-  &:hover {
-    background: #2a2a2e;
-    color: #fff;
-  }
 `;
 
 export const WeekRow = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-  margin-bottom: 4px;
+  gap: 4px;
+  margin-bottom: 6px;
 `;
 
 export const WeekDay = styled.div`
-  font-family: Arial, sans-serif;
-  font-size: 11px;
-  color: #555;
+  ${bodyFont}
   text-align: center;
-  padding: 2px 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-soft);
+  text-transform: uppercase;
 `;
 
 export const DaysGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  gap: 4px;
 `;
 
-export const DayCell = styled.button<{ $blocked: boolean; $today: boolean; $empty: boolean; $past: boolean }>`
-  height: 30px;
-  border-radius: 4px;
-  border: none;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
+export const DayCell = styled.button<{
+  $blocked: boolean;
+  $today: boolean;
+  $empty: boolean;
+  $past: boolean;
+}>`
+  ${bodyFont}
+  height: 34px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-size: 0.84rem;
+  font-weight: 700;
   cursor: ${({ $empty, $past }) => ($empty || $past ? "default" : "pointer")};
   background: ${({ $blocked, $empty, $past }) =>
-    $empty ? "transparent" :
-    $past ? "#1a1a1a" :
-    $blocked ? "rgba(255, 60, 60, 0.85)" : "#2a2a2e"};
+    $empty
+      ? "transparent"
+      : $past
+        ? "#eef3fb"
+        : $blocked
+          ? "rgba(216, 75, 84, 0.14)"
+          : "var(--surface-muted)"};
   color: ${({ $blocked, $empty, $past, $today }) =>
-    $empty ? "transparent" :
-    $past ? "#333" :
-    $today ? "#ffcc00" :
-    $blocked ? "#fff" : "#aaa"};
-  outline: ${({ $today }) => ($today ? "2px solid var(--yellow-bar)" : "none")};
-  outline-offset: -2px;
-  transition: background 0.15s;
+    $empty
+      ? "transparent"
+      : $past
+        ? "#b0bfd2"
+        : $blocked
+          ? "var(--danger)"
+          : $today
+            ? "var(--primary-strong)"
+            : "var(--navy)"};
+  box-shadow: ${({ $today }) => ($today ? "inset 0 0 0 2px rgba(15, 106, 230, 0.22)" : "none")};
   pointer-events: ${({ $empty, $past }) => ($empty || $past ? "none" : "auto")};
+`;
 
-  &:hover {
-    background: ${({ $blocked, $empty, $past }) =>
-      $empty || $past ? "transparent" :
-      $blocked ? "rgba(255, 80, 80, 1)" : "#3a3a3e"};
-  }
+export const TableScroll = styled.div`
+  width: 100%;
+  overflow-x: auto;
 `;
 
 export const BookingsTable = styled.table`
   width: 100%;
   border-collapse: collapse;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
+  min-width: 980px;
 `;
 
 export const Th = styled.th`
+  ${bodyFont}
   text-align: left;
-  padding: 10px 14px;
-  background: #1a1a1e;
-  color: var(--yellow-bar);
-  font-size: 12px;
-  letter-spacing: 1px;
-  border-bottom: 2px solid #2a2a2e;
+  padding: 12px 14px;
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(12, 76, 177, 0.1);
 `;
 
 export const Td = styled.td`
-  padding: 10px 14px;
-  color: #ccc;
-  border-bottom: 1px solid #1e1e22;
+  ${bodyFont}
+  padding: 14px;
+  color: var(--navy);
+  font-size: 0.94rem;
+  border-bottom: 1px solid rgba(12, 76, 177, 0.08);
   vertical-align: middle;
 `;
 
+export const CellStrong = styled.strong`
+  color: var(--navy);
+`;
+
+export const CellMuted = styled.span`
+  color: var(--text-soft);
+  font-size: 0.84rem;
+`;
+
 export const StatusBadge = styled.span<{ $status: string }>`
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: bold;
+  ${bodyFont}
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
   background: ${({ $status }) =>
-    $status === "confirmed" ? "rgba(50, 200, 100, 0.2)" :
-    $status === "pending" ? "rgba(255, 204, 0, 0.2)" : "rgba(100, 100, 100, 0.2)"};
+    $status === "confirmed"
+      ? "rgba(31, 157, 104, 0.12)"
+      : $status === "pending"
+        ? "rgba(240, 156, 40, 0.12)"
+        : "rgba(92, 112, 143, 0.12)"};
   color: ${({ $status }) =>
-    $status === "confirmed" ? "#50c878" :
-    $status === "pending" ? "#ffcc00" : "#888"};
-  border: 1px solid currentColor;
+    $status === "confirmed"
+      ? "var(--success)"
+      : $status === "pending"
+        ? "#9b5f14"
+        : "var(--text-soft)"};
 `;
 
 export const EmptyMsg = styled.p`
-  color: #555;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  padding: 20px 0;
+  ${bodyFont}
+  color: var(--text-soft);
+  font-size: 0.96rem;
+  padding: 10px 0 4px;
+`;
+
+export const ActionsRow = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 `;
 
 export const ActionBtn = styled.button<{ $variant: "confirm" | "cancel" }>`
-  padding: 4px 12px;
-  border-radius: 5px;
-  border: none;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: opacity 0.15s;
+  ${bodyFont}
+  padding: 9px 12px;
+  border-radius: 14px;
+  border: 1px solid
+    ${({ $variant }) =>
+      $variant === "confirm" ? "rgba(31, 157, 104, 0.18)" : "rgba(216, 75, 84, 0.18)"};
   background: ${({ $variant }) =>
-    $variant === "confirm" ? "rgba(50, 200, 100, 0.2)" : "rgba(200, 50, 50, 0.2)"};
-  color: ${({ $variant }) =>
-    $variant === "confirm" ? "#50c878" : "#e05050"};
-  border: 1px solid currentColor;
-
-  &:hover {
-    opacity: 0.75;
-  }
+    $variant === "confirm" ? "rgba(31, 157, 104, 0.08)" : "rgba(216, 75, 84, 0.08)"};
+  color: ${({ $variant }) => ($variant === "confirm" ? "var(--success)" : "var(--danger)")};
+  font-size: 0.84rem;
+  font-weight: 800;
+  cursor: pointer;
 
   &:disabled {
-    opacity: 0.35;
+    opacity: 0.45;
     cursor: not-allowed;
   }
 `;

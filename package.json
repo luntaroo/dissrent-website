@@ -6,29 +6,31 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "cf:build": "opennextjs-cloudflare build",
+    "cf:deploy": "opennextjs-cloudflare build && cmd /c \"set OPEN_NEXT_DEPLOY=true && npx wrangler deploy\"",
+    "db:migrate:local": "wrangler d1 execute dissrent-db --local --file=./migrations/0001_initial.sql",
+    "db:migrate:remote": "wrangler d1 execute dissrent-db --remote --file=./migrations/0001_initial.sql"
   },
   "dependencies": {
-    "better-sqlite3": "^12.6.2",
-    "drizzle-orm": "^0.45.1",
-    "next": "16.1.6",
-    "pg": "^8.19.0",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "next": "^15.5.15",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "resend": "^6.9.3",
     "styled-components": "^6.3.11"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241230.0",
+    "@opennextjs/cloudflare": "^1.0.0",
     "@tailwindcss/postcss": "^4",
-    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^20",
-    "@types/pg": "^8.18.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "drizzle-kit": "^0.31.9",
     "eslint": "^9",
-    "eslint-config-next": "16.1.6",
+    "eslint-config-next": "^15.5.15",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.65.0"
   }
 }

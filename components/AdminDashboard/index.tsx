@@ -1,18 +1,28 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getCarAvailabilitySummary } from "@/lib/availability";
+import { CAR_DATA } from "@/lib/carData";
+import type { Booking } from "@/lib/db";
+import type { CarAvailabilityMap } from "@/lib/types";
 import {
   Page,
   Header,
+  TitleBlock,
   Title,
+  HeaderText,
   LogoutBtn,
+  SectionCard,
   SectionTitle,
+  SectionHint,
   CarsGrid,
   CarCalendarCard,
   CarHeader,
   CarThumb,
+  CarTitle,
   CarName,
+  CarMeta,
   CalendarWrap,
   MonthNav,
   MonthLabel,
@@ -21,21 +31,32 @@ import {
   WeekDay,
   DaysGrid,
   DayCell,
+  TableScroll,
   BookingsTable,
   Th,
   Td,
+  CellStrong,
+  CellMuted,
   StatusBadge,
   ActionBtn,
+  ActionsRow,
   EmptyMsg,
 } from "./styles";
-import { CAR_DATA } from "@/lib/carData";
-import type { Booking } from "@/lib/db";
 
-const WEEK_DAYS = ["Po", "Ut", "Sr", "Če", "Pe", "Su", "Ne"];
-
+const WEEK_DAYS = ["Po", "Ut", "Sr", "Ce", "Pe", "Su", "Ne"];
 const MONTH_NAMES = [
-  "Januar", "Februar", "Mart", "April", "Maj", "Juni",
-  "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar",
+  "Januar",
+  "Februar",
+  "Mart",
+  "April",
+  "Maj",
+  "Juni",
+  "Juli",
+  "August",
+  "Septembar",
+  "Oktobar",
+  "Novembar",
+  "Decembar",
 ];
 
 function toYMD(year: number, month: number, day: number): string {
@@ -44,53 +65,69 @@ function toYMD(year: number, month: number, day: number): string {
 
 function buildCalendar(year: number, month: number): (number | null)[] {
   const firstDay = new Date(year, month, 1).getDay();
-  // Convert Sunday=0 to Mon=0 format
   const startOffset = (firstDay + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const cells: (number | null)[] = [];
-  for (let i = 0; i < startOffset; i++) cells.push(null);
-  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+
+  for (let i = 0; i < startOffset; i += 1) cells.push(null);
+  for (let day = 1; day <= daysInMonth; day += 1) cells.push(day);
+
   return cells;
 }
 
+function fmtDate(value: string | null): string {
+  if (!value) return "-";
+  const [year, month, day] = value.split("-");
+  return `${day}.${month}.${year}.`;
+}
+
 async function fetchBlockedSet(rangeStart: string, rangeEnd: string): Promise<Set<string>> {
-  const res = await fetch(`/api/admin/availability?start=${rangeStart}&end=${rangeEnd}`);
-  if (!res.ok) {
+  const response = await fetch(`/api/admin/availability?start=${rangeStart}&end=${rangeEnd}`);
+  if (!response.ok) {
     return new Set<string>();
   }
 
-  const data = await res.json();
+  const data = (await response.json()) as { blocked: { car_img: string; date: string }[] };
   const nextSet = new Set<string>();
-  for (const item of data.blocked as { car_img: string; date: string }[]) {
+  for (const item of data.blocked) {
     nextSet.add(`${item.car_img}__${item.date}`);
   }
 
   return nextSet;
 }
 
-function fmtDate(s: string | null): string {
-  if (!s) return "—";
-  const [y, m, d] = s.split("-");
-  return `${d}.${m}.${y}.`;
+async function fetchAvailabilityMap(todayStr: string): Promise<CarAvailabilityMap> {
+  const entries = await Promise.all(
+    CAR_DATA.map(async (car) => {
+      const response = await fetch(`/api/availability?carImg=${encodeURIComponent(car.img)}`);
+      const data = response.ok ? (await response.json()) as { blockedDates: string[] } : { blockedDates: [] as string[] };
+      return [car.img, getCarAvailabilitySummary(data.blockedDates ?? [], 1, todayStr)] as const;
+    })
+  );
+
+  return Object.fromEntries(entries);
 }
 
 interface Props {
   initialBookings: Booking[];
+  initialAvailabilityByCar: CarAvailabilityMap;
 }
 
-export default function AdminDashboard({ initialBookings }: Props) {
+export default function AdminDashboard({ initialBookings, initialAvailabilityByCar }: Props) {
   const router = useRouter();
   const today = new Date();
   const todayStr = toYMD(today.getFullYear(), today.getMonth(), today.getDate());
 
   const [bookings, setBookings] = useState<Booking[]>(initialBookings);
   const [blockedSet, setBlockedSet] = useState<Set<string>>(new Set());
+  const [availabilityByCar, setAvailabilityByCar] =
+    useState<CarAvailabilityMap>(initialAvailabilityByCar);
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
 
-  // Compute range for current displayed month
   const rangeStart = toYMD(year, month, 1);
   const rangeEnd = toYMD(year, month, new Date(year, month + 1, 0).getDate());
+  const cells = buildCalendar(year, month);
 
   useEffect(() => {
     let active = true;
@@ -107,7 +144,25 @@ export default function AdminDashboard({ initialBookings }: Props) {
     return () => {
       active = false;
     };
-  }, [rangeStart, rangeEnd]);
+  }, [rangeEnd, rangeStart]);
+
+  async function refreshAvailability() {
+    setAvailabilityByCar(await fetchAvailabilityMap(todayStr));
+  }
+
+  async function refreshBookings() {
+    const response = await fetch("/api/admin/bookings");
+    if (!response.ok) {
+      return;
+    }
+
+    const data = (await response.json()) as { bookings: Booking[] };
+    setBookings(data.bookings);
+  }
+
+  async function refreshBlockedForMonth() {
+    setBlockedSet(await fetchBlockedSet(rangeStart, rangeEnd));
+  }
 
   async function toggleDate(carImg: string, date: string) {
     await fetch("/api/admin/availability", {
@@ -115,7 +170,8 @@ export default function AdminDashboard({ initialBookings }: Props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ carImg, date }),
     });
-    setBlockedSet(await fetchBlockedSet(rangeStart, rangeEnd));
+
+    await Promise.all([refreshBlockedForMonth(), refreshAvailability()]);
   }
 
   async function handleBookingAction(id: string, action: "confirm" | "cancel") {
@@ -124,11 +180,8 @@ export default function AdminDashboard({ initialBookings }: Props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, action }),
     });
-    const res = await fetch("/api/admin/bookings");
-    if (res.ok) {
-      const data = await res.json();
-      setBookings(data.bookings);
-    }
+
+    await Promise.all([refreshBookings(), refreshBlockedForMonth(), refreshAvailability()]);
   }
 
   async function handleLogout() {
@@ -137,145 +190,205 @@ export default function AdminDashboard({ initialBookings }: Props) {
   }
 
   function prevMonth() {
-    if (month === 0) { setYear(y => y - 1); setMonth(11); }
-    else setMonth(m => m - 1);
+    if (month === 0) {
+      setYear((currentYear) => currentYear - 1);
+      setMonth(11);
+      return;
+    }
+
+    setMonth((currentMonth) => currentMonth - 1);
   }
 
   function nextMonth() {
-    if (month === 11) { setYear(y => y + 1); setMonth(0); }
-    else setMonth(m => m + 1);
-  }
+    if (month === 11) {
+      setYear((currentYear) => currentYear + 1);
+      setMonth(0);
+      return;
+    }
 
-  const cells = buildCalendar(year, month);
+    setMonth((currentMonth) => currentMonth + 1);
+  }
 
   return (
     <Page>
       <Header>
-        <Title>ADMIN DASHBOARD</Title>
+        <TitleBlock>
+          <Title>Admin dashboard</Title>
+          <HeaderText>
+            Upravljanje dostupnoscu i rezervacijama je sada vizuelno uskladjeno sa javnim sajtom, uz
+            odmah vidljiv status svakog vozila i prvi slobodan termin.
+          </HeaderText>
+        </TitleBlock>
+
         <LogoutBtn onClick={handleLogout}>Odjava</LogoutBtn>
       </Header>
 
-      <SectionTitle>DOSTUPNOST AUTOMOBILA</SectionTitle>
-      <p style={{ fontFamily: "Arial, sans-serif", fontSize: 13, color: "#666", marginBottom: 20 }}>
-        Kliknite na datum da blokirate / deblokirate automobil za taj dan. Crveno = zauzeto.
-      </p>
+      <SectionCard>
+        <SectionTitle>Dostupnost automobila</SectionTitle>
+        <SectionHint>
+          Kliknite na datum da blokirate ili deblokirate vozilo. U kartici svakog automobila odmah se vidi
+          da li je slobodan danas ili koji je prvi naredni slobodan termin.
+        </SectionHint>
 
-      <CarsGrid>
-        {CAR_DATA.map((car) => (
-          <CarCalendarCard key={car.img}>
-            <CarHeader>
-              <CarThumb $img={car.img} />
-              <CarName>{car.name}</CarName>
-            </CarHeader>
+        <CarsGrid>
+          {CAR_DATA.map((car) => {
+            const availability = availabilityByCar[car.img];
+            const availabilityText = availability?.isAvailableForWindow
+              ? "Dostupno odmah"
+              : availability?.firstAvailableLabel
+                ? `Prvi slobodan termin: ${availability.firstAvailableLabel}`
+                : "Trenutno nema slobodnog termina";
 
-            <CalendarWrap>
-              <MonthNav>
-                <NavBtn onClick={prevMonth}>‹</NavBtn>
-                <MonthLabel>{MONTH_NAMES[month]} {year}</MonthLabel>
-                <NavBtn onClick={nextMonth}>›</NavBtn>
-              </MonthNav>
+            return (
+              <CarCalendarCard key={car.img}>
+                <CarHeader>
+                  <CarThumb $img={car.img} />
+                  <CarTitle>
+                    <CarName>{car.name}</CarName>
+                    <CarMeta $available={availability?.isAvailableForWindow ?? true}>
+                      {availabilityText}
+                    </CarMeta>
+                  </CarTitle>
+                </CarHeader>
 
-              <WeekRow>
-                {WEEK_DAYS.map((d) => <WeekDay key={d}>{d}</WeekDay>)}
-              </WeekRow>
+                <CalendarWrap>
+                  <MonthNav>
+                    <NavBtn type="button" onClick={prevMonth}>
+                      &#8249;
+                    </NavBtn>
+                    <MonthLabel>
+                      {MONTH_NAMES[month]} {year}
+                    </MonthLabel>
+                    <NavBtn type="button" onClick={nextMonth}>
+                      &#8250;
+                    </NavBtn>
+                  </MonthNav>
 
-              <DaysGrid>
-                {cells.map((day, idx) => {
-                  if (day === null) {
-                    return <DayCell key={idx} $blocked={false} $today={false} $empty $past={false} />;
-                  }
-                  const dateStr = toYMD(year, month, day);
-                  const blocked = blockedSet.has(`${car.img}__${dateStr}`);
-                  const isToday = dateStr === todayStr;
-                  const isPast = dateStr < todayStr;
-                  return (
-                    <DayCell
-                      key={idx}
-                      $blocked={blocked}
-                      $today={isToday}
-                      $empty={false}
-                      $past={isPast}
-                      onClick={() => !isPast && toggleDate(car.img, dateStr)}
-                    >
-                      {day}
-                    </DayCell>
-                  );
-                })}
-              </DaysGrid>
-            </CalendarWrap>
-          </CarCalendarCard>
-        ))}
-      </CarsGrid>
+                  <WeekRow>
+                    {WEEK_DAYS.map((day) => (
+                      <WeekDay key={day}>{day}</WeekDay>
+                    ))}
+                  </WeekRow>
 
-      <SectionTitle>REZERVACIJE</SectionTitle>
+                  <DaysGrid>
+                    {cells.map((day, idx) => {
+                      if (day === null) {
+                        return (
+                          <DayCell
+                            key={idx}
+                            $blocked={false}
+                            $today={false}
+                            $empty
+                            $past={false}
+                          />
+                        );
+                      }
 
-      {bookings.length === 0 ? (
-        <EmptyMsg>Nema rezervacija.</EmptyMsg>
-      ) : (
-        <BookingsTable>
-          <thead>
-            <tr>
-              <Th>AUTO</Th>
-              <Th>PERIOD</Th>
-              <Th>IME I PREZIME</Th>
-              <Th>TELEFON</Th>
-              <Th>EMAIL</Th>
-              <Th>KONTAKT</Th>
-              <Th>CIJENA</Th>
-              <Th>STATUS</Th>
-              <Th>DATUM</Th>
-              <Th>AKCIJE</Th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings.map((b) => (
-              <tr key={b.id}>
-                <Td>{b.car_name ?? "—"}</Td>
-                <Td>
-                  {b.pickup_date
-                    ? `${fmtDate(b.pickup_date)} – ${fmtDate(b.return_date)} (${b.days}d)`
-                    : "—"}
-                </Td>
-                <Td><strong style={{ color: "#fff" }}>{b.customer_name}</strong></Td>
-                <Td>{b.customer_phone}</Td>
-                <Td>{b.customer_email}</Td>
-                <Td>{b.contact_preference}</Td>
-                <Td style={{ color: "var(--yellow-bar)" }}>
-                  {b.total_price ? `${b.total_price} KM` : "Po dogovoru"}
-                </Td>
-                <Td>
-                  <StatusBadge $status={b.status}>{b.status}</StatusBadge>
-                </Td>
-                <Td style={{ color: "#555", fontSize: 12 }}>
-                  {b.created_at.slice(0, 10)}
-                </Td>
-                <Td>
-                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                    {b.status === "pending" && (
-                      <>
-                        <ActionBtn $variant="confirm" onClick={() => handleBookingAction(b.id, "confirm")}>
-                          Potvrdi
-                        </ActionBtn>
-                        <ActionBtn $variant="cancel" onClick={() => handleBookingAction(b.id, "cancel")}>
-                          Otkaži
-                        </ActionBtn>
-                      </>
-                    )}
-                    {b.status === "confirmed" && (
-                      <ActionBtn $variant="cancel" onClick={() => handleBookingAction(b.id, "cancel")}>
-                        Otkaži
-                      </ActionBtn>
-                    )}
-                    {b.status === "cancelled" && (
-                      <span style={{ color: "#444", fontSize: 12 }}>—</span>
-                    )}
-                  </div>
-                </Td>
-              </tr>
-            ))}
-          </tbody>
-        </BookingsTable>
-      )}
+                      const dateStr = toYMD(year, month, day);
+                      const blocked = blockedSet.has(`${car.img}__${dateStr}`);
+                      const isToday = dateStr === todayStr;
+                      const isPast = dateStr < todayStr;
+
+                      return (
+                        <DayCell
+                          key={idx}
+                          $blocked={blocked}
+                          $today={isToday}
+                          $empty={false}
+                          $past={isPast}
+                          onClick={() => !isPast && toggleDate(car.img, dateStr)}
+                        >
+                          {day}
+                        </DayCell>
+                      );
+                    })}
+                  </DaysGrid>
+                </CalendarWrap>
+              </CarCalendarCard>
+            );
+          })}
+        </CarsGrid>
+      </SectionCard>
+
+      <SectionCard>
+        <SectionTitle>Rezervacije</SectionTitle>
+        <SectionHint>
+          Ovdje potvrdjujete ili otkazujete rezervacije i odmah osvjezavate stanje dostupnosti na sajtu.
+        </SectionHint>
+
+        {bookings.length === 0 ? (
+          <EmptyMsg>Nema rezervacija.</EmptyMsg>
+        ) : (
+          <TableScroll>
+            <BookingsTable>
+              <thead>
+                <tr>
+                  <Th>Auto</Th>
+                  <Th>Period</Th>
+                  <Th>Ime i prezime</Th>
+                  <Th>Telefon</Th>
+                  <Th>Email</Th>
+                  <Th>Kontakt</Th>
+                  <Th>Cijena</Th>
+                  <Th>Status</Th>
+                  <Th>Kreirano</Th>
+                  <Th>Akcije</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookings.map((booking) => (
+                  <tr key={booking.id}>
+                    <Td>{booking.car_name ?? "-"}</Td>
+                    <Td>
+                      {booking.pickup_date
+                        ? `${fmtDate(booking.pickup_date)} - ${fmtDate(booking.return_date)} (${booking.days}d)`
+                        : "-"}
+                    </Td>
+                    <Td><CellStrong>{booking.customer_name}</CellStrong></Td>
+                    <Td>{booking.customer_phone}</Td>
+                    <Td>{booking.customer_email}</Td>
+                    <Td>{booking.contact_preference}</Td>
+                    <Td>{booking.total_price ? `${booking.total_price} KM` : "Po dogovoru"}</Td>
+                    <Td>
+                      <StatusBadge $status={booking.status}>{booking.status}</StatusBadge>
+                    </Td>
+                    <Td><CellMuted>{booking.created_at.slice(0, 10)}</CellMuted></Td>
+                    <Td>
+                      <ActionsRow>
+                        {booking.status === "pending" && (
+                          <>
+                            <ActionBtn
+                              $variant="confirm"
+                              onClick={() => handleBookingAction(booking.id, "confirm")}
+                            >
+                              Potvrdi
+                            </ActionBtn>
+                            <ActionBtn
+                              $variant="cancel"
+                              onClick={() => handleBookingAction(booking.id, "cancel")}
+                            >
+                              Otkazi
+                            </ActionBtn>
+                          </>
+                        )}
+                        {booking.status === "confirmed" && (
+                          <ActionBtn
+                            $variant="cancel"
+                            onClick={() => handleBookingAction(booking.id, "cancel")}
+                          >
+                            Otkazi
+                          </ActionBtn>
+                        )}
+                        {booking.status === "cancelled" && <CellMuted>-</CellMuted>}
+                      </ActionsRow>
+                    </Td>
+                  </tr>
+                ))}
+              </tbody>
+            </BookingsTable>
+          </TableScroll>
+        )}
+      </SectionCard>
     </Page>
   );
 }

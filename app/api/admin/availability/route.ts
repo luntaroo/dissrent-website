@@ -30,13 +30,12 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "start mora biti <= end." }, { status: 400 });
   }
 
-  // Max 2-year range to prevent resource exhaustion
   const diffDays = (new Date(end).getTime() - new Date(start).getTime()) / 86400000;
   if (diffDays > 730) {
     return NextResponse.json({ error: "Raspon datuma ne može biti veći od 2 godine." }, { status: 400 });
   }
 
-  const blocked = db.getBlockedDates(start, end);
+  const blocked = await db.getBlockedDates(start, end);
   return NextResponse.json({ blocked });
 }
 
@@ -66,7 +65,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Nevažeći format datuma (YYYY-MM-DD)." }, { status: 400 });
   }
 
-  const result = db.toggleBlockedDate(carImg, date);
+  const result = await db.toggleBlockedDate(carImg, date);
   if (result === "reserved") {
     return NextResponse.json(
       { error: "Datum je vec vezan za potvrdjenu rezervaciju." },

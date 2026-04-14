@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ blockedDates: [] });
   }
 
-  const blockedDates = db.getBlockedDatesForCar(carImg);
+  const blockedDates = await db.getBlockedDatesForCar(carImg);
   return NextResponse.json(
     { blockedDates },
     { headers: { "Cache-Control": "no-store" } }

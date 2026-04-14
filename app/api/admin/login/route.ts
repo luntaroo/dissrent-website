@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Rate limit: 5 attempts per IP per 15 minutes
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
     req.headers.get("x-real-ip") ??
@@ -45,20 +44,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Lozinka je obavezna." }, { status: 400 });
   }
 
-  const sessionValue = createAdminSessionValue();
-  if (!sessionValue) {
-    return NextResponse.json({ error: "Admin sesija nije mogla biti kreirana." }, { status: 500 });
-  }
-
   if (!verifyAdminPassword(password)) {
     return NextResponse.json({ error: "Pogrešna lozinka." }, { status: 401 });
+  }
+
+  const sessionValue = await createAdminSessionValue();
+  if (!sessionValue) {
+    return NextResponse.json({ error: "Admin sesija nije mogla biti kreirana." }, { status: 500 });
   }
 
   const res = NextResponse.json({ success: true });
   res.cookies.set(ADMIN_COOKIE_NAME, sessionValue, {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
     priority: "high",

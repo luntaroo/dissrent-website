@@ -3,7 +3,7 @@ import db from "@/lib/db";
 import { sendAdminEmail } from "@/lib/email";
 
 function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+  return process.env.APP_BASE_URL ?? process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 }
 
 function redirectToStatus(status: string): NextResponse {
@@ -39,12 +39,12 @@ export async function POST(req: NextRequest) {
     return redirectToStatus("invalid");
   }
 
-  const booking = db.getBookingByToken(token);
+  const booking = await db.getBookingByToken(token);
   if (!booking || booking.status !== "pending") {
     return redirectToStatus("invalid");
   }
 
-  const result = db.confirmBookingIfAvailable(booking.id);
+  const result = await db.confirmBookingIfAvailable(booking.id);
   if (!result.success) {
     return redirectToStatus(result.reason === "conflict" ? "unavailable" : "invalid");
   }

@@ -7,7 +7,7 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const bookings = db.getAllBookings();
+  const bookings = await db.getAllBookings();
   return NextResponse.json({ bookings });
 }
 
@@ -32,13 +32,13 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "action mora biti 'confirm' ili 'cancel'." }, { status: 400 });
   }
 
-  const booking = db.getBookingById(id);
+  const booking = await db.getBookingById(id);
   if (!booking) {
     return NextResponse.json({ error: "Rezervacija nije pronađena." }, { status: 404 });
   }
 
   if (action === "confirm") {
-    const result = db.confirmBookingIfAvailable(id);
+    const result = await db.confirmBookingIfAvailable(id);
     if (!result.success) {
       if (result.reason === "conflict") {
         return NextResponse.json(
@@ -53,7 +53,7 @@ export async function PATCH(req: NextRequest) {
     if (booking.status === "cancelled") {
       return NextResponse.json({ error: "Rezervacija je već otkazana." }, { status: 400 });
     }
-    db.cancelBooking(id);
+    await db.cancelBooking(id);
   }
 
   return NextResponse.json({ success: true });

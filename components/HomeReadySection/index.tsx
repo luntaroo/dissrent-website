@@ -1,64 +1,77 @@
 import React from "react";
 import {
   Section,
+  Inner,
   Header,
   Eyebrow,
   Title,
   Text,
   Cards,
   Card,
-  CardNumber,
   CardTitle,
   CardText,
+  CardKicker,
   Strip,
   StripItem,
+  FinalNote,
 } from "./styles";
 
 export default function HomeReadySection() {
   return (
     <Section>
-      <Header>
-        <Eyebrow>SPREMNO ZA BRZU REZERVACIJU</Eyebrow>
-        <Title>KAKO REZERVACIJA RADI</Title>
-        <Text>
-          Pocetna sada vodi korisnika kroz cijeli tok bez zabune: prvo odabir termina, zatim auto i
-          na kraju potvrda preko emaila. Tako korisnik uvijek zna sta je sledeci korak i zasto.
-        </Text>
-      </Header>
+      <Inner>
+        <Header>
+          <Eyebrow>Kako funkcionise</Eyebrow>
+          <Title>Rezervacija u 4 jednostavna koraka.</Title>
+          <Text>
+            Od prvog odabira datuma do potvrde na email, cijeli proces je brz, jasan i prilagodjen
+            gostima koji zele rezervaciju bez komplikacija.
+          </Text>
+        </Header>
 
-      <Cards>
-        <Card>
-          <CardNumber>01</CardNumber>
-          <CardTitle>Izaberite termin</CardTitle>
-          <CardText>
-            Odmah na vrhu birate datum preuzimanja i datum povratka. Sistem zatim prikazuje samo realnu
-            dostupnost i cijene za taj period.
-          </CardText>
-        </Card>
-        <Card>
-          <CardNumber>02</CardNumber>
-          <CardTitle>Odaberite auto</CardTitle>
-          <CardText>
-            Svaka kartica prikazuje da li je vozilo slobodno, kolika je ukupna cijena i da li termin
-            zahtijeva ponudu po dogovoru.
-          </CardText>
-        </Card>
-        <Card>
-          <CardNumber>03</CardNumber>
-          <CardTitle>Potvrdite preko emaila</CardTitle>
-          <CardText>
-            Nakon slanja forme stize email potvrde. Rezervacija se finalizuje tek nakon klika na link,
-            pa nema konfuzije ni laznih prijava.
-          </CardText>
-        </Card>
-      </Cards>
+        <Cards>
+          <Card>
+            <CardKicker>01</CardKicker>
+            <CardTitle>Odaberite termin</CardTitle>
+            <CardText>
+              Odaberite datume i odmah pogledajte koja su vozila dostupna za vas termin.
+            </CardText>
+          </Card>
+          <Card>
+            <CardKicker>02</CardKicker>
+            <CardTitle>Uporedite vozila</CardTitle>
+            <CardText>
+              Uporedite dnevne tarife, popuste i osnovne informacije kako biste lako izabrali pravo
+              vozilo.
+            </CardText>
+          </Card>
+          <Card>
+            <CardKicker>03</CardKicker>
+            <CardTitle>Posaljite rezervaciju</CardTitle>
+            <CardText>
+              Popunite kontakt podatke i posaljite rezervaciju za svega nekoliko minuta.
+            </CardText>
+          </Card>
+          <Card>
+            <CardKicker>04</CardKicker>
+            <CardTitle>Potvrdite email</CardTitle>
+            <CardText>
+              Nakon potvrde na email, rezervacija je evidentirana i spremna za dogovor oko preuzimanja
+              vozila.
+            </CardText>
+          </Card>
+        </Cards>
 
-      <Strip>
-        <StripItem>Bez depozita</StripItem>
-        <StripItem>Bez skrivenih troskova</StripItem>
-        <StripItem>Brza potvrda rezervacije</StripItem>
-        <StripItem>Kontakt putem Viber-a ili SMS-a</StripItem>
-      </Strip>
+        <Strip>
+          <StripItem>Bez depozita</StripItem>
+          <StripItem>Transparentne tarife</StripItem>
+          <StripItem>Potvrda emailom</StripItem>
+          <StripItem>Viber i SMS kontakt</StripItem>
+          <StripItem>Brza korisnicka podrska</StripItem>
+        </Strip>
+
+        <FinalNote>Za duzi najam ili posebnu lokaciju preuzimanja, javite nam se direktno i pripremicemo ponudu.</FinalNote>
+      </Inner>
     </Section>
   );
 }

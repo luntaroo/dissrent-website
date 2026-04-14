@@ -1,88 +1,166 @@
 import styled from "styled-components";
-import { heavyFont } from "../shared/mixins";
+import { bodyFont, heavyFont } from "../shared/mixins";
 
-export const Wrapper = styled.header`
-  background-color: var(--yellow-bar);
-  border-radius: 6px;
-  padding: 12px 18px;
-  display: flex;
-  align-items: flex-end;
-  gap: 12px;
-  margin-bottom: 25px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.9);
-  flex-wrap: wrap;
+export const Wrapper = styled.section`
+  position: relative;
+  z-index: 1100;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.82) 100%),
+    linear-gradient(135deg, rgba(var(--gold-rgb), 0.08), transparent 55%);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.66);
+  backdrop-filter: blur(18px);
+  overflow: visible;
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 16px;
-    gap: 10px;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(var(--gold-rgb), 0.12), transparent 30%);
+    pointer-events: none;
+  }
+
+  @media (max-width: 900px) {
+    padding: 14px 12px;
+    border-radius: 18px;
   }
 `;
 
-export const Logo = styled.div`
-  ${heavyFont}
+export const Header = styled.div`
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 12px;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const HeaderCopy = styled.div`
   display: flex;
   flex-direction: column;
-  color: #000;
-  font-size: 56px;
-  line-height: 0.82;
-  padding-right: 12px;
-  margin-bottom: 4px;
-  white-space: nowrap;
-  -webkit-text-stroke: 1px #000;
-  transform: scaleX(0.88);
-  transform-origin: left;
+  gap: 6px;
+`;
 
-  @media (max-width: 900px) {
-    font-size: 42px;
+export const Eyebrow = styled.div`
+  ${bodyFont}
+  font-size: 0.58rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold-strong);
+`;
+
+export const Title = styled.h2`
+  ${heavyFont}
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  line-height: 1.02;
+  color: var(--text);
+`;
+
+export const Description = styled.p`
+  ${bodyFont}
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 620px;
+`;
+
+export const Logo = styled.div`
+  ${bodyFont}
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 180px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  background: rgba(16, 24, 40, 0.05);
+  border: 1px solid rgba(16, 24, 40, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+
+  span {
+    font-size: 0.56rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
   }
 
-  @media (max-width: 768px) {
-    flex-direction: row;
-    gap: 10px;
-    justify-content: center;
-    padding-right: 0;
-    padding-bottom: 10px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
-    margin-bottom: 0;
+  strong {
+    ${heavyFont}
+    font-size: 0.96rem;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  small {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+  }
+`;
+
+export const FieldsGrid = styled.div`
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  align-items: end;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
   }
 `;
 
 export const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-width: 220px;
+  gap: 8px;
+  min-width: 0;
 `;
 
 export const Label = styled.label`
-  ${heavyFont}
-  color: #000;
-  font-size: 17px;
-  margin-bottom: 4px;
-  letter-spacing: 1.5px;
-  font-weight: 900;
+  ${bodyFont}
+  font-size: 0.58rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
 `;
 
 export const InputContainer = styled.div`
   position: relative;
-  background-color: var(--input-bg);
-  border-radius: 4px;
-  height: 40px;
+  height: 44px;
 `;
 
 export const TextInput = styled.input`
+  ${bodyFont}
   width: 100%;
   height: 100%;
-  background: transparent;
-  border: none;
-  color: #777;
-  padding: 0 38px 0 14px;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  font-weight: bold;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(16, 24, 40, 0.1);
+  border-radius: 14px;
+  color: var(--text);
+  padding: 0 36px 0 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
   outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    border-color: rgba(var(--gold-rgb), 0.4);
+    box-shadow: 0 0 0 4px rgba(var(--gold-rgb), 0.12);
+  }
 `;
 
 export const InputIcon = styled.i`
@@ -90,47 +168,47 @@ export const InputIcon = styled.i`
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--red-icon);
-  font-size: 15px;
+  color: var(--gold-strong);
+  font-size: 0.76rem;
+  pointer-events: none;
 `;
 
 export const SearchButton = styled.button`
-  ${heavyFont}
-  background: linear-gradient(180deg, #ff2a00 0%, #bb0000 100%);
-  color: #000;
+  ${bodyFont}
+  width: 100%;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   border: none;
-  border-radius: 6px;
-  padding: 0 28px;
-  height: 58px;
-  font-size: 42px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #101828;
+  font-size: 0.76rem;
+  font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 6px 0 #550000, 0 12px 25px rgba(0, 0, 0, 0.8);
-  transition: all 0.1s;
+  transition: transform 0.15s, box-shadow 0.2s ease;
   white-space: nowrap;
-  letter-spacing: -0.5px;
-  transform: scaleX(0.88);
+  box-shadow: 0 18px 34px rgba(var(--gold-rgb), 0.22);
 
   &:hover {
-    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 22px 38px rgba(var(--gold-rgb), 0.28);
   }
 
   &:active {
-    transform: translateY(5px);
-    box-shadow: 0 1px 0 #550000, 0 4px 10px rgba(0, 0, 0, 0.8);
-  }
-
-  @media (max-width: 1200px) {
-    width: 100%;
-    margin-top: 8px;
+    transform: translateY(0);
   }
 `;
 
 export const MetaRow = styled.div`
-  width: 100%;
+  position: relative;
+  z-index: 1;
+  margin-top: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 `;
 
@@ -139,31 +217,34 @@ export const MetaInfo = styled.div`
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  flex: 1;
 `;
 
 export const MetaPill = styled.div`
-  background: rgba(0, 0, 0, 0.14);
-  color: #000;
-  border: 1px solid rgba(0, 0, 0, 0.18);
+  ${bodyFont}
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: rgba(var(--gold-rgb), 0.1);
+  color: var(--gold-strong);
+  border: 1px solid rgba(var(--gold-rgb), 0.18);
   border-radius: 999px;
-  padding: 6px 12px;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.5px;
+  font-size: 0.68rem;
+  font-weight: 700;
 `;
 
 export const HelperText = styled.p`
-  color: rgba(0, 0, 0, 0.72);
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-  font-weight: bold;
+  ${bodyFont}
+  color: var(--text-soft);
+  font-size: 0.7rem;
+  line-height: 1.45;
 `;
 
 export const ErrorText = styled.p`
-  width: 100%;
-  color: #7a0000;
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-  font-weight: bold;
+  ${bodyFont}
+  color: var(--danger);
+  font-size: 0.74rem;
+  font-weight: 700;
+  margin-top: 8px;
 `;

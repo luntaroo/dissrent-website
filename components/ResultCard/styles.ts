@@ -1,221 +1,183 @@
 import styled from "styled-components";
-import { heavyFont } from "../shared/mixins";
+import { bodyFont, heavyFont } from "../shared/mixins";
 
 export const Card = styled.article`
   position: relative;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-  min-height: 340px;
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: transform 0.2s;
+  min-height: 100%;
+  backdrop-filter: blur(14px);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
   }
+`;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      180deg,
-      rgba(20, 20, 24, 0.9) 0%,
-      rgba(20, 20, 24, 0.35) 30%,
-      rgba(20, 20, 24, 0.25) 55%,
-      rgba(10, 10, 14, 0.93) 100%
-    );
-    z-index: 1;
-  }
+export const Media = styled.div`
+  position: relative;
+  min-height: 170px;
 `;
 
 export const Bg = styled.div<{ $img: string }>`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url(${({ $img }) => $img});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(16, 24, 40, 0.04) 0%, rgba(16, 24, 40, 0.4) 100%),
+    url(${({ $img }) => $img}) center/cover no-repeat;
 `;
 
-export const Top = styled.div`
+export const MediaOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(var(--gold-rgb), 0.12), transparent 56%);
+`;
+
+export const BadgeRow = styled.div`
   position: relative;
-  z-index: 2;
-  padding: 16px 16px 8px;
+  z-index: 1;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+`;
+
+export const StatusBadge = styled.div<{ $tone?: "available" | "warning" | "blocked" | "neutral" }>`
+  ${bodyFont}
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  background: ${({ $tone }) =>
+    $tone === "blocked"
+      ? "rgba(194, 65, 12, 0.88)"
+      : $tone === "warning"
+        ? "rgba(180, 83, 9, 0.88)"
+        : $tone === "neutral"
+          ? "rgba(10, 15, 22, 0.66)"
+          : "rgba(255, 255, 255, 0.9)"};
+  color: ${({ $tone }) =>
+    $tone === "available" ? "var(--text)" : "var(--text-inverse)"};
+`;
+
+export const Content = styled.div`
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
 `;
 
 export const CarName = styled.h3`
   ${heavyFont}
-  color: #ffffff;
-  font-size: 26px;
-  line-height: 1;
-  margin-bottom: 6px;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.95);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: -0.5px;
-  transform: scaleX(0.88);
-  transform-origin: left;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 0.98;
 `;
 
-export const PriceLine = styled.div`
-  color: #bbb;
-  font-size: 13px;
-  font-family: Arial, sans-serif;
-  margin-bottom: 2px;
-  line-height: 1.5;
-
-  strong {
-    color: #fff;
-    font-size: 14px;
-  }
+export const Summary = styled.p`
+  ${bodyFont}
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
 `;
 
-export const TotalPrice = styled.div`
-  ${heavyFont}
-  color: var(--price-yellow);
-  font-size: 44px;
-  font-style: italic;
-  line-height: 1;
-  letter-spacing: -0.5px;
-  text-shadow: 0 0 25px rgba(255, 204, 0, 0.4), 2px 2px 6px rgba(0, 0, 0, 0.95);
-  transform: scaleX(0.88);
-  transform-origin: left;
-  margin-top: 2px;
-
-  @media (max-width: 900px) {
-    font-size: 36px;
-  }
+export const PricingPanel = styled.div`
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 16px;
+  background: rgba(16, 24, 40, 0.04);
+  border: 1px solid rgba(16, 24, 40, 0.08);
 `;
 
-export const NegotiableText = styled.div`
-  ${heavyFont}
-  color: var(--price-yellow);
-  font-size: 22px;
-  font-style: italic;
-  line-height: 1;
-  text-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
-  transform: scaleX(0.88);
-  transform-origin: left;
-  margin-top: 4px;
-`;
-
-export const DiscountBadge = styled.div`
-  ${heavyFont}
-  display: inline-block;
-  background: linear-gradient(135deg, #ff3300 0%, #cc0000 100%);
-  color: #ffffff;
-  font-size: 16px;
-  padding: 3px 10px 2px;
-  border-radius: 4px;
-  margin-top: 5px;
-  box-shadow: 0 2px 8px rgba(255, 0, 0, 0.5);
-  transform: scaleX(0.88);
-  transform-origin: left;
-  letter-spacing: 0.5px;
-`;
-
-export const Bottom = styled.div`
-  position: relative;
-  z-index: 2;
-  padding: 0 16px 14px;
-`;
-
-export const BlockedOverlay = styled.div`
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 3;
+export const PricingRow = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 12px;
 `;
 
-export const ZauzetoBadge = styled.div`
-  ${heavyFont}
-  font-size: 36px;
-  color: #ff2222;
-  letter-spacing: 3px;
-  transform: rotate(-18deg) scaleX(0.88);
-  text-shadow:
-    0 0 20px rgba(255, 0, 0, 0.8),
-    2px 2px 0 rgba(0, 0, 0, 0.9);
-  border: 4px solid #ff2222;
-  padding: 6px 18px 4px;
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 24px rgba(255, 0, 0, 0.4);
-  white-space: nowrap;
+export const PricingLabel = styled.span`
+  ${bodyFont}
+  color: var(--text-faint);
+  font-size: 0.56rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+`;
 
-  @media (max-width: 900px) {
-    font-size: 26px;
+export const PricingValue = styled.span`
+  ${bodyFont}
+  color: var(--text);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-align: right;
+`;
+
+export const Notice = styled.div<{ $available: boolean }>`
+  ${bodyFont}
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: ${({ $available }) => ($available ? "var(--success-dim)" : "var(--danger-dim)")};
+  border: 1px solid
+    ${({ $available }) => ($available ? "rgba(21, 128, 61, 0.14)" : "rgba(194, 65, 12, 0.16)")};
+  color: ${({ $available }) => ($available ? "var(--success)" : "var(--danger)")};
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.65;
+`;
+
+export const ActionRow = styled.div`
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+
+  @media (max-width: 520px) {
+    flex-direction: column;
   }
 `;
 
-export const UnavailableBtn = styled.button`
-  ${heavyFont}
-  background: rgba(20, 20, 24, 0.9);
-  color: #ff3333;
-  border: 2px solid #ff3333;
-  border-radius: 6px;
-  padding: 10px 8px;
-  font-size: 20px;
-  cursor: not-allowed;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  letter-spacing: -0.5px;
-  transform: scaleX(0.9);
-  opacity: 0.85;
-  box-shadow: 0 5px 0 #6a0000, 0 8px 18px rgba(0, 0, 0, 0.7);
-`;
-
-export const ReserveBtn = styled.button<{ $contact?: boolean }>`
-  ${heavyFont}
-  background: ${({ $contact }) =>
-    $contact
-      ? "linear-gradient(180deg, #2a2a2e 0%, #1a1a1e 100%)"
-      : "linear-gradient(180deg, #ffcc00 0%, #ff5500 100%)"};
-  color: ${({ $contact }) => ($contact ? "var(--yellow-bar)" : "#000000")};
-  border: ${({ $contact }) => ($contact ? "2px solid var(--yellow-bar)" : "none")};
-  border-radius: 6px;
-  padding: 10px 8px;
-  font-size: 20px;
+export const GhostButton = styled.button`
+  ${bodyFont}
+  flex: 1;
+  min-height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 24, 40, 0.12);
+  background: rgba(16, 24, 40, 0.03);
+  color: var(--text);
+  font-size: 0.72rem;
+  font-weight: 800;
   cursor: pointer;
-  box-shadow: ${({ $contact }) =>
-    $contact
-      ? "0 5px 0 #111, 0 8px 18px rgba(0,0,0,0.7)"
-      : "0 5px 0 #8a3000, 0 8px 18px rgba(0,0,0,0.7)"};
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.1s;
-  letter-spacing: -0.5px;
-  transform: scaleX(0.9);
-  white-space: nowrap;
+`;
 
-  &:hover {
-    filter: brightness(1.1);
-  }
+export const PrimaryButton = styled.button`
+  ${bodyFont}
+  flex: 1.15;
+  min-height: 42px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #101828;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 18px 30px rgba(var(--gold-rgb), 0.22);
 
-  &:active {
-    transform: scaleX(0.9) translateY(4px);
-    box-shadow: ${({ $contact }) =>
-      $contact
-        ? "0 1px 0 #111, 0 3px 8px rgba(0,0,0,0.7)"
-        : "0 1px 0 #8a3000, 0 3px 8px rgba(0,0,0,0.7)"};
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    box-shadow: none;
   }
 `;

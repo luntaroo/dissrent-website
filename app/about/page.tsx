@@ -1,7 +1,6 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
@@ -17,62 +16,67 @@ import {
   BackLink,
 } from "@/components/InfoPage/styles";
 
+export const metadata: Metadata = {
+  title: "O nama",
+  description:
+    "Saznajte vise o DISS RENT rent a car usluzi u Banjaluci, nasem pristupu rezervaciji i kontakt podacima.",
+};
+
 export default function AboutPage() {
   return (
     <PageWrap>
       <Navbar />
+
       <Container>
         <BackLink as={Link} href="/">
-          <i className="fa-solid fa-arrow-left" /> NAZAD NA POČETNU
+          <i className="fa-solid fa-arrow-left" /> Nazad na pocetnu
         </BackLink>
 
-        <PageTitle>O NAMA</PageTitle>
+        <PageTitle>O nama</PageTitle>
         <TitleAccent />
 
         <Section>
           <Text>
-            <strong style={{ color: "var(--yellow-bar)" }}>DISS RENT</strong> je
-            pouzdana rent-a-car agencija sa sjedištem u Banjaluci. Naša misija je
-            jednostavna — pružiti Vam kvalitetno, pouzdano i pristupačno
-            iznajmljivanje automobila bez skrivenih troškova i komplikacija.
+            <strong style={{ color: "var(--primary)" }}>DISS RENT</strong> je rent-a-car agencija iz
+            Banjaluke koja nudi provjerena vozila, jasne cijene i brzu online rezervaciju bez depozita.
+          </Text>
+          <Text>
+            Bez obzira da li vam je vozilo potrebno za poslovni put, gradsku voznju ili duzi boravak,
+            cilj nam je da najam zavrsite jednostavno i uz pouzdanu podrsku od prvog kontakta do
+            preuzimanja kljuceva.
           </Text>
         </Section>
 
         <Section>
-          <SectionTitle>ZAŠTO MI?</SectionTitle>
+          <SectionTitle>Zasto mi</SectionTitle>
           <List>
-            <ListItem>Konkurentne cijene — već od 60 KM dnevno</ListItem>
-            <ListItem>Bez depozita i skrivenih troškova</ListItem>
-            <ListItem>Brza i jednostavna online rezervacija</ListItem>
-            <ListItem>Flota od 6 kvalitetnih i održavanih vozila</ListItem>
-            <ListItem>Fleksibilni uslovi najma — od jednog dana do više sedmica</ListItem>
-            <ListItem>Popusti za duže periode (4+ dana)</ListItem>
-            <ListItem>Personalizovana usluga — dostupni smo na Viber, telefon i email</ListItem>
+            <ListItem>Konkurentne cijene od 60 KM dnevno</ListItem>
+            <ListItem>Bez depozita i bez skrivenih troskova</ListItem>
+            <ListItem>Brza online rezervacija sa email potvrdom</ListItem>
+            <ListItem>Flota od 6 uredno predstavljenih vozila</ListItem>
+            <ListItem>Popusti za periode od 4 do 7 dana</ListItem>
+            <ListItem>Fleksibilna komunikacija putem telefona, Viber-a i email-a</ListItem>
           </List>
         </Section>
 
         <Section>
-          <SectionTitle>NAŠA VIZIJA</SectionTitle>
+          <SectionTitle>Nasa vizija</SectionTitle>
           <Text>
-            Želimo biti prvi izbor za iznajmljivanje automobila u Banjaluci i
-            široj regiji. Fokusirani smo na transparentnost, kvalitet usluge i
-            zadovoljstvo klijenata. Svako vozilo u našoj floti prolazi redovne
-            tehničke preglede i održava se po najvišim standardima.
+            Zelimo biti prvi izbor za rent a car u Banjaluci zahvaljujuci pouzdanoj usluzi,
+            transparentnim uslovima i vozilima spremnim za svaki plan puta.
           </Text>
         </Section>
 
         <Section>
-          <SectionTitle>KONTAKTIRAJTE NAS</SectionTitle>
-          <Text>
-            Imate pitanje ili želite posebnu ponudu? Javite nam se direktno:
-          </Text>
+          <SectionTitle>Kontakt</SectionTitle>
           <List>
-            <ListItem>Telefon / Viber: +387 65 000 000</ListItem>
+            <ListItem>Telefon / Viber: +387 65 626 444</ListItem>
             <ListItem>Email: rent@diss.com</ListItem>
             <ListItem>Lokacija: Banjaluka, Republika Srpska</ListItem>
           </List>
         </Section>
       </Container>
+
       <Footer />
     </PageWrap>
   );

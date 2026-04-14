@@ -23,3 +23,13 @@ export interface BookingContext {
   totalPrice?: number | null;
   pricingMode?: "standard" | "discount" | "quote";
 }
+
+export interface CarAvailabilitySummary {
+  isAvailableForWindow: boolean;
+  firstAvailableDate: string | null;
+  firstAvailableLabel: string | null;
+  requestedDays: number;
+  startFrom: string;
+}
+
+export type CarAvailabilityMap = Record<string, CarAvailabilitySummary>;

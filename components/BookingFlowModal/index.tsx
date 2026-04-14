@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "../DatePicker";
 import type { BookingContext } from "@/lib/types";
+import { findFirstAvailableStartDate, formatAvailabilityDateLabel } from "@/lib/availability";
 import {
   EMAIL_RE,
   calculateBookingPrice,
@@ -20,7 +21,15 @@ import {
 import {
   Overlay,
   Modal,
+  MobileBar,
+  ScrollArea,
   CloseX,
+  Shell,
+  SummaryPane,
+  SummaryVisual,
+  SummaryOverlay,
+  SummaryContent,
+  SummaryEyebrow,
   Title,
   Subtitle,
   Steps,
@@ -28,6 +37,9 @@ import {
   SummaryBox,
   SummaryLine,
   Notice,
+  FormPane,
+  MobileCarTitle,
+  SectionTitle,
   DateRow,
   Field,
   Label,
@@ -93,6 +105,25 @@ export default function BookingFlowModal({ isOpen, onClose, bookingContext }: Pr
     effectivePickupDate &&
     effectiveReturnDate &&
     hasBlockedDates(blockedDates, effectivePickupDate, effectiveReturnDate);
+  const requestedDaysForAvailability = priceSummary.days > 0 ? priceSummary.days : 1;
+  const hasValidSelectedRange =
+    !!effectivePickupDate &&
+    !!effectiveReturnDate &&
+    isDateRangeValid(effectivePickupDate, effectiveReturnDate);
+  const showContactFields = !needsDates || (hasValidSelectedRange && !liveConflict);
+  const firstAvailableAfterConflict = liveConflict
+    ? formatAvailabilityDateLabel(
+        findFirstAvailableStartDate(
+          blockedDates,
+          requestedDaysForAvailability,
+          shiftDate(effectivePickupDate, 1) ?? effectivePickupDate
+        )
+      )
+    : null;
+  const modalTitle = needsDates ? "Provjerite termin i nastavite rezervaciju" : "Zavrsite rezervaciju";
+  const modalSubtitle = needsDates
+    ? "Odaberite slobodan termin za ovo vozilo, zatim unesite kontakt podatke i posaljite rezervaciju."
+    : "Provjerite detalje, ostavite kontakt podatke i potvrdu rezervacije dobijate na email.";
 
   useEffect(() => {
     if (!isOpen || !bookingContext?.carImg) {
@@ -101,7 +132,7 @@ export default function BookingFlowModal({ isOpen, onClose, bookingContext }: Pr
     }
 
     fetch(`/api/availability?carImg=${encodeURIComponent(bookingContext.carImg)}`)
-      .then((response) => response.json())
+      .then((response) => response.json() as Promise<{ blockedDates?: string[] }>)
       .then((data) => setBlockedDates(data.blockedDates ?? []))
       .catch(() => setBlockedDates([]));
   }, [isOpen, bookingContext?.carImg]);
@@ -157,7 +188,11 @@ export default function BookingFlowModal({ isOpen, onClose, bookingContext }: Pr
     }
 
     if (liveConflict) {
-      setError("Ovaj termin je u medjuvremenu zauzet. Izaberite drugi period.");
+      setError(
+        firstAvailableAfterConflict
+          ? `Ovaj termin je u medjuvremenu zauzet. Prvi slobodan termin je ${firstAvailableAfterConflict}.`
+          : "Ovaj termin je u medjuvremenu zauzet. Izaberite drugi period."
+      );
       return;
     }
 
@@ -195,7 +230,7 @@ export default function BookingFlowModal({ isOpen, onClose, bookingContext }: Pr
       });
 
       if (response.ok) {
-        const data = await response.json().catch(() => ({}));
+        const data = (await response.json().catch(() => ({}))) as { emailWarning?: string };
         if (data.emailWarning) {
           setError(data.emailWarning);
         }
@@ -203,7 +238,7 @@ export default function BookingFlowModal({ isOpen, onClose, bookingContext }: Pr
         return;
       }
 
-      const data = await response.json().catch(() => ({}));
+      const data = (await response.json().catch(() => ({}))) as { error?: string };
       setError(data.error ?? "Doslo je do greske. Pokusajte ponovo.");
     } catch {
       setError("Doslo je do greske. Provjerite internet vezu.");
@@ -222,174 +257,217 @@ export default function BookingFlowModal({ isOpen, onClose, bookingContext }: Pr
       }}
     >
       <Modal $open={isOpen}>
+        {/* Desktop close button — absolutely positioned, stays put */}
         <CloseX onClick={onClose} aria-label="Zatvori rezervaciju">
-          &times;
+          <i className="fa-solid fa-xmark" />
         </CloseX>
 
+        {/* Mobile close bar — sits above scroll area so it never scrolls away */}
+        <MobileBar>
+          <CloseX
+            as="button"
+            onClick={onClose}
+            aria-label="Zatvori rezervaciju"
+            style={{ position: "static", transform: "none" }}
+          >
+            <i className="fa-solid fa-xmark" />
+          </CloseX>
+        </MobileBar>
+
+        <ScrollArea>
         {success ? (
           <SuccessBox>
-            <SuccessTitle>REZERVACIJA PRIMLJENA</SuccessTitle>
+            <SuccessTitle>Rezervacija je primljena.</SuccessTitle>
             <SuccessText>
-              Poslali smo email na <strong>{email}</strong>.
-              <br />
-              Rezervacija postaje vazeca tek nakon potvrde linka iz email poruke.
+              Poslali smo email na <strong>{email}</strong>. Rezervacija postaje vazeca tek nakon
+              potvrde linka iz email poruke.
             </SuccessText>
           </SuccessBox>
         ) : (
-          <>
-            <Title>ZAVRSI REZERVACIJU</Title>
-            <Subtitle>
-              Tok je sada jednostavan: pregled termina, kontakt podaci i finalna potvrda preko emaila.
-            </Subtitle>
+          <Shell>
+            <SummaryPane>
+              <SummaryVisual $img={bookingContext?.carImg ?? "/1.jpg"}>
+                <SummaryOverlay />
+              </SummaryVisual>
 
-            <Steps>
-              <Step $active>{bookingContext?.carName ?? "AUTO"}</Step>
-              <Step $active={!needsDates || pickupDate !== ""}>TERMIN</Step>
-              <Step $active={name !== "" || phone !== "" || email !== ""}>KONTAKT</Step>
-            </Steps>
+              <SummaryContent>
+                <SummaryEyebrow>{needsDates ? "Provjera dostupnosti" : "Rezervacija"}</SummaryEyebrow>
+                <Title>{modalTitle}</Title>
+                <Subtitle>{modalSubtitle}</Subtitle>
 
-            <SummaryBox>
-              <SummaryLine>
-                <span>Automobil</span>
-                <strong>{bookingContext?.carName ?? "-"}</strong>
-              </SummaryLine>
-              <SummaryLine>
-                <span>Termin</span>
-                <strong>
-                  {effectivePickupDate && effectiveReturnDate
-                    ? `${formatDate(effectivePickupDate)} - ${formatDate(effectiveReturnDate)}`
-                    : "Odaberite datume"}
-                </strong>
-              </SummaryLine>
-              <SummaryLine>
-                <span>Trajanje</span>
-                <strong>{priceSummary.days > 0 ? `${priceSummary.days} dana` : "-"}</strong>
-              </SummaryLine>
-              <SummaryLine>
-                <span>Cijena</span>
-                <strong>
-                  {priceSummary.days === 0
-                    ? "-"
-                    : priceSummary.totalPrice == null
-                      ? "Cijena po dogovoru"
-                      : `${priceSummary.totalPrice} KM`}
-                </strong>
-              </SummaryLine>
-            </SummaryBox>
+                <Steps>
+                  <Step $active>{bookingContext?.carName ?? "Auto"}</Step>
+                  <Step $active={!needsDates || pickupDate !== ""}>Termin</Step>
+                  <Step $active={name !== "" || phone !== "" || email !== ""}>Kontakt</Step>
+                </Steps>
 
-            <Notice>
-              Ako je termin zauzet u trenutku slanja, odmah cete dobiti jasnu poruku i necemo napraviti
-              losu rezervaciju.
-            </Notice>
+                <SummaryBox>
+                  <SummaryLine>
+                    <span>Automobil</span>
+                    <strong>{bookingContext?.carName ?? "-"}</strong>
+                  </SummaryLine>
+                  <SummaryLine>
+                    <span>Termin</span>
+                    <strong>
+                      {effectivePickupDate && effectiveReturnDate
+                        ? `${formatDate(effectivePickupDate)} - ${formatDate(effectiveReturnDate)}`
+                        : "Odaberite datume"}
+                    </strong>
+                  </SummaryLine>
+                  <SummaryLine>
+                    <span>Trajanje</span>
+                    <strong>{priceSummary.days > 0 ? `${priceSummary.days} dana` : "-"}</strong>
+                  </SummaryLine>
+                  <SummaryLine>
+                    <span>Cijena</span>
+                    <strong>
+                      {priceSummary.days === 0
+                        ? "-"
+                        : priceSummary.totalPrice == null
+                          ? "Cijena po dogovoru"
+                          : `${priceSummary.totalPrice} KM`}
+                    </strong>
+                  </SummaryLine>
+                </SummaryBox>
 
-            {needsDates && (
-              <DateRow>
-                <div>
-                  <Label as="span">DATUM PREUZIMANJA</Label>
-                  <DatePicker
-                    key={`modal-pickup-${pickupDate || today}`}
-                    value={pickupDate}
-                    onChange={(date) => {
-                      setPickupDate(date);
-                      setError("");
-                      if (returnDate && returnDate <= date) {
-                        setReturnDate("");
-                      }
-                    }}
-                    placeholder="Odaberite datum"
-                    minDate={today}
-                    rangeStart={pickupDate}
-                    rangeEnd={returnDate}
-                    blockedDates={blockedDates}
-                  />
-                </div>
-                <div>
-                  <Label as="span">DATUM POVRATKA</Label>
-                  <DatePicker
-                    key={`modal-return-${returnDate || returnMinDate}`}
-                    value={returnDate}
-                    onChange={(date) => {
-                      setReturnDate(date);
-                      setError("");
-                    }}
-                    placeholder="Odaberite datum"
-                    minDate={returnMinDate}
-                    maxDate={returnMaxDate}
-                    rangeStart={pickupDate}
-                    rangeEnd={returnDate}
-                    blockedDates={blockedDates}
-                  />
-                </div>
-              </DateRow>
-            )}
+                <Notice>
+                  {liveConflict && firstAvailableAfterConflict
+                    ? `Ovaj termin je zauzet. Prvi slobodan termin za ovo vozilo je ${firstAvailableAfterConflict}.`
+                    : "Ako se termin u medjuvremenu popuni, odmah cete dobiti obavjestenje i moci odabrati prvi naredni slobodan datum."}
+                </Notice>
+              </SummaryContent>
+            </SummaryPane>
 
-            <Field>
-              <Label htmlFor="booking-name">IME I PREZIME</Label>
-              <Input
-                id="booking-name"
-                type="text"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-              />
-            </Field>
+            <FormPane>
+              <MobileCarTitle>{bookingContext?.carName ?? "Rezervacija"}</MobileCarTitle>
+              {needsDates && (
+                <>
+                  <SectionTitle>1. Odaberite termin</SectionTitle>
+                  <DateRow>
+                    <div>
+                      <Label as="span">Datum preuzimanja</Label>
+                      <DatePicker
+                        key={`modal-pickup-${pickupDate || today}`}
+                        value={pickupDate}
+                        onChange={(date) => {
+                          setPickupDate(date);
+                          setError("");
+                          if (returnDate && returnDate <= date) {
+                            setReturnDate("");
+                          }
+                        }}
+                        placeholder="Odaberite datum"
+                        minDate={today}
+                        rangeStart={pickupDate}
+                        rangeEnd={returnDate}
+                        blockedDates={blockedDates}
+                      />
+                    </div>
+                    <div>
+                      <Label as="span">Datum povratka</Label>
+                      <DatePicker
+                        key={`modal-return-${returnDate || returnMinDate}`}
+                        value={returnDate}
+                        onChange={(date) => {
+                          setReturnDate(date);
+                          setError("");
+                        }}
+                        placeholder="Odaberite datum"
+                        minDate={returnMinDate}
+                        maxDate={returnMaxDate}
+                        rangeStart={pickupDate}
+                        rangeEnd={returnDate}
+                        blockedDates={blockedDates}
+                      />
+                    </div>
+                  </DateRow>
+                </>
+              )}
 
-            <Field>
-              <Label htmlFor="booking-phone">BROJ TELEFONA</Label>
-              <Input
-                id="booking-phone"
-                type="tel"
-                value={phone}
-                onChange={(event) => setPhone(event.target.value)}
-              />
-            </Field>
+              {!showContactFields && needsDates && (
+                <Notice>
+                  Odaberite slobodan termin za ovo vozilo. Cim unesete validan period, mozete nastaviti
+                  sa slanjem rezervacije.
+                </Notice>
+              )}
 
-            <Field>
-              <Label htmlFor="booking-email">EMAIL</Label>
-              <Input
-                id="booking-email"
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </Field>
+              {showContactFields && (
+                <>
+                  <SectionTitle>{needsDates ? "2. Kontakt podaci" : "Kontakt podaci"}</SectionTitle>
 
-            <ContactLabel>NACIN KONTAKTA</ContactLabel>
-            <RadioGroup>
-              <RadioOption>
-                <RadioInput
-                  type="radio"
-                  name="contact"
-                  value="viber"
-                  checked={contact === "viber"}
-                  onChange={() => setContact("viber")}
-                />
-                <RadioIcon className="fa-brands fa-viber" />
-                <RadioText>Viber</RadioText>
-              </RadioOption>
-              <RadioOption>
-                <RadioInput
-                  type="radio"
-                  name="contact"
-                  value="sms"
-                  checked={contact === "sms"}
-                  onChange={() => setContact("sms")}
-                />
-                <RadioIcon className="fa-regular fa-comment-dots" />
-                <RadioText>SMS</RadioText>
-              </RadioOption>
-            </RadioGroup>
+                  <Field>
+                    <Label htmlFor="booking-name">Ime i prezime</Label>
+                    <Input
+                      id="booking-name"
+                      type="text"
+                      value={name}
+                      onChange={(event) => setName(event.target.value)}
+                    />
+                  </Field>
 
-            {error && <ErrorText>{error}</ErrorText>}
+                  <Field>
+                    <Label htmlFor="booking-phone">Broj telefona</Label>
+                    <Input
+                      id="booking-phone"
+                      type="tel"
+                      value={phone}
+                      onChange={(event) => setPhone(event.target.value)}
+                    />
+                  </Field>
 
-            <ConfirmButton type="button" onClick={handleSubmit} disabled={submitting}>
-              {submitting
-                ? "SALJEM..."
-                : priceSummary.totalPrice == null && priceSummary.days > 7
-                  ? "POSALJI UPIT"
-                  : "POSALJI REZERVACIJU"}
-            </ConfirmButton>
-          </>
+                  <Field>
+                    <Label htmlFor="booking-email">Email</Label>
+                    <Input
+                      id="booking-email"
+                      type="email"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                  </Field>
+
+                  <ContactLabel>Nacin kontakta</ContactLabel>
+                  <RadioGroup>
+                    <RadioOption>
+                      <RadioInput
+                        type="radio"
+                        name="contact"
+                        value="viber"
+                        checked={contact === "viber"}
+                        onChange={() => setContact("viber")}
+                      />
+                      <RadioIcon className="fa-brands fa-viber" />
+                      <RadioText>Viber</RadioText>
+                    </RadioOption>
+                    <RadioOption>
+                      <RadioInput
+                        type="radio"
+                        name="contact"
+                        value="sms"
+                        checked={contact === "sms"}
+                        onChange={() => setContact("sms")}
+                      />
+                      <RadioIcon className="fa-regular fa-comment-dots" />
+                      <RadioText>SMS</RadioText>
+                    </RadioOption>
+                  </RadioGroup>
+                </>
+              )}
+
+              {error && <ErrorText>{error}</ErrorText>}
+
+              {showContactFields && (
+                <ConfirmButton type="button" onClick={handleSubmit} disabled={submitting}>
+                  {submitting
+                    ? "Saljem..."
+                    : priceSummary.totalPrice == null && priceSummary.days > 7
+                      ? "Posalji upit"
+                      : "Posalji rezervaciju"}
+                </ConfirmButton>
+              )}
+            </FormPane>
+          </Shell>
         )}
+        </ScrollArea>
       </Modal>
     </Overlay>
   );

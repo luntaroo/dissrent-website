@@ -1,105 +1,183 @@
 import styled from "styled-components";
-import { heavyFont } from "../shared/mixins";
+import { bodyFont } from "../shared/mixins";
 
 export const FooterEl = styled.footer`
-  background: #222225;
-  margin-top: 40px;
-  border-top: 4px solid var(--yellow-bar);
+  background:
+    radial-gradient(circle at top left, rgba(var(--gold-rgb), 0.14), transparent 24%),
+    linear-gradient(180deg, var(--bg-dark-strong) 0%, #0f141d 100%);
+  color: var(--text-inverse);
 `;
 
 export const Container = styled.div`
-  width: 96%;
-  max-width: 1500px;
+  max-width: var(--max-w);
   margin: 0 auto;
-  padding: 40px 0 0;
+  padding: 72px 32px 30px;
+
+  @media (max-width: 900px) {
+    padding: 54px 20px 24px;
+  }
 `;
 
-export const Cols = styled.div`
+export const TopRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 30px;
-  padding-bottom: 30px;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
+  gap: 24px;
+  margin-bottom: 28px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 960px) {
     grid-template-columns: 1fr;
-    gap: 25px;
   }
+`;
+
+export const BrandBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+`;
+
+export const BrandEyebrow = styled.span`
+  ${bodyFont}
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(var(--gold-rgb), 0.12);
+  border: 1px solid rgba(var(--gold-rgb), 0.18);
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold-light);
+`;
+
+export const BrandLogoLink = styled.a`
+  display: block;
+  width: min(100%, 320px);
+  text-decoration: none;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 24px 44px rgba(0, 0, 0, 0.22));
+  }
+`;
+
+export const BrandText = styled.p`
+  ${bodyFont}
+  max-width: 560px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.96rem;
+  line-height: 1.8;
+`;
+
+export const ContactCard = styled.div`
+  display: grid;
+  gap: 10px;
+  padding: 24px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+`;
+
+export const ContactLabel = styled.div`
+  ${bodyFont}
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.42);
+`;
+
+export const ContactValue = styled.a`
+  ${bodyFont}
+  color: var(--text-inverse);
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
+`;
+
+export const LinksGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding: 26px 0 30px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 export const ColTitle = styled.h4`
-  ${heavyFont}
-  font-size: 28px;
-  color: var(--yellow-bar);
-  margin-bottom: 16px;
-  letter-spacing: 1px;
-  transform: scaleX(0.88);
-  transform-origin: left;
-
-  @media (max-width: 768px) {
-    font-size: 24px;
-  }
-`;
-
-export const ColText = styled.div`
-  color: #ffffff;
-  font-size: 15px;
-  line-height: 2;
-  font-family: Arial, sans-serif;
-`;
-
-export const LinksList = styled.ul`
-  list-style: none;
-`;
-
-export const LinksItem = styled.li`
+  ${bodyFont}
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.38);
   margin-bottom: 6px;
 `;
 
 export const FooterLink = styled.a`
-  color: #ffffff;
+  ${bodyFont}
+  color: rgba(255, 255, 255, 0.66);
   text-decoration: none;
-  font-size: 15px;
-  font-family: Arial, sans-serif;
+  font-size: 0.94rem;
   transition: color 0.2s;
 
   &:hover {
-    color: var(--yellow-bar);
+    color: var(--gold-light);
   }
 `;
 
 export const SocialIcons = styled.div`
   display: flex;
-  gap: 16px;
-  margin-top: 4px;
+  gap: 10px;
+  flex-wrap: wrap;
 `;
 
 export const SocialLink = styled.a`
-  color: var(--yellow-bar);
-  font-size: 36px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 1rem;
   text-decoration: none;
-  transition: transform 0.2s, color 0.2s;
+  transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 
   &:hover {
-    transform: scale(1.15);
-    color: #fff;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 30px;
+    color: var(--gold-light);
+    border-color: rgba(var(--gold-rgb), 0.28);
+    background: rgba(var(--gold-rgb), 0.12);
+    transform: translateY(-1px);
   }
 `;
 
 export const BottomBar = styled.div`
-  border-top: 1px solid rgba(255, 204, 0, 0.2);
-  padding: 16px 0;
-  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
 `;
 
 export const BottomText = styled.p`
-  ${heavyFont}
-  color: var(--yellow-bar);
-  font-size: 16px;
-  letter-spacing: 1px;
-  transform: scaleX(0.9);
-  transform-origin: center;
+  ${bodyFont}
+  color: rgba(255, 255, 255, 0.36);
+  font-size: 0.82rem;
+  line-height: 1.6;
 `;

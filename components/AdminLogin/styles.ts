@@ -1,85 +1,92 @@
 import styled from "styled-components";
-import { heavyFont } from "../shared/mixins";
+import { bodyFont, heavyFont } from "../shared/mixins";
 
 export const Wrapper = styled.div`
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 `;
 
 export const Card = styled.div`
-  background: #111114;
-  border: 3px solid var(--yellow-bar);
-  border-radius: 10px;
-  padding: 40px 36px 36px;
-  width: 90%;
-  max-width: 420px;
+  width: min(100%, 460px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97) 0%, rgba(246, 250, 255, 0.99) 100%);
+  border: 1px solid rgba(12, 76, 177, 0.12);
+  border-radius: 30px;
+  padding: 34px 30px 28px;
+  box-shadow: var(--shadow-lg);
+`;
+
+export const Eyebrow = styled.span`
+  ${bodyFont}
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--primary-strong);
+  margin-bottom: 10px;
 `;
 
 export const Title = styled.h1`
   ${heavyFont}
-  font-size: 42px;
-  color: var(--yellow-bar);
-  margin-bottom: 28px;
-  letter-spacing: 1px;
-  transform: scaleX(0.88);
-  transform-origin: left;
-  text-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
+  font-size: clamp(2.1rem, 5vw, 3rem);
+  line-height: 0.94;
+  color: var(--navy);
+  margin-bottom: 10px;
+`;
+
+export const Subtitle = styled.p`
+  ${bodyFont}
+  color: var(--text-soft);
+  font-size: 0.98rem;
+  line-height: 1.8;
+  margin-bottom: 22px;
 `;
 
 export const Label = styled.label`
-  ${heavyFont}
+  ${bodyFont}
   display: block;
-  color: var(--yellow-bar);
-  font-size: 20px;
+  color: var(--navy);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   margin-bottom: 8px;
-  letter-spacing: 1px;
-  transform: scaleX(0.88);
-  transform-origin: left;
 `;
 
 export const Input = styled.input`
+  ${bodyFont}
   width: 100%;
-  height: 48px;
-  background: #2a2a2e;
-  border: none;
-  border-radius: 6px;
-  color: #fff;
-  padding: 0 16px;
-  font-size: 15px;
-  font-family: Arial, sans-serif;
+  height: 56px;
+  background: var(--surface-solid);
+  border: 1px solid rgba(12, 76, 177, 0.12);
+  border-radius: 18px;
+  color: var(--navy);
+  padding: 0 18px;
+  font-size: 1rem;
   outline: none;
   margin-bottom: 20px;
-  transition: background 0.2s;
 
   &:focus {
-    background: #333338;
+    border-color: rgba(12, 76, 177, 0.28);
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.08);
   }
 `;
 
 export const LoginBtn = styled.button`
-  ${heavyFont}
+  ${bodyFont}
   width: 100%;
-  background: linear-gradient(180deg, #ffcc00 0%, #ff5500 100%);
-  color: #000;
+  background: linear-gradient(135deg, var(--primary) 0%, #3ba5ff 100%);
+  color: var(--text-inverse);
   border: none;
-  border-radius: 8px;
-  padding: 14px 0;
-  font-size: 32px;
+  border-radius: 18px;
+  padding: 16px 18px;
+  font-size: 1rem;
+  font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 6px 0 #8a3000, 0 10px 25px rgba(0, 0, 0, 0.7);
-  transition: all 0.1s;
-  transform: scaleX(0.9);
-
-  &:hover {
-    filter: brightness(1.08);
-  }
-
-  &:active {
-    transform: scaleX(0.9) translateY(4px);
-    box-shadow: 0 2px 0 #8a3000;
-  }
+  box-shadow: 0 18px 32px rgba(var(--primary-rgb), 0.22);
 
   &:disabled {
     opacity: 0.6;
@@ -88,8 +95,9 @@ export const LoginBtn = styled.button`
 `;
 
 export const ErrorMsg = styled.p`
-  color: #ff4444;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
+  ${bodyFont}
+  color: var(--danger);
+  font-size: 0.92rem;
+  line-height: 1.7;
   margin-bottom: 14px;
 `;

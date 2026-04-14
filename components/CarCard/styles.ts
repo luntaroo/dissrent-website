@@ -1,187 +1,201 @@
 import styled from "styled-components";
-import { heavyFont } from "../shared/mixins";
+import { bodyFont, heavyFont } from "../shared/mixins";
 
 export const Card = styled.article`
-  position: relative;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-  min-height: 320px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: transform 0.2s;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(16px);
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
 
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
   }
+`;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      180deg,
-      rgba(30, 30, 34, 0.85) 0%,
-      rgba(30, 30, 34, 0.3) 35%,
-      rgba(30, 30, 34, 0.2) 60%,
-      rgba(15, 15, 18, 0.85) 100%
-    );
-    z-index: 1;
-  }
-
-  @media (max-width: 900px) {
-    min-height: 280px;
-  }
-
-  @media (max-width: 768px) {
-    min-height: 300px;
-  }
+export const Media = styled.div`
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
 `;
 
 export const Bg = styled.div<{ $img: string }>`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url(${({ $img }) => $img});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(16, 24, 40, 0) 0%, rgba(16, 24, 40, 0.36) 100%),
+    url(${({ $img }) => $img}) center/cover no-repeat;
+  transition: transform 0.45s ease;
+
+  ${Card}:hover & {
+    transform: scale(1.03);
+  }
 `;
 
-export const Top = styled.div`
+export const MediaOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(var(--gold-rgb), 0.14), transparent 56%);
+`;
+
+export const TopRow = styled.div`
   position: relative;
-  z-index: 2;
-  padding: 16px 16px 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px;
+  flex-wrap: wrap;
+`;
+
+export const StatusBadge = styled.div<{ $available: boolean }>`
+  ${bodyFont}
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: ${({ $available }) =>
+    $available ? "rgba(10, 15, 22, 0.66)" : "rgba(180, 83, 9, 0.88)"};
+  color: var(--text-inverse);
+  font-size: 0.62rem;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+`;
+
+export const PriceBadge = styled.div`
+  ${bodyFont}
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--text);
+  font-size: 0.62rem;
+  font-weight: 800;
+`;
+
+export const Bottom = styled.div`
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+`;
+
+export const TitleRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 `;
 
 export const Title = styled.h3`
   ${heavyFont}
-  color: #ffffff;
-  font-size: 28px;
+  color: var(--text);
+  font-size: 1rem;
   line-height: 1;
-  margin-bottom: 0;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.95);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: -0.5px;
-  transform: scaleX(0.88);
-  transform-origin: left;
+`;
 
-  @media (max-width: 900px) {
-    font-size: 22px;
-  }
+export const AvailabilityText = styled.p<{ $available: boolean }>`
+  ${bodyFont}
+  color: ${({ $available }) => ($available ? "var(--success)" : "var(--warning)")};
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.45;
+`;
 
-  @media (max-width: 768px) {
-    font-size: 30px;
-  }
+export const PricingGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
 
-  @media (max-width: 480px) {
-    font-size: 26px;
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-export const Price = styled.div`
-  ${heavyFont}
-  color: var(--price-yellow);
-  font-size: 42px;
-  line-height: 1.05;
-  font-style: italic;
-  text-shadow: 0 0 25px rgba(255, 204, 0, 0.4), 2px 2px 6px rgba(0, 0, 0, 0.95);
-  letter-spacing: -0.5px;
-  transform: scaleX(0.88);
-  transform-origin: left;
+export const PricingCard = styled.div`
+  padding: 10px;
+  border-radius: 16px;
+  background: rgba(16, 24, 40, 0.04);
+  border: 1px solid rgba(16, 24, 40, 0.08);
+`;
 
-  @media (max-width: 900px) {
-    font-size: 34px;
-  }
+export const PricingLabel = styled.div`
+  ${bodyFont}
+  font-size: 0.54rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 5px;
+`;
 
-  @media (max-width: 768px) {
-    font-size: 44px;
-  }
+export const PricingValue = styled.div`
+  ${bodyFont}
+  color: var(--text);
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1.4;
+`;
 
-  @media (max-width: 480px) {
-    font-size: 38px;
+export const BenefitRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+`;
+
+export const Benefit = styled.span`
+  ${bodyFont}
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(var(--gold-rgb), 0.08);
+  border: 1px solid rgba(var(--gold-rgb), 0.15);
+  color: var(--gold-strong);
+  font-size: 0.62rem;
+  font-weight: 700;
+`;
+
+export const ActionRow = styled.div`
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+
+  @media (max-width: 520px) {
+    flex-direction: column;
   }
 `;
 
-export const Bottom = styled.div`
-  position: relative;
-  z-index: 2;
-  padding: 0 16px 14px;
+export const GhostButton = styled.button`
+  ${bodyFont}
+  flex: 1;
+  min-height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 24, 40, 0.12);
+  background: rgba(16, 24, 40, 0.03);
+  color: var(--text);
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
 `;
 
 export const BookBtn = styled.button`
-  ${heavyFont}
-  background: linear-gradient(180deg, #ffcc00 0%, #ff5500 100%);
-  color: #000000;
+  ${bodyFont}
+  flex: 1.2;
+  min-height: 42px;
   border: none;
-  border-radius: 6px;
-  padding: 10px 0;
-  font-size: 34px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #101828;
+  font-size: 0.72rem;
+  font-weight: 800;
   cursor: pointer;
-  position: relative;
-  box-shadow: 0 5px 0 #8a3000, 0 8px 18px rgba(0, 0, 0, 0.7);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.1s;
-  letter-spacing: -0.5px;
-  transform: scaleX(0.9);
-
-  &:hover {
-    filter: brightness(1.08);
-  }
-
-  &:active {
-    transform: scaleX(0.9) translateY(4px);
-    box-shadow: 0 1px 0 #8a3000, 0 3px 8px rgba(0, 0, 0, 0.7);
-  }
-
-  @media (max-width: 900px) {
-    font-size: 26px;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 34px;
-    padding: 13px 0;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 28px;
-  }
-`;
-
-export const CursorIcon = styled.div`
-  position: absolute;
-  right: 8px;
-  bottom: 4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 1;
-  transform: rotate(-10deg);
-
-  i {
-    font-size: 14px;
-    color: #000;
-    margin-bottom: -1px;
-  }
-
-  span {
-    font-family: Arial, sans-serif;
-    font-size: 8px;
-    font-weight: 900;
-    color: #000;
-    letter-spacing: 0;
-  }
+  box-shadow: 0 18px 30px rgba(var(--gold-rgb), 0.22);
 `;

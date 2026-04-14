@@ -42,15 +42,16 @@ export default function ResultsSection({ result, cars, blockedImgs = [], onBook 
       <Heading>AVAILABLE CARS FOR YOUR TRIP</Heading>
 
       <Grid>
-        {cars.map((car, i) => (
+        {cars.map((car) => (
           <ResultCard
-            key={i}
+            key={car.img}
             car={car}
             days={days}
             pickupDate={pickupDate}
             returnDate={returnDate}
             isBlocked={blockedImgs.includes(car.img)}
             onBook={onBook}
+            onPreview={onBook}
           />
         ))}
       </Grid>

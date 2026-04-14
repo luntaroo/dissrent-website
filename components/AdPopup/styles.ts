@@ -1,135 +1,183 @@
 import styled from "styled-components";
-import { heavyFont } from "../shared/mixins";
+import { bodyFont, heavyFont } from "../shared/mixins";
 
-export const Overlay = styled.div<{ $hidden: boolean }>`
+export const Overlay = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.88);
-  z-index: 10000;
+  right: 24px;
+  bottom: 24px;
+  z-index: 960;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: ${({ $hidden }) => ($hidden ? 0 : 1)};
-  pointer-events: ${({ $hidden }) => ($hidden ? "none" : "all")};
-  transition: opacity 0.4s ease;
+  justify-content: flex-end;
+  align-items: flex-end;
+  pointer-events: none;
+
+  @media (max-width: 640px) {
+    right: 14px;
+    left: 14px;
+    bottom: 14px;
+  }
 `;
 
-export const Content = styled.div<{ $hidden: boolean }>`
+export const Content = styled.div`
   position: relative;
-  max-width: 550px;
-  width: 92%;
-  background: linear-gradient(180deg, #2a2a2e 0%, #151517 100%);
-  border-radius: 10px;
+  max-width: 360px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  background: rgba(10, 15, 22, 0.9);
+  border-radius: 30px;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 60px rgba(255, 204, 0, 0.1);
-  border: 2px solid var(--yellow-bar);
-  transform: scale(${({ $hidden }) => ($hidden ? 0.85 : 1)});
-  transition: transform 0.4s ease;
+  box-shadow: 0 30px 80px rgba(9, 12, 17, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(22px) saturate(160%);
+  pointer-events: auto;
 `;
 
-export const ImageContainer = styled.div`
-  width: 100%;
-  height: 280px;
-  background: #0a0a0a;
-  overflow: hidden;
+export const Visual = styled.div`
   position: relative;
-
-  @media (max-width: 768px) {
-    height: 200px;
-  }
+  min-height: 160px;
 `;
 
-export const ImagePlaceholder = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #1a1a1e, #2a2a2e);
-  gap: 10px;
+export const VisualOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.08) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+`;
 
-  i {
-    font-size: 50px;
-    color: var(--yellow-bar);
-  }
+export const VisualBadge = styled.div`
+  ${bodyFont}
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(8, 8, 8, 0.78);
+  backdrop-filter: blur(8px);
+  color: var(--gold);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid rgba(200, 145, 42, 0.3);
+`;
 
-  span {
-    font-size: 13px;
-    color: #666;
-  }
+export const VisualTitle = styled.h2`
+  ${heavyFont}
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 14px;
+  color: var(--text-inverse);
+  font-size: 1.45rem;
+  line-height: 0.95;
 `;
 
 export const Body = styled.div`
-  padding: 25px 25px 28px;
-  text-align: center;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+`;
+
+export const BodyTop = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+`;
+
+export const Kicker = styled.div`
+  ${bodyFont}
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold);
 `;
 
 export const Title = styled.h2`
   ${heavyFont}
-  font-size: 42px;
-  color: var(--yellow-bar);
-  margin-bottom: 6px;
-  letter-spacing: 3px;
-  text-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
-
-  @media (max-width: 768px) {
-    font-size: 30px;
-  }
+  font-size: clamp(1.18rem, 3vw, 1.4rem);
+  line-height: 1;
+  color: var(--text-inverse);
 `;
 
 export const Subtitle = styled.p`
-  font-size: 15px;
-  color: #999;
-  margin-bottom: 22px;
-  line-height: 1.5;
+  ${bodyFont}
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.56);
+  line-height: 1.65;
+`;
+
+export const FeatureRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+`;
+
+export const Feature = styled.div`
+  ${bodyFont}
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(200, 145, 42, 0.1);
+  border: 1px solid rgba(200, 145, 42, 0.18);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.72rem;
+  font-weight: 600;
+
+  i {
+    color: var(--gold);
+    font-size: 0.66rem;
+  }
 `;
 
 export const CloseBtn = styled.button`
-  ${heavyFont}
-  background: linear-gradient(180deg, #ffcc00 0%, #ff5500 100%);
-  color: #000;
+  ${bodyFont}
+  align-self: flex-start;
   border: none;
-  border-radius: 6px;
-  padding: 12px 45px;
-  font-size: 26px;
+  border-radius: 999px;
+  padding: 11px 16px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #101828;
+  font-size: 0.8rem;
+  font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 5px 0 #993300, 0 10px 20px rgba(0, 0, 0, 0.6);
-  transition: all 0.15s;
-  letter-spacing: 2px;
+  transition: background 0.2s, transform 0.15s;
 
   &:hover {
-    filter: brightness(1.1);
-  }
-
-  &:active {
-    transform: translateY(4px);
-    box-shadow: 0 1px 0 #993300, 0 3px 8px rgba(0, 0, 0, 0.6);
+    transform: translateY(-1px);
   }
 `;
 
 export const CloseX = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #fff;
-  width: 34px;
-  height: 34px;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  font-size: 20px;
+  border: 1px solid var(--border-dark);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.15rem;
+  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
-  transition: background 0.2s;
+  padding: 0;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 
   &:hover {
-    background: rgba(255, 0, 0, 0.8);
+    background: var(--gold-dim);
+    color: var(--gold);
+    border-color: rgba(200, 145, 42, 0.4);
   }
 `;

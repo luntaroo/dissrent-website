@@ -110,7 +110,7 @@ export default function BookingModal({ isOpen, onClose, bookingContext }: Props)
       return;
     }
     fetch(`/api/availability?carImg=${encodeURIComponent(bookingContext.carImg)}`)
-      .then(r => r.json())
+      .then(r => r.json() as Promise<{ blockedDates?: string[] }>)
       .then(data => setCarBlockedDates(data.blockedDates ?? []))
       .catch(() => setCarBlockedDates([]));
   }, [isOpen, needsDates, bookingContext?.carImg]);
@@ -182,11 +182,11 @@ export default function BookingModal({ isOpen, onClose, bookingContext }: Props)
         }),
       });
       if (res.ok) {
-        const data = await res.json().catch(() => ({}));
+        const data = (await res.json().catch(() => ({}))) as { emailWarning?: string };
         if (data.emailWarning) setError(data.emailWarning);
         setSuccess(true);
       } else {
-        const data = await res.json().catch(() => ({}));
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
         setError(data.error ?? "Greška. Pokušajte ponovo.");
       }
     } catch {

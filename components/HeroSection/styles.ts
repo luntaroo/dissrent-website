@@ -1,269 +1,213 @@
-import styled, { keyframes } from "styled-components";
-import { heavyFont } from "../shared/mixins";
+import styled from "styled-components";
+import { bodyFont, heavyFont } from "../shared/mixins";
 
-const glowPulse = keyframes`
-  0%, 100% { opacity: 0.6; }
-  50%      { opacity: 1; }
-`;
-
-/* ── main wrapper ── */
 export const Hero = styled.section`
-  position: relative;
-  overflow: hidden;
-  padding: 44px 4% 36px;
-
-  @media (max-width: 768px) {
-    padding: 32px 5% 28px;
-  }
-`;
-
-/* ── full-bleed background image container ── */
-export const HeroBgImage = styled.div`
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-`;
-
-/* ── dark overlay over the image ── */
-export const DarkOverlay = styled.div`
-  position: absolute;
-  inset: 0;
-  z-index: 1;
   background:
-    linear-gradient(90deg, rgba(10, 10, 14, 0.88) 0%, rgba(10, 10, 14, 0.55) 60%, rgba(10, 10, 14, 0.30) 100%),
-    linear-gradient(180deg, rgba(10, 10, 14, 0.4) 0%, rgba(10, 10, 14, 0.75) 100%);
+    radial-gradient(circle at top left, rgba(var(--gold-rgb), 0.16), transparent 24%),
+    linear-gradient(180deg, var(--bg-dark-strong) 0%, #10151d 100%);
 `;
 
-/* ── yellow→red accent stripe on left ── */
-export const Accent = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  z-index: 2;
-  background: linear-gradient(180deg, var(--yellow-bar) 0%, #ff5500 100%);
-`;
-
-export const AccentRight = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  z-index: 2;
-  background: linear-gradient(180deg, var(--yellow-bar) 0%, #ff5500 100%);
-`;
-
-export const AccentBottom = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 3px;
-  z-index: 2;
-  background: linear-gradient(90deg, #ff5500 0%, var(--yellow-bar) 50%, #ff5500 100%);
-`;
-
-/* ── yellow radial spotlight ── */
-export const Spotlight = styled.div`
-  position: absolute;
-  top: -20%;
-  left: 5%;
-  width: 55%;
-  height: 160%;
-  z-index: 2;
-  background: radial-gradient(
-    ellipse at 20% 50%,
-    rgba(255, 204, 0, 0.07) 0%,
-    transparent 65%
-  );
-  pointer-events: none;
-  animation: ${glowPulse} 4s ease-in-out infinite;
-`;
-
-/* ── content on top of everything ── */
-export const Content = styled.div`
-  position: relative;
-  z-index: 3;
-  max-width: 1500px;
+export const HeroInner = styled.div`
+  max-width: var(--max-w);
   margin: 0 auto;
-`;
-
-/* ── top row: location tag + price badge ── */
-export const TopRow = styled.div`
-  display: flex;
+  padding: calc(var(--nav-h) + 20px) 24px 80px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.88fr);
+  gap: 22px;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
 
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    padding: calc(var(--nav-h) + 14px) 16px 72px;
   }
 `;
 
-/* ── red location tag ── */
-export const LocationTag = styled.div`
-  ${heavyFont}
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, #ff3300 0%, #cc0000 100%);
-  color: #fff;
-  font-size: 14px;
-  padding: 5px 14px 4px;
-  border-radius: 4px;
-  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.45);
-  letter-spacing: 1.5px;
-`;
-
-export const LocationIcon = styled.i`
-  font-size: 13px;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
-`;
-
-/* ── price badge ── */
-export const PriceBadge = styled.div`
+export const Content = styled.div`
   display: flex;
-  align-items: baseline;
-  gap: 6px;
-  border: 2px solid var(--yellow-bar);
-  border-radius: 6px;
-  padding: 6px 18px 5px;
-  background: rgba(0, 0, 0, 0.55);
-  box-shadow: 0 0 25px rgba(255, 204, 0, 0.2), inset 0 0 15px rgba(255, 204, 0, 0.04);
-
-  span {
-    ${heavyFont}
-    font-size: 13px;
-    color: #999;
-  }
+  flex-direction: column;
+  gap: 16px;
 `;
 
-export const PriceNumber = styled.span`
-  && {
-    ${heavyFont}
-    font-size: 38px;
-    color: var(--yellow-bar);
-    text-shadow: 0 0 25px rgba(255, 204, 0, 0.5);
-    line-height: 1;
-    letter-spacing: -1px;
-  }
+export const Eyebrow = styled.div`
+  ${bodyFont}
+  width: fit-content;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-light);
 `;
 
-export const PriceUnit = styled.span`
-  && {
-    ${heavyFont}
-    font-size: 14px;
-    color: var(--yellow-bar);
-    letter-spacing: 0.5px;
-  }
-`;
-
-/* ── massive headline ── */
 export const Headline = styled.h1`
   ${heavyFont}
-  font-size: clamp(38px, 7vw, 82px);
-  color: #fff;
-  line-height: 0.88;
-  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.95), 0 0 80px rgba(0, 0, 0, 0.7);
-  margin-bottom: 8px;
+  font-size: clamp(1.9rem, 3.8vw, 3rem);
+  line-height: 0.96;
+  color: var(--text-inverse);
+  max-width: 10ch;
 
   span {
-    color: var(--yellow-bar);
-    text-shadow:
-      0 0 40px rgba(255, 204, 0, 0.5),
-      0 0 80px rgba(255, 204, 0, 0.2),
-      0 4px 40px rgba(0, 0, 0, 0.9);
-  }
-
-  @media (max-width: 480px) {
-    margin-bottom: 6px;
+    display: block;
+    color: rgba(247, 248, 251, 0.82);
   }
 `;
 
-/* ── yellow separator line ── */
-export const Separator = styled.div`
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--yellow-bar) 0%, #ff5500 100%);
-  border-radius: 2px;
-  margin-bottom: 18px;
-  box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
-
-  @media (max-width: 480px) {
-    margin-bottom: 14px;
-  }
+export const Lead = styled.p`
+  ${bodyFont}
+  max-width: 580px;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: rgba(247, 248, 251, 0.68);
 `;
 
-/* ── trust checkmarks row ── */
+export const Actions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+`;
+
+export const PrimaryAction = styled.a`
+  ${bodyFont}
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #101828;
+  font-size: 0.76rem;
+  font-weight: 800;
+  box-shadow: 0 18px 30px rgba(var(--gold-rgb), 0.22);
+`;
+
+export const SecondaryAction = styled.a`
+  ${bodyFont}
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-inverse);
+  font-size: 0.76rem;
+  font-weight: 700;
+`;
+
 export const TrustRow = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
-  margin-bottom: 22px;
-
-  @media (max-width: 480px) {
-    gap: 10px;
-    margin-bottom: 18px;
-  }
-`;
-
-export const TrustItem = styled.div`
-  display: flex;
-  align-items: center;
   gap: 8px;
 `;
 
-export const TrustCheck = styled.i`
-  color: var(--yellow-bar);
-  font-size: 14px;
-  text-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
-`;
+export const TrustItem = styled.div`
+  ${bodyFont}
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(247, 248, 251, 0.74);
+  font-size: 0.72rem;
+  font-weight: 700;
 
-export const TrustText = styled.span`
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  color: #ddd;
-  font-weight: bold;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
-
-  @media (max-width: 480px) {
-    font-size: 12px;
+  i {
+    color: var(--gold-light);
   }
 `;
 
-/* ── 3D CTA button ── */
-export const CtaButton = styled.button`
-  ${heavyFont}
-  font-size: clamp(18px, 2.5vw, 26px);
-  color: #000;
-  background: linear-gradient(180deg, #ffcc00 0%, #ff5500 100%);
-  border: none;
-  border-radius: 6px;
-  padding: 12px 40px 10px;
-  cursor: pointer;
-  box-shadow:
-    0 5px 0 #8a3000,
-    0 10px 25px rgba(0, 0, 0, 0.7),
-    0 0 35px rgba(255, 204, 0, 0.15);
-  transition: all 0.1s;
-  letter-spacing: 0.5px;
+export const Showcase = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
-  &:hover {
-    filter: brightness(1.1);
-  }
+export const ImageCard = styled.div`
+  position: relative;
+  min-height: 250px;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 32px 72px rgba(0, 0, 0, 0.28);
 
-  &:active {
-    transform: translateY(4px) scaleX(0.88);
-    box-shadow:
-      0 1px 0 #8a3000,
-      0 4px 15px rgba(0, 0, 0, 0.6);
+  @media (max-width: 960px) {
+    min-height: 220px;
   }
+`;
 
-  @media (max-width: 480px) {
-    padding: 10px 28px 8px;
+export const ImageOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(16, 24, 40, 0.04) 0%, rgba(16, 24, 40, 0.48) 100%),
+    linear-gradient(135deg, rgba(var(--gold-rgb), 0.14), transparent 56%);
+`;
+
+export const FloatingBadge = styled.div`
+  ${bodyFont}
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: 16px;
+  background: rgba(10, 15, 22, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-inverse);
+  backdrop-filter: blur(12px);
+`;
+
+export const FloatingBadgeLabel = styled.span`
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(247, 248, 251, 0.5);
+`;
+
+export const FloatingBadgeValue = styled.span`
+  font-size: 0.74rem;
+  font-weight: 700;
+`;
+
+export const InfoPanel = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
   }
+`;
+
+export const InfoLabel = styled.div`
+  ${bodyFont}
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(247, 248, 251, 0.46);
+  margin-bottom: 6px;
+`;
+
+export const InfoValue = styled.div`
+  ${bodyFont}
+  color: var(--text-inverse);
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.45;
 `;

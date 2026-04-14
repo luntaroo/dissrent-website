@@ -18,10 +18,7 @@ const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const VALID_PREFS = ["viber", "sms"] as const;
 
-// Valid car images — must match car.img paths in carData (public paths with leading slash)
-
 export async function POST(req: NextRequest) {
-  // Rate limit: 10 bookings per IP per hour
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
     req.headers.get("x-real-ip") ??
@@ -36,7 +33,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const body = await req.json();
+    const body = (await req.json()) as Record<string, unknown>;
     const {
       customerName,
       customerPhone,
@@ -53,7 +50,6 @@ export async function POST(req: NextRequest) {
     const normalizedEmail = typeof customerEmail === "string" ? normalizeEmail(customerEmail) : "";
     const car = typeof carImg === "string" ? getCarByImg(carImg) : undefined;
 
-    // ── Required field presence ──────────────────────────────────────────────
     if (
       !customerName ||
       !customerPhone ||
@@ -66,7 +62,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Sva polja su obavezna." }, { status: 400 });
     }
 
-    // ── Type checks ──────────────────────────────────────────────────────────
     if (
       typeof customerName !== "string" ||
       typeof customerPhone !== "string" ||
@@ -79,7 +74,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Nevažeći tipovi podataka." }, { status: 400 });
     }
 
-    // ── Length limits ────────────────────────────────────────────────────────
     if (normalizedName.length < 2 || normalizedName.length > 100) {
       return NextResponse.json({ error: "Ime mora biti između 2 i 100 znakova." }, { status: 400 });
     }
@@ -90,17 +84,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Email je predugačak." }, { status: 400 });
     }
 
-    // ── Email format ─────────────────────────────────────────────────────────
     if (!EMAIL_RE.test(normalizedEmail)) {
       return NextResponse.json({ error: "Nevažeća email adresa." }, { status: 400 });
     }
 
-    // ── Contact preference enum ──────────────────────────────────────────────
     if (!VALID_PREFS.includes(contactPreference as typeof VALID_PREFS[number])) {
       return NextResponse.json({ error: "Nevažeća kontakt preferencija." }, { status: 400 });
     }
 
-    // ── Date format (if provided) ────────────────────────────────────────────
     if (pickupDate && !DATE_RE.test(pickupDate)) {
       return NextResponse.json({ error: "Nevažeći format datuma preuzimanja." }, { status: 400 });
     }
@@ -111,7 +102,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Datum povratka mora biti poslije datuma preuzimanja." }, { status: 400 });
     }
 
-    // ── Days sanity ──────────────────────────────────────────────────────────
     if (days !== null && days !== undefined) {
       const daysNum = Number(days);
       if (!Number.isInteger(daysNum) || daysNum < 1 || daysNum > 365) {
@@ -119,17 +109,16 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // ── Car image (if provided) ──────────────────────────────────────────────
     if (!VALID_CAR_IMGS.includes(carImg) || !car) {
       return NextResponse.json({ error: "Nevažeći auto." }, { status: 400 });
     }
 
     const pricing = getQuoteForCar(carImg, pickupDate, returnDate);
     if (!pricing || pricing.quote.days > 365) {
-      return NextResponse.json({ error: "NevaÅ¾eÄ‡i termin rezervacije." }, { status: 400 });
+      return NextResponse.json({ error: "Nevažeći termin rezervacije." }, { status: 400 });
     }
 
-    if (db.hasBlockingConflict(carImg, pickupDate, returnDate)) {
+    if (await db.hasBlockingConflict(carImg, pickupDate, returnDate)) {
       return NextResponse.json(
         { error: "Odabrani termin je upravo zauzet. Izaberite drugi period." },
         { status: 409 }
@@ -158,10 +147,8 @@ export async function POST(req: NextRequest) {
       created_at: new Date().toISOString(),
     };
 
-    // Save to DB first — always succeeds
-    db.createBooking(booking);
+    await db.createBooking(booking);
 
-    // Send email — if it fails, booking is still saved
     try {
       await sendConfirmEmail({ ...booking, status: "pending" });
     } catch (emailErr) {

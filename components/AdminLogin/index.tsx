@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Wrapper, Card, Title, Label, Input, LoginBtn, ErrorMsg } from "./styles";
+import { Wrapper, Card, Eyebrow, Title, Subtitle, Label, Input, LoginBtn, ErrorMsg } from "./styles";
 
 interface Props {
   disabledMessage?: string;
@@ -30,7 +30,7 @@ export default function AdminLogin({ disabledMessage }: Props) {
       if (res.ok) {
         router.push("/admin/dashboard");
       } else {
-        const data = await res.json().catch(() => ({}));
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
         setError(data.error ?? "Pogrešna lozinka.");
       }
     } catch {
@@ -43,10 +43,14 @@ export default function AdminLogin({ disabledMessage }: Props) {
   return (
     <Wrapper>
       <Card>
-        <Title>ADMIN PANEL</Title>
+        <Eyebrow>Interni pristup</Eyebrow>
+        <Title>Admin panel</Title>
+        <Subtitle>
+          Prijavite se da upravljate rezervacijama, raspolozivosti vozila i statusima potvrde.
+        </Subtitle>
         {disabledMessage && <ErrorMsg>{disabledMessage}</ErrorMsg>}
         <form onSubmit={handleLogin}>
-          <Label htmlFor="password">LOZINKA</Label>
+          <Label htmlFor="password">Lozinka</Label>
           <Input
             id="password"
             type="password"
@@ -57,7 +61,7 @@ export default function AdminLogin({ disabledMessage }: Props) {
           />
           {error && <ErrorMsg>{error}</ErrorMsg>}
           <LoginBtn type="submit" disabled={loading || Boolean(disabledMessage)}>
-            {loading ? "..." : "PRIJAVA"}
+            {loading ? "Prijava..." : "Prijava"}
           </LoginBtn>
         </form>
       </Card>

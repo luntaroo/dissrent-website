@@ -1,47 +1,84 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import {
   Overlay,
   Content,
-  ImageContainer,
-  ImagePlaceholder,
+  Visual,
+  VisualOverlay,
+  VisualBadge,
+  VisualTitle,
   Body,
+  BodyTop,
+  Kicker,
   Title,
   Subtitle,
+  FeatureRow,
+  Feature,
   CloseBtn,
   CloseX,
 } from "./styles";
 
 export default function AdPopup() {
-  const [hidden, setHidden] = useState(false);
-  const [mounted, setMounted] = useState(true);
+  const [open, setOpen] = useState(true);
 
-  function close() {
-    setHidden(true);
-    setTimeout(() => setMounted(false), 400);
-  }
+  if (!open) return null;
 
-  if (!mounted) return null;
+  const close = () => setOpen(false);
+  const scrollToSearch = () => {
+    document.getElementById("search-bar")?.scrollIntoView({ behavior: "smooth" });
+    close();
+  };
 
   return (
-    <Overlay $hidden={hidden} onClick={(e) => { if (e.target === e.currentTarget) close(); }}>
-      <Content $hidden={hidden}>
-        <CloseX onClick={close}>&times;</CloseX>
-        <ImageContainer>
-          {/* To add an ad image: replace ImagePlaceholder with <img src="/ad.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}} /> */}
-          <ImagePlaceholder>
-            <i className="fa-solid fa-image" />
-            <span>Postavi reklamu (zamijeni src na img ispod)</span>
-          </ImagePlaceholder>
-        </ImageContainer>
+    <Overlay>
+      <Content>
+        <Visual>
+          <Image
+            src="/009.jpeg"
+            alt="Posebna DISS RENT ponuda"
+            fill
+            style={{ objectFit: "cover", objectPosition: "center" }}
+            priority
+          />
+          <VisualOverlay />
+          <VisualBadge>Online rezervacija</VisualBadge>
+          <VisualTitle>Popust do 30%</VisualTitle>
+        </Visual>
+
         <Body>
-          <Title>POSEBNA PONUDA!</Title>
+          <BodyTop>
+            <Kicker>Posebna ponuda</Kicker>
+            <CloseX type="button" onClick={close} aria-label="Zatvori ponudu">
+              &times;
+            </CloseX>
+          </BodyTop>
+
+          <Title>Rezervisi ranije i vozi po boljoj cijeni.</Title>
           <Subtitle>
-            Rezerviši sada i ostvari popust do 30% na sve premium automobile.
-            Ponuda traje ograničeno!
+            Premium vozila po najboljim cijenama. Rezervisite online i ustedite do 30% na
+            visedevni najam.
           </Subtitle>
-          <CloseBtn onClick={close}>POGLEDAJ PONUDU</CloseBtn>
+
+          <FeatureRow>
+            <Feature>
+              <i className="fa-solid fa-check" />
+              Bez depozita
+            </Feature>
+            <Feature>
+              <i className="fa-solid fa-check" />
+              Potvrda emailom
+            </Feature>
+            <Feature>
+              <i className="fa-solid fa-check" />
+              4-7 dana popust
+            </Feature>
+          </FeatureRow>
+
+          <CloseBtn type="button" onClick={scrollToSearch}>
+            Pogledaj vozila
+          </CloseBtn>
         </Body>
       </Content>
     </Overlay>

@@ -1,7 +1,6 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
@@ -17,80 +16,77 @@ import {
   BackLink,
 } from "@/components/InfoPage/styles";
 
+export const metadata: Metadata = {
+  title: "Uslovi koristenja",
+  description:
+    "Uslovi koristenja i najma za DISS RENT rent a car u Banjaluci, ukljucujuci rezervaciju, cijene i otkazivanje.",
+};
+
 export default function TermsPage() {
   return (
     <PageWrap>
       <Navbar />
+
       <Container>
         <BackLink as={Link} href="/">
-          <i className="fa-solid fa-arrow-left" /> NAZAD NA POČETNU
+          <i className="fa-solid fa-arrow-left" /> Nazad na pocetnu
         </BackLink>
 
-        <PageTitle>USLOVI KORIŠTENJA</PageTitle>
+        <PageTitle>Uslovi koristenja</PageTitle>
         <TitleAccent />
 
         <Section>
           <Text>
-            Korištenjem usluga <strong style={{ color: "var(--yellow-bar)" }}>DISS RENT</strong> prihvatate
-            sljedeće uslove korištenja. Molimo Vas da ih pažljivo pročitate prije rezervacije vozila.
+            Koristenjem usluga <strong style={{ color: "var(--primary)" }}>DISS RENT</strong> prihvatate
+            osnovne uslove najma, rezervacije i povrata vozila.
           </Text>
         </Section>
 
         <Section>
-          <SectionTitle>1. USLOVI NAJMA</SectionTitle>
+          <SectionTitle>1. Uslovi najma</SectionTitle>
           <List>
             <ListItem>Najmoprimac mora imati najmanje 21 godinu</ListItem>
-            <ListItem>Potrebna je važeća vozačka dozvola (minimalno 2 godine)</ListItem>
-            <ListItem>Potrebna je važeća lična karta ili pasoš</ListItem>
-            <ListItem>Vozilo se preuzima i vraća na dogovorenu lokaciju u Banjaluci</ListItem>
+            <ListItem>Potrebna je vazeca vozacka dozvola</ListItem>
+            <ListItem>Potrebna je vazeca licna karta ili pasos</ListItem>
+            <ListItem>Preuzimanje i vracanje vozila se dogovara u Banjaluci</ListItem>
           </List>
         </Section>
 
         <Section>
-          <SectionTitle>2. PLAĆANJE I CIJENE</SectionTitle>
+          <SectionTitle>2. Placanje i cijene</SectionTitle>
           <List>
-            <ListItem>Cijene su izražene u konvertibilnim markama (KM)</ListItem>
-            <ListItem>Cijena uključuje osnovno osiguranje vozila</ListItem>
-            <ListItem>Gorivo nije uključeno u cijenu — vozilo se vraća sa istom količinom goriva</ListItem>
-            <ListItem>Za periode duže od 7 dana cijena se dogovara individualno</ListItem>
-            <ListItem>Popusti za periode od 4 do 7 dana primjenjuju se automatski</ListItem>
+            <ListItem>Cijene su izrazene u KM</ListItem>
+            <ListItem>Osnovno osiguranje je ukljuceno u cijenu</ListItem>
+            <ListItem>Za termine duze od 7 dana cijena ide po dogovoru</ListItem>
+            <ListItem>Popusti za 4 do 7 dana se primjenjuju automatski</ListItem>
           </List>
         </Section>
 
         <Section>
-          <SectionTitle>3. REZERVACIJA I OTKAZIVANJE</SectionTitle>
+          <SectionTitle>3. Rezervacija i otkazivanje</SectionTitle>
           <List>
-            <ListItem>Rezervacija se smatra potvrđenom nakon klika na link za potvrdu u email-u</ListItem>
-            <ListItem>Besplatno otkazivanje je moguće do 24 sata prije preuzimanja</ListItem>
-            <ListItem>U slučaju nepojave bez prethodnog otkazivanja, DISS RENT zadržava pravo naplate naknade</ListItem>
+            <ListItem>Rezervacija je potvrdjena nakon klika na email link</ListItem>
+            <ListItem>Otkazivanje je moguce prije preuzimanja vozila</ListItem>
+            <ListItem>DISS RENT zadrzava pravo izmjene termina u slucaju nedostupnosti</ListItem>
           </List>
         </Section>
 
         <Section>
-          <SectionTitle>4. KORIŠTENJE VOZILA</SectionTitle>
+          <SectionTitle>4. Koristenje vozila</SectionTitle>
           <List>
-            <ListItem>Vozilo se smije koristiti isključivo na teritoriji Bosne i Hercegovine, osim uz prethodni dogovor</ListItem>
-            <ListItem>Zabranjeno je korištenje vozila za takmičenja, pod-iznajmljivanje ili prevoz opasnih materija</ListItem>
-            <ListItem>Najmoprimac je odgovoran za sve saobraćajne prekršaje tokom perioda najma</ListItem>
-            <ListItem>U slučaju nesreće ili oštećenja, najmoprimac je dužan odmah obavijestiti DISS RENT</ListItem>
+            <ListItem>Vozilo se koristi u skladu sa zakonom i pravilima saobracaja</ListItem>
+            <ListItem>Najmoprimac je odgovoran za prekrsaje tokom trajanja najma</ListItem>
+            <ListItem>Svako ostecenje ili incident potrebno je odmah prijaviti</ListItem>
           </List>
         </Section>
 
         <Section>
-          <SectionTitle>5. VRAĆANJE VOZILA</SectionTitle>
-          <List>
-            <ListItem>Vozilo se vraća u istom stanju u kakvom je preuzeto</ListItem>
-            <ListItem>Kašnjenje u vraćanju se naplaćuje po dnevnoj tarifi</ListItem>
-            <ListItem>Oštećenja koja nisu prijavljena pri preuzimanju padaju na teret najmoprimca</ListItem>
-          </List>
-        </Section>
-
-        <Section>
-          <Text style={{ color: "#777", fontSize: 13 }}>
-            Posljednje ažuriranje: Mart 2026. DISS RENT zadržava pravo izmjene uslova korištenja.
+          <Text style={{ color: "var(--text-soft)", fontSize: "0.92rem", marginBottom: 0 }}>
+            Posljednje azuriranje: april 2026.
           </Text>
         </Section>
       </Container>
+
       <Footer />
     </PageWrap>
   );
